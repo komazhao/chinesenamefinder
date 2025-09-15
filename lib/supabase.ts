@@ -1,12 +1,16 @@
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from './database.types'
 
-// 客户端配置
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// 客户端配置 - 使用占位符以避免构建错误
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key'
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables')
+// 检查是否为开发环境且缺少配置
+const isDevelopment = process.env.NODE_ENV === 'development'
+const isMissingConfig = !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+if (isMissingConfig && !isDevelopment) {
+  throw new Error('Missing Supabase environment variables in production')
 }
 
 // 客户端实例

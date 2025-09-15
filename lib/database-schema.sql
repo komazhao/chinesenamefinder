@@ -80,8 +80,12 @@ CREATE INDEX IF NOT EXISTS idx_names_style ON public.names(style, created_at DES
 CREATE INDEX IF NOT EXISTS idx_payments_user_status ON public.payments(user_id, status, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_payments_stripe_session ON public.payments(stripe_session_id) WHERE stripe_session_id IS NOT NULL;
 
-CREATE INDEX IF NOT EXISTS idx_content_sources_type_tags ON public.content_sources USING GIN(type, tags);
-CREATE INDEX IF NOT EXISTS idx_content_sources_search ON public.content_sources USING GIN(to_tsvector('chinese', COALESCE(search_text, '')));
+-- 为type字段创建btree索引，为tags数组创建GIN索引
+CREATE INDEX IF NOT EXISTS idx_content_sources_type ON public.content_sources(type);
+CREATE INDEX IF NOT EXISTS idx_content_sources_tags ON public.content_sources USING GIN(tags);
+-- 如需更好的中文搜索支持，请先安装中文文本搜索配置
+-- 当前使用simple配置确保兼容性
+CREATE INDEX IF NOT EXISTS idx_content_sources_search ON public.content_sources USING GIN(to_tsvector('simple', COALESCE(search_text, '')));
 
 CREATE INDEX IF NOT EXISTS idx_user_works_type_public ON public.user_works(work_type, is_public, created_at DESC) WHERE is_public = TRUE;
 CREATE INDEX IF NOT EXISTS idx_user_works_user_type ON public.user_works(user_id, work_type, created_at DESC);
@@ -187,12 +191,12 @@ BEGIN
         cs.title,
         cs.content_data,
         ts_rank(
-            to_tsvector('chinese', COALESCE(cs.search_text, '')),
-            plainto_tsquery('chinese', search_term)
+            to_tsvector('simple', COALESCE(cs.search_text, '')),
+            plainto_tsquery('simple', search_term)
         ) AS relevance
     FROM public.content_sources cs
     WHERE cs.type = 'poetry'
-        AND to_tsvector('chinese', COALESCE(cs.search_text, '')) @@ plainto_tsquery('chinese', search_term)
+        AND to_tsvector('simple', COALESCE(cs.search_text, '')) @@ plainto_tsquery('simple', search_term)
         AND (theme_filter IS NULL OR cs.tags && theme_filter)
     ORDER BY relevance DESC
     LIMIT 20;
@@ -226,11 +230,16 @@ INSERT INTO public.content_sources (type, title, content_data, tags, search_text
 }', ARRAY['traditional_culture', 'five_elements'], '五行 金木水火土 传统文化 中国文化');
 
 -- 创建默认的用户档案触发器
+-- 注意：此触发器专为Supabase环境设计，需要auth.users表存在
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
     INSERT INTO public.user_profiles (id, email, display_name)
-    VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data->>'full_name');
+    VALUES (
+        NEW.id, 
+        COALESCE(NEW.email, ''), 
+        COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'name', '')
+    );
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
