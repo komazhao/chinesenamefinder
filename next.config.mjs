@@ -1,8 +1,12 @@
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Cloudflare Pages 优化配置
   trailingSlash: true,
-  output: 'export',
+  // output: 'export', // Commented out for development with middleware
   distDir: '.next',
 
   // 图片优化 - Cloudflare Pages 兼容
@@ -37,4 +41,4 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+export default withNextIntl(nextConfig)

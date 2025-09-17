@@ -1,0 +1,831 @@
+{
+  "metadata": {
+    "title": "文化伴侣 - 专业AI中文起名服务",
+    "description": "文化伴侣为全球用户提供专业、智能的中文名生成服务，融合传统文化与现代AI技术，让每个名字都富有深刻的文化内涵。",
+    "keywords": "AI中文起名, 智能起名, 中国文化, 五行起名, 诗意命名"
+  },
+  "navigation": {
+    "home": "首页",
+    "about": "关于我们",
+    "pricing": "价格方案",
+    "generate": "生成姓名",
+    "dashboard": "控制台",
+    "contact": "联系我们",
+    "blog": "博客",
+    "stories": "用户故事",
+    "sign_in": "登录",
+    "sign_out": "退出登录",
+    "register": "免费注册"
+  },
+  "hero": {
+    "title": "发现您的完美中文名",
+    "subtitle": "文化伴侣",
+    "description": "专业AI驱动的中文起名服务，融合传统文化与现代技术，为您创造富有深刻文化意义的美好名字。",
+    "cta_primary": "开始生成",
+    "cta_secondary": "了解更多",
+    "features": {
+      "ai_powered": "AI智能",
+      "cultural_meaning": "文化内涵",
+      "personalized": "个性定制",
+      "instant": "即时生成"
+    }
+  },
+  "features": {
+    "title": "为什么选择文化伴侣？",
+    "subtitle": "先进功能打造完美姓名",
+    "items": {
+      "ai_technology": {
+        "title": "先进AI技术",
+        "description": "运用尖端人工智能技术，生成文化地道的中文姓名"
+      },
+      "cultural_depth": {
+        "title": "深厚文化底蕴",
+        "description": "姓名根植于中国哲学、文学和传统价值观念"
+      },
+      "five_elements": {
+        "title": "五行理论融合",
+        "description": "根据传统五行理论平衡姓名的能量属性"
+      },
+      "personalization": {
+        "title": "个性化生成",
+        "description": "根据您的偏好和需求定制专属姓名"
+      },
+      "instant_results": {
+        "title": "即时结果",
+        "description": "几秒钟内获得完美中文名及详细解释"
+      },
+      "multiple_options": {
+        "title": "多样选择",
+        "description": "从多个不同寓意的姓名建议中选择"
+      }
+    }
+  },
+  "testimonials": {
+    "title": "用户评价",
+    "subtitle": "全球数千用户的信赖之选",
+    "items": {
+      "user1": {
+        "name": "张莎拉",
+        "role": "商务专家",
+        "content": "文化伴侣为我生成的中文名寓意深刻，音韵优美，非常适合我在中国的商务活动！"
+      },
+      "user2": {
+        "name": "陈迈克",
+        "role": "学生",
+        "content": "作为一个学习中华文化的人，这个工具帮助我理解了中文姓名背后的深刻意义。强烈推荐！"
+      },
+      "user3": {
+        "name": "艾玛·汤普森",
+        "role": "作家",
+        "content": "每个姓名提供的文化解释都非常详细深入，对我小说中的角色命名很有帮助。"
+      }
+    }
+  },
+  "pricing": {
+    "title": "选择您的方案",
+    "subtitle": "简单透明的定价",
+    "free": {
+      "title": "免费版",
+      "price": "¥0",
+      "description": "体验我们的服务",
+      "features": [
+        "每日3次姓名生成",
+        "基础文化解释",
+        "标准客服支持"
+      ],
+      "cta": "开始使用"
+    },
+    "pro": {
+      "title": "专业版",
+      "price": "¥68",
+      "period": "/月",
+      "description": "为认真寻名者设计",
+      "features": [
+        "无限次姓名生成",
+        "详细文化分析",
+        "五行属性匹配",
+        "优先客服支持",
+        "导出功能"
+      ],
+      "cta": "开始专业试用",
+      "popular": "最受欢迎"
+    },
+    "enterprise": {
+      "title": "企业版",
+      "price": "定制",
+      "description": "为企业和机构定制",
+      "features": [
+        "定制集成服务",
+        "批量姓名生成",
+        "专属客服支持",
+        "定制文化需求",
+        "API接口访问"
+      ],
+      "cta": "联系销售"
+    }
+  },
+  "cta": {
+    "title": "准备好寻找您的中文名了吗？",
+    "description": "加入数千名用户，与文化伴侣一起发现您的完美中文名。",
+    "button": "开始生成姓名"
+  },
+  "footer": {
+    "title": "文化伴侣",
+    "description": "专业的AI中文起名服务平台",
+    "sections": {
+      "products": "产品",
+      "support": "支持",
+      "about": "关于"
+    },
+    "links": {
+      "ai_naming": "AI起名",
+      "stories": "文化故事",
+      "pricing": "定价方案",
+      "help": "帮助中心",
+      "contact": "联系我们",
+      "dashboard": "用户面板",
+      "about": "关于我们",
+      "privacy": "隐私政策",
+      "terms": "服务条款"
+    },
+    "copyright": "© 2024 文化伴侣. 保留所有权利."
+  },
+  "language_switcher": {
+    "title": "语言",
+    "english": "English",
+    "chinese": "中文"
+  },
+  "auth": {
+    "welcomeBack": "欢迎回来",
+    "loginSubtitle": "登录您的文化伴侣账户",
+    "email": "邮箱地址",
+    "password": "密码",
+    "forgotPassword": "忘记密码？",
+    "login": "登录",
+    "loginLoading": "登录中...",
+    "loginError": "登录失败，请检查您的邮箱和密码",
+    "googleLogin": "使用 Google 账号登录",
+    "googleLoginError": "Google 登录失败",
+    "or": "或",
+    "noAccount": "还没有账户？",
+    "registerNow": "立即注册",
+    "backToHome": "返回首页",
+    "createAccount": "创建账户",
+    "registrationSubtitle": "开始您的AI起名之旅，每天5次免费机会",
+    "name": "姓名",
+    "namePlaceholder": "张三",
+    "confirmPassword": "确认密码",
+    "passwordLength": "至少8个字符",
+    "passwordUppercase": "包含大写字母",
+    "passwordLowercase": "包含小写字母",
+    "passwordNumber": "包含数字",
+    "agreeToTerms": "请同意服务条款和隐私政策",
+    "passwordMismatch": "两次输入的密码不一致",
+    "registrationError": "注册失败，请稍后重试",
+    "googleRegistrationError": "Google 注册失败",
+    "registrationSuccess": "注册成功！",
+    "verificationEmailSent": "验证邮件已发送到您的邮箱，请查收并验证您的账户。",
+    "redirectingToLogin": "正在跳转到登录页面...",
+    "register": "注册",
+    "registerLoading": "注册中...",
+    "agreeToText": "我已阅读并同意",
+    "termsOfService": "服务条款",
+    "and": "和",
+    "privacyPolicy": "隐私政策",
+    "googleRegister": "使用 Google 账号注册",
+    "hasAccount": "已有账户？",
+    "loginNow": "立即登录"
+  },
+  "dashboard": {
+    "title": "控制台",
+    "welcome": "欢迎回来",
+    "creditsRemaining": "剩余积分",
+    "todayGenerations": "今日生成",
+    "favoriteNames": "收藏名字",
+    "totalGenerated": "总生成数"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "发生错误",
+    "retry": "重试",
+    "save": "保存",
+    "cancel": "取消",
+    "close": "关闭",
+    "next": "下一步",
+    "previous": "上一步",
+    "submit": "提交"
+  },
+  "about": {
+    "title": "关于我们",
+    "subtitle": "传承文化，创新未来",
+    "description": "文化伴侣是一家专注于AI中文起名的创新企业，我们将深厚的中华文化底蕴与前沿的人工智能技术相结合，为全球用户提供富有文化内涵和个人特色的中文名字生成服务。",
+    "getStarted": "开始起名",
+    "stats": {
+      "users": "服务用户",
+      "names": "生成名字",
+      "countries": "覆盖国家",
+      "satisfaction": "客户满意度"
+    },
+    "mission": {
+      "title": "我们的使命",
+      "subtitle": "让每个人都能拥有一个富有文化内涵的中文名字",
+      "sectionTitle": "连接传统与现代",
+      "description1": "在全球化的今天，越来越多的人希望通过中文名字来体现对中华文化的喜爱和尊重。我们相信，一个好的中文名字不仅仅是文字的组合，更是文化的传承和情感的寄托。",
+      "description2": "通过AI技术，我们让传统的起名艺术变得更加智能和个性化，让每个人都能轻松获得符合自己特质和期望的中文名字。"
+    },
+    "values": {
+      "title": "我们的价值观",
+      "subtitle": "指导我们前进的核心理念",
+      "cultural": {
+        "title": "文化传承",
+        "description": "我们深信中华文化的深厚底蕴，致力于将传统文化智慧传承给新一代"
+      },
+      "innovation": {
+        "title": "技术创新",
+        "description": "运用前沿AI技术，让古老的起名艺术在现代科技中焕发新的生命力"
+      },
+      "userFirst": {
+        "title": "用户至上",
+        "description": "以用户需求为中心，提供个性化、专业化的起名服务体验"
+      },
+      "global": {
+        "title": "全球连接",
+        "description": "架起文化桥梁，让世界各地的人们都能感受中华文化的魅力"
+      }
+    },
+    "timeline": {
+      "title": "发展历程",
+      "subtitle": "从初创团队到服务全球用户的成长之路",
+      "2023_birth": {
+        "title": "文化伴侣诞生",
+        "description": "团队成立，开始专注于AI中文起名技术研发"
+      },
+      "2023_launch": {
+        "title": "产品正式上线",
+        "description": "第一版AI起名系统发布，获得用户积极反馈"
+      },
+      "2024_upgrade": {
+        "title": "功能全面升级",
+        "description": "新增五行八字分析、诗意命名等高级功能"
+      },
+      "2024_global": {
+        "title": "国际化发展",
+        "description": "服务扩展至全球40多个国家和地区"
+      }
+    },
+    "cta": {
+      "title": "加入我们的文化传承之旅",
+      "description": "体验AI智能起名，感受中华文化的深厚魅力",
+      "experience": "立即体验",
+      "contact": "联系我们"
+    }
+  },
+  "stories": {
+    "title": "探索中华文化的深厚底蕴",
+    "description": "通过真实的故事和深度的文化解读，了解中文起名背后的文化智慧。每一个名字都承载着深厚的文化内涵和美好的期望。",
+    "getStarted": "开始起名",
+    "categories": {
+      "title": "故事分类",
+      "all": "全部",
+      "cultural": "文化传承",
+      "poetry": "诗词文化",
+      "traditional": "传统文化",
+      "crossCultural": "跨文化",
+      "business": "商业应用",
+      "userStories": "用户故事"
+    },
+    "featured": {
+      "title": "精选故事",
+      "badge": "精选",
+      "readMore": "阅读全文"
+    },
+    "latest": {
+      "title": "最新故事"
+    },
+    "cta": {
+      "title": "分享您的故事",
+      "description": "每个名字都有独特的故事，分享您的起名经历，让更多人感受中华文化的魅力",
+      "share": "分享故事",
+      "contact": "联系我们"
+    },
+    "posts": {
+      "culturalRoots": {
+        "title": "寻找文化之根：海外华人的中文名故事",
+        "excerpt": "从小在海外长大的华人二代，通过AI起名重新连接中华文化的感人故事...",
+        "author": "文化伴侣团队"
+      },
+      "poetry": {
+        "title": "古诗词中的美丽名字：诗意起名的艺术",
+        "excerpt": "探索古典诗词中蕴含的起名智慧，如何让名字既有文化底蕴又具现代感...",
+        "author": "古典文学研究员"
+      },
+      "fiveElements": {
+        "title": "五行八字与现代起名：传统智慧的新应用",
+        "excerpt": "深入了解五行八字理论如何与现代AI技术结合，创造个性化的起名体验...",
+        "author": "AI研发团队"
+      },
+      "crossCultural": {
+        "title": "跨文化家庭的命名故事：东西方文化的融合",
+        "excerpt": "国际家庭如何为孩子选择既尊重传统又适应现代生活的中文名字...",
+        "author": "用户投稿"
+      },
+      "enterprise": {
+        "title": "企业命名的文化考量：品牌与传统的平衡",
+        "excerpt": "现代企业如何通过中文命名体现文化价值，建立深层次的品牌认同...",
+        "author": "品牌策略专家"
+      },
+      "userStory": {
+        "title": "名字背后的故事：用户真实分享",
+        "excerpt": "收集来自全球用户的真实起名经历，每个名字都承载着独特的文化意义...",
+        "author": "社区编辑"
+      }
+    }
+  },
+  "help": {
+    "title": "我们随时为您提供帮助",
+    "description": "在这里找到您需要的所有答案。从快速入门到高级功能，我们为您准备了详细的指南和常见问题解答。",
+    "search": {
+      "placeholder": "搜索帮助文档...",
+      "button": "搜索"
+    },
+    "categories": {
+      "title": "浏览帮助主题",
+      "quickStart": {
+        "title": "快速开始",
+        "description": "了解如何使用AI起名服务"
+      },
+      "account": {
+        "title": "账户设置",
+        "description": "管理您的个人信息和偏好"
+      },
+      "billing": {
+        "title": "付费与订阅",
+        "description": "了解定价和订阅相关问题"
+      },
+      "privacy": {
+        "title": "隐私与安全",
+        "description": "保护您的数据和隐私"
+      },
+      "ai": {
+        "title": "AI功能",
+        "description": "深入了解AI起名的特色功能"
+      },
+      "support": {
+        "title": "技术支持",
+        "description": "解决技术问题和故障"
+      }
+    },
+    "popular": {
+      "title": "热门文章",
+      "articles": {
+        "firstTime": {
+          "title": "如何开始您的第一次AI起名？",
+          "description": "详细指导新用户完成第一次起名体验"
+        },
+        "fiveElements": {
+          "title": "什么是五行八字分析？",
+          "description": "深入了解传统文化中的五行八字理论"
+        },
+        "subscription": {
+          "title": "如何选择合适的订阅套餐？",
+          "description": "对比不同套餐功能，选择最适合的方案"
+        },
+        "privacy": {
+          "title": "个人信息如何保护？",
+          "description": "了解我们如何保护您的隐私数据"
+        },
+        "account": {
+          "title": "修改密码和邮箱",
+          "description": "学会如何更新您的账户信息"
+        }
+      },
+      "viewAll": "查看所有文章"
+    },
+    "quickActions": {
+      "title": "还需要帮助？",
+      "contact": {
+        "title": "联系客服",
+        "description": "直接与我们的支持团队对话",
+        "action": "立即联系"
+      },
+      "email": {
+        "title": "发送邮件",
+        "description": "通过邮件获得详细帮助",
+        "action": "发送邮件"
+      },
+      "chat": {
+        "title": "在线聊天",
+        "description": "实时获得技术支持",
+        "action": "开始聊天"
+      }
+    },
+    "hours": {
+      "title": "客服时间",
+      "weekdays": "周一 - 周五",
+      "weekends": "周六 - 周日",
+      "email": "邮件支持",
+      "response": {
+        "title": "平均响应时间",
+        "time": "2小时"
+      }
+    },
+    "cta": {
+      "title": "没有找到答案？",
+      "description": "我们的支持团队随时准备为您提供个性化的帮助和解决方案",
+      "contact": "联系支持",
+      "community": "查看社区"
+    }
+  },
+  "contact": {
+    "title": "随时为您提供帮助",
+    "description": "无论您有任何问题、建议或需要技术支持，我们的专业团队都随时为您服务。我们致力于为每一位用户提供优质的服务体验。",
+    "methods": {
+      "title": "联系方式",
+      "email": {
+        "title": "邮件支持",
+        "description": "24小时内回复",
+        "action": "立即联系"
+      },
+      "chat": {
+        "title": "在线客服",
+        "description": "工作时间实时响应",
+        "value": "点击开始对话"
+      },
+      "phone": {
+        "title": "电话支持",
+        "description": "周一至周五 9:00-18:00"
+      },
+      "address": {
+        "title": "地址",
+        "description": "欢迎预约拜访",
+        "value": "北京市朝阳区科技园区"
+      }
+    },
+    "form": {
+      "title": "发送消息",
+      "description": "填写下方表单，我们会尽快回复您",
+      "name": "姓名",
+      "namePlaceholder": "请输入您的姓名",
+      "email": "邮箱",
+      "emailPlaceholder": "请输入您的邮箱",
+      "category": "问题类型",
+      "categoryPlaceholder": "请选择问题类型",
+      "categories": {
+        "technical": "技术支持",
+        "billing": "账单问题",
+        "feature": "功能建议",
+        "partnership": "商务合作",
+        "other": "其他问题"
+      },
+      "subject": "主题",
+      "subjectPlaceholder": "请简要描述您的问题",
+      "message": "详细描述",
+      "messagePlaceholder": "请详细描述您的问题或建议，这将帮助我们更好地为您服务",
+      "send": "发送消息",
+      "sending": "发送中...",
+      "success": "消息已发送！我们会尽快回复您。",
+      "error": "发送失败，请稍后重试或直接发送邮件给我们。"
+    },
+    "supportHours": {
+      "title": "客服时间",
+      "description": "我们的支持团队服务时间",
+      "weekdays": {
+        "days": "周一 - 周五",
+        "hours": "9:00 - 18:00",
+        "type": "全功能支持"
+      },
+      "weekends": {
+        "days": "周六 - 周日",
+        "hours": "10:00 - 16:00",
+        "type": "基础支持"
+      },
+      "holidays": {
+        "days": "节假日",
+        "hours": "邮件支持",
+        "type": "24小时内回复"
+      }
+    },
+    "faq": {
+      "title": "常见问题",
+      "description": "快速找到答案",
+      "items": {
+        "password": {
+          "question": "如何重置我的密码？",
+          "answer": "您可以在登录页面点击\"忘记密码\"，我们会发送重置链接到您的邮箱。"
+        },
+        "credits": {
+          "question": "积分什么时候会过期？",
+          "answer": "不同套餐的积分有效期不同，具体请查看您的账户信息或定价页面。"
+        },
+        "refund": {
+          "question": "是否支持退款？",
+          "answer": "我们提供7天无理由退款保证，详细政策请查看服务条款。"
+        },
+        "support": {
+          "question": "如何获得技术支持？",
+          "answer": "您可以通过邮件、在线客服或电话联系我们的技术支持团队。"
+        }
+      },
+      "viewAll": "查看完整帮助中心"
+    },
+    "enterprise": {
+      "title": "企业服务",
+      "description": "为企业客户提供专属服务和定制解决方案",
+      "features": {
+        "manager": {
+          "title": "专属客户经理",
+          "description": "一对一专业服务"
+        },
+        "custom": {
+          "title": "定制化解决方案",
+          "description": "根据需求量身定制"
+        },
+        "priority": {
+          "title": "优先技术支持",
+          "description": "快速响应保障"
+        }
+      },
+      "contact": "联系企业服务"
+    },
+    "promise": {
+      "title": "我们的承诺：",
+      "description": "一般问题24小时内回复，紧急问题2小时内回复。我们致力于为每一位用户提供及时、专业的服务支持。"
+    }
+  },
+  "apiDocs": {
+    "title": "开发者 API 文档",
+    "description": "强大的 RESTful API，让您轻松集成我们的 AI 中文起名服务。简单易用，功能丰富，助力您的应用快速上线。",
+    "quickStart": "快速开始",
+    "downloadSDK": "下载 SDK",
+    "stats": {
+      "uptime": "服务可用性",
+      "response": "平均响应时间",
+      "encryption": "SSL 加密",
+      "endpoints": "API 端点"
+    },
+    "tabs": {
+      "quickStart": "快速开始",
+      "authentication": "认证",
+      "endpoints": "API 端点",
+      "examples": "代码示例",
+      "sdks": "SDK"
+    },
+    "quickStartContent": {
+      "title": "快速开始",
+      "description": "几分钟内开始使用我们的 API",
+      "steps": {
+        "getKey": {
+          "title": "获取 API 密钥",
+          "description": "在控制台中创建应用并获取您的 API 密钥",
+          "action": "获取密钥"
+        },
+        "firstRequest": {
+          "title": "发送第一个请求",
+          "description": "使用我们的 API 生成您的第一个中文名字",
+          "action": "查看示例"
+        },
+        "integrate": {
+          "title": "集成到应用",
+          "description": "将 API 集成到您的应用程序中",
+          "action": "下载 SDK"
+        }
+      },
+      "baseUrl": "基础 URL"
+    },
+    "authentication": {
+      "title": "身份认证",
+      "description": "了解如何安全地访问我们的 API",
+      "apiKey": {
+        "title": "API Key认证",
+        "description": "在请求头中添加API密钥"
+      },
+      "oauth": {
+        "title": "OAuth 2.0",
+        "description": "适用于第三方应用集成"
+      }
+    },
+    "endpoints": {
+      "title": "API 端点",
+      "description": "详细的 API 端点文档和参数说明",
+      "generate": {
+        "name": "生成名字",
+        "description": "根据用户输入生成个性化的中文名字"
+      },
+      "analyze": {
+        "name": "名字分析",
+        "description": "分析现有名字的文化内涵和五行属性"
+      },
+      "history": {
+        "name": "历史记录",
+        "description": "获取用户的起名历史记录"
+      },
+      "parameters": "请求参数",
+      "response": "响应示例",
+      "required": "必需",
+      "optional": "可选"
+    },
+    "examples": {
+      "title": "代码示例",
+      "description": "在不同编程语言中使用我们的 API"
+    },
+    "sdks": {
+      "title": "SDK 和工具",
+      "description": "官方 SDK 和开发工具，让集成更简单",
+      "status": {
+        "available": "可用",
+        "development": "开发中",
+        "planned": "计划中"
+      },
+      "download": "下载"
+    },
+    "support": {
+      "title": "需要技术支持？",
+      "description": "我们的开发者支持团队随时为您提供技术帮助和集成指导",
+      "contact": "联系支持",
+      "community": "开发者社区"
+    }
+  },
+  "blog": {
+    "title": "探索文化，分享智慧",
+    "description": "在这里，我们分享关于中华文化、AI技术和起名艺术的深度见解。每一篇文章都是文化传承与技术创新的完美结合。",
+    "search": {
+      "placeholder": "搜索文章..."
+    },
+    "categories": {
+      "all": "全部",
+      "tech": "技术创新",
+      "culture": "文化传承",
+      "tradition": "传统文化",
+      "international": "国际化",
+      "userStory": "用户故事",
+      "business": "商业应用"
+    },
+    "featured": {
+      "title": "精选文章",
+      "badge": "精选",
+      "readMore": "阅读全文"
+    },
+    "latest": {
+      "title": "最新文章",
+      "filter": "筛选",
+      "loadMore": "加载更多文章"
+    },
+    "trending": {
+      "title": "热门标签"
+    },
+    "newsletter": {
+      "title": "订阅我们的博客",
+      "description": "获取最新的文化洞察、技术更新和起名智慧，直接发送到您的邮箱",
+      "placeholder": "请输入您的邮箱",
+      "subscribe": "订阅",
+      "note": "每周精选内容，随时可以取消订阅"
+    },
+    "posts": {
+      "aiTech": {
+        "title": "AI技术如何革新传统中文起名艺术",
+        "excerpt": "探索人工智能如何结合古老的中华文化智慧，为现代起名带来全新的可能性。深入了解机器学习在文化传承中的重要作用...",
+        "author": "AI研发团队"
+      },
+      "poetry": {
+        "title": "古典诗词中的起名智慧：从《诗经》到现代",
+        "excerpt": "从古代经典诗词中汲取起名灵感，了解如何让传统文化在现代起名中焕发新的生命力。探索诗词背后的深层文化内涵...",
+        "author": "文化研究员"
+      },
+      "fiveElements": {
+        "title": "五行八字理论在现代起名中的应用",
+        "excerpt": "深入了解传统五行八字理论如何与现代科学相结合，为起名提供更加个性化和准确的指导...",
+        "author": "传统文化专家"
+      },
+      "crossCultural": {
+        "title": "跨文化起名：连接东西方文化的桥梁",
+        "excerpt": "在全球化时代，如何为跨文化家庭的孩子选择既具有中华文化特色又适应国际环境的名字...",
+        "author": "国际化专家"
+      },
+      "userStory": {
+        "title": "用户故事：我的中文名字改变了我的生活",
+        "excerpt": "来自全球用户的真实分享，了解一个好的中文名字如何影响个人的文化认同和生活体验...",
+        "author": "用户投稿"
+      },
+      "enterprise": {
+        "title": "企业命名策略：品牌文化的深层表达",
+        "excerpt": "探讨现代企业如何通过中文命名来表达品牌文化，建立与消费者的深层情感连接...",
+        "author": "品牌策略师"
+      }
+    }
+  },
+  "privacy": {
+    "title": "隐私政策",
+    "lastUpdated": "最后更新",
+    "sections": {
+      "introduction": {
+        "title": "引言",
+        "content": "文化伴侣（\"我们\"、\"我们的\"或\"我们\"）致力于保护您的隐私。本隐私政策说明我们在您使用我们的AI中文起名服务时如何收集、使用、披露和保护您的信息。"
+      },
+      "collection": {
+        "title": "我们收集的信息",
+        "content": "我们收集您直接提供给我们的信息、您使用我们服务时自动收集的信息，以及经您同意从第三方来源获得的信息。"
+      },
+      "usage": {
+        "title": "我们如何使用您的信息",
+        "content": "我们使用收集的信息来提供、维护和改进我们的服务，与您沟通，并遵守法律义务。"
+      },
+      "sharing": {
+        "title": "信息共享和披露",
+        "content": "除本政策中描述的情况外，我们不会在未经您同意的情况下向第三方出售、交易或以其他方式转让您的个人信息。"
+      },
+      "security": {
+        "title": "数据安全",
+        "content": "我们实施适当的技术和组织措施，保护您的个人信息免受未经授权的访问、更改、披露或销毁。"
+      },
+      "rights": {
+        "title": "您的权利",
+        "content": "您对您的个人信息拥有某些权利，包括访问、更新、删除或限制处理您数据的权利。"
+      },
+      "contact": {
+        "title": "联系我们",
+        "content": "如果您对本隐私政策有任何疑问，请使用我们联系部分提供的信息与我们联系。"
+      }
+    }
+  },
+  "terms": {
+    "title": "服务条款",
+    "lastUpdated": "最后更新",
+    "sections": {
+      "acceptance": {
+        "title": "接受条款",
+        "content": "通过访问和使用文化伴侣的AI中文起名服务，您接受并同意受本协议条款和规定的约束。"
+      },
+      "description": {
+        "title": "服务描述",
+        "content": "文化伴侣提供AI驱动的中文名字生成服务，结合传统文化智慧与现代技术创造有意义的名字。"
+      },
+      "eligibility": {
+        "title": "用户资格",
+        "content": "您必须年满13岁才能使用我们的服务。如果您未满18岁，必须获得父母同意才能使用我们的服务。"
+      },
+      "conduct": {
+        "title": "用户行为",
+        "content": "您同意仅出于合法目的并按照这些条款使用我们的服务。禁止以可能损害或破坏服务的方式使用服务。"
+      },
+      "intellectual": {
+        "title": "知识产权",
+        "content": "服务及其原创内容、功能和功能由文化伴侣拥有，并受国际版权、商标和其他知识产权法律保护。"
+      },
+      "limitation": {
+        "title": "责任限制",
+        "content": "在任何情况下，文化伴侣都不对因您使用服务而产生的任何间接、偶然、特殊、后果性或惩罚性损害承担责任。"
+      },
+      "termination": {
+        "title": "终止",
+        "content": "对于我们认为违反这些条款的行为，我们可能会立即终止或暂停您的账户和对服务的访问，无需事先通知。"
+      },
+      "changes": {
+        "title": "条款变更",
+        "content": "我们保留随时修改这些条款的权利。我们将通过在本页面发布新条款来通知您任何变更。"
+      }
+    }
+  },
+  "settings": {
+    "title": "设置",
+    "profile": {
+      "title": "个人资料设置",
+      "name": "显示名称",
+      "email": "邮箱地址",
+      "avatar": "头像",
+      "bio": "个人简介",
+      "save": "保存更改"
+    },
+    "preferences": {
+      "title": "起名偏好",
+      "style": "偏好风格",
+      "elements": "五行偏好",
+      "length": "名字长度",
+      "notifications": "邮件通知",
+      "newsletter": "营销邮件"
+    },
+    "account": {
+      "title": "账户设置",
+      "password": "更改密码",
+      "subscription": "订阅管理",
+      "billing": "账单信息",
+      "delete": "删除账户"
+    },
+    "language": {
+      "title": "语言和地区",
+      "interface": "界面语言",
+      "timezone": "时区",
+      "currency": "货币"
+    }
+  },
+  "generate": {
+    "title": "AI中文起名生成器",
+    "description": "使用我们先进的AI技术创造美丽、有意义的中文名字",
+    "form": {
+      "gender": "性别",
+      "surname": "姓氏",
+      "style": "起名风格",
+      "preferences": "偏好设置",
+      "generate": "生成名字"
+    }
+  }
+}

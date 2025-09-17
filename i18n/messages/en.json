@@ -1,0 +1,831 @@
+{
+  "metadata": {
+    "title": "Chinese Name Finder - Professional AI Chinese Name Generator",
+    "description": "Cultural Companion provides professional, intelligent Chinese name generation service, combining traditional culture with modern AI technology.",
+    "keywords": "Chinese name generator, AI naming, Chinese culture, Five Elements naming, poetic naming"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "pricing": "Pricing",
+    "generate": "Generate Name",
+    "dashboard": "Dashboard",
+    "contact": "Contact",
+    "blog": "Blog",
+    "stories": "Stories",
+    "sign_in": "Sign In",
+    "sign_out": "Sign Out",
+    "register": "Register"
+  },
+  "hero": {
+    "title": "Discover Your Perfect Chinese Name",
+    "subtitle": "Cultural Companion",
+    "description": "Professional AI-powered Chinese name generation combining traditional culture with modern technology. Create meaningful names with deep cultural significance.",
+    "cta_primary": "Start Generating",
+    "cta_secondary": "Learn More",
+    "features": {
+      "ai_powered": "AI-Powered",
+      "cultural_meaning": "Cultural Meaning",
+      "personalized": "Personalized Results",
+      "instant": "Instant Generation"
+    }
+  },
+  "features": {
+    "title": "Why Choose Cultural Companion?",
+    "subtitle": "Advanced Features for Perfect Names",
+    "items": {
+      "ai_technology": {
+        "title": "Advanced AI Technology",
+        "description": "Leveraging cutting-edge AI to generate culturally authentic Chinese names"
+      },
+      "cultural_depth": {
+        "title": "Deep Cultural Understanding",
+        "description": "Names rooted in Chinese philosophy, literature, and traditional values"
+      },
+      "five_elements": {
+        "title": "Five Elements Integration",
+        "description": "Names balanced according to traditional Five Elements theory"
+      },
+      "personalization": {
+        "title": "Personalized Generation",
+        "description": "Customized names based on your preferences and requirements"
+      },
+      "instant_results": {
+        "title": "Instant Results",
+        "description": "Get your perfect Chinese name in seconds with detailed explanations"
+      },
+      "multiple_options": {
+        "title": "Multiple Options",
+        "description": "Choose from various name suggestions with different meanings"
+      }
+    }
+  },
+  "testimonials": {
+    "title": "What Our Users Say",
+    "subtitle": "Trusted by thousands worldwide",
+    "items": {
+      "user1": {
+        "name": "Sarah Johnson",
+        "role": "Business Professional",
+        "content": "The name Cultural Companion generated for me has deep meaning and sounds beautiful. Perfect for my business in China!"
+      },
+      "user2": {
+        "name": "Michael Chen",
+        "role": "Student",
+        "content": "As someone learning Chinese culture, this tool helped me understand the significance behind Chinese names. Highly recommended!"
+      },
+      "user3": {
+        "name": "Emma Thompson",
+        "role": "Writer",
+        "content": "The cultural explanations provided with each name are incredibly detailed. Great for character naming in my novels."
+      }
+    }
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "subtitle": "Simple, transparent pricing",
+    "free": {
+      "title": "Free",
+      "price": "$0",
+      "description": "Perfect for trying out our service",
+      "features": [
+        "3 name generations per day",
+        "Basic cultural explanations",
+        "Standard support"
+      ],
+      "cta": "Get Started"
+    },
+    "pro": {
+      "title": "Pro",
+      "price": "$9.99",
+      "period": "/month",
+      "description": "For serious name seekers",
+      "features": [
+        "Unlimited name generations",
+        "Detailed cultural analysis",
+        "Five Elements compatibility",
+        "Priority support",
+        "Export options"
+      ],
+      "cta": "Start Pro Trial",
+      "popular": "Most Popular"
+    },
+    "enterprise": {
+      "title": "Enterprise",
+      "price": "Custom",
+      "description": "For businesses and organizations",
+      "features": [
+        "Custom integrations",
+        "Bulk name generation",
+        "Dedicated support",
+        "Custom cultural requirements",
+        "API access"
+      ],
+      "cta": "Contact Sales"
+    }
+  },
+  "cta": {
+    "title": "Ready to Find Your Chinese Name?",
+    "description": "Join thousands of users who have discovered their perfect Chinese names with Cultural Companion.",
+    "button": "Start Generating Names"
+  },
+  "footer": {
+    "title": "Chinese Name Finder",
+    "description": "Professional AI Chinese naming service platform",
+    "sections": {
+      "products": "Products",
+      "support": "Support",
+      "about": "About"
+    },
+    "links": {
+      "ai_naming": "AI Naming",
+      "stories": "Cultural Stories",
+      "pricing": "Pricing",
+      "help": "Help Center",
+      "contact": "Contact Us",
+      "dashboard": "Dashboard",
+      "about": "About Us",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "copyright": "© 2024 Chinese Name Finder. All rights reserved."
+  },
+  "language_switcher": {
+    "title": "Language",
+    "english": "English",
+    "chinese": "中文"
+  },
+  "auth": {
+    "welcomeBack": "Welcome Back",
+    "loginSubtitle": "Sign in to your Cultural Companion account",
+    "email": "Email Address",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "login": "Sign In",
+    "loginLoading": "Signing in...",
+    "loginError": "Login failed, please check your email and password",
+    "googleLogin": "Sign in with Google",
+    "googleLoginError": "Google sign in failed",
+    "or": "or",
+    "noAccount": "Don't have an account?",
+    "registerNow": "Sign up now",
+    "backToHome": "Back to Home",
+    "createAccount": "Create Account",
+    "registrationSubtitle": "Start your AI name generation journey with 5 free credits daily",
+    "name": "Name",
+    "namePlaceholder": "John Doe",
+    "confirmPassword": "Confirm Password",
+    "passwordLength": "At least 8 characters",
+    "passwordUppercase": "Contains uppercase letter",
+    "passwordLowercase": "Contains lowercase letter",
+    "passwordNumber": "Contains number",
+    "agreeToTerms": "Please agree to the Terms of Service and Privacy Policy",
+    "passwordMismatch": "Passwords don't match",
+    "registrationError": "Registration failed, please try again",
+    "googleRegistrationError": "Google registration failed",
+    "registrationSuccess": "Registration Successful!",
+    "verificationEmailSent": "Verification email has been sent to your inbox. Please check and verify your account.",
+    "redirectingToLogin": "Redirecting to login page...",
+    "register": "Sign Up",
+    "registerLoading": "Signing up...",
+    "agreeToText": "I have read and agree to the",
+    "termsOfService": "Terms of Service",
+    "and": "and",
+    "privacyPolicy": "Privacy Policy",
+    "googleRegister": "Sign up with Google",
+    "hasAccount": "Already have an account?",
+    "loginNow": "Sign in now"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "creditsRemaining": "Credits Remaining",
+    "todayGenerations": "Today's Generations",
+    "favoriteNames": "Favorite Names",
+    "totalGenerated": "Total Generated"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Inheriting Culture, Innovating the Future",
+    "description": "Cultural Companion is an innovative company focused on AI Chinese naming. We combine the profound heritage of Chinese culture with cutting-edge artificial intelligence technology to provide users worldwide with Chinese name generation services rich in cultural connotations and personal characteristics.",
+    "getStarted": "Start Naming",
+    "stats": {
+      "users": "Users Served",
+      "names": "Names Generated",
+      "countries": "Countries Covered",
+      "satisfaction": "Customer Satisfaction"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "subtitle": "Let everyone have a Chinese name rich in cultural connotations",
+      "sectionTitle": "Connecting Tradition and Modernity",
+      "description1": "In today's globalized world, more and more people hope to express their love and respect for Chinese culture through Chinese names. We believe that a good Chinese name is not just a combination of words, but also a inheritance of culture and emotional sustenance.",
+      "description2": "Through AI technology, we make the traditional art of naming more intelligent and personalized, allowing everyone to easily obtain Chinese names that match their characteristics and expectations."
+    },
+    "values": {
+      "title": "Our Values",
+      "subtitle": "Core concepts guiding our progress",
+      "cultural": {
+        "title": "Cultural Heritage",
+        "description": "We deeply believe in the profound heritage of Chinese culture and are committed to passing on traditional cultural wisdom to the new generation"
+      },
+      "innovation": {
+        "title": "Technological Innovation",
+        "description": "Using cutting-edge AI technology to give new life to the ancient art of naming in modern technology"
+      },
+      "userFirst": {
+        "title": "User First",
+        "description": "Centered on user needs, providing personalized and professional naming service experiences"
+      },
+      "global": {
+        "title": "Global Connection",
+        "description": "Building cultural bridges, allowing people worldwide to feel the charm of Chinese culture"
+      }
+    },
+    "timeline": {
+      "title": "Development Journey",
+      "subtitle": "Growth path from startup team to serving global users",
+      "2023_birth": {
+        "title": "Cultural Companion Born",
+        "description": "Team established, began focusing on AI Chinese naming technology research and development"
+      },
+      "2023_launch": {
+        "title": "Product Official Launch",
+        "description": "First version of AI naming system released, received positive user feedback"
+      },
+      "2024_upgrade": {
+        "title": "Comprehensive Feature Upgrade",
+        "description": "Added advanced features such as Five Elements and Eight Characters analysis, poetic naming"
+      },
+      "2024_global": {
+        "title": "International Development",
+        "description": "Services expanded to over 40 countries and regions worldwide"
+      }
+    },
+    "cta": {
+      "title": "Join Our Cultural Heritage Journey",
+      "description": "Experience AI intelligent naming and feel the profound charm of Chinese culture",
+      "experience": "Experience Now",
+      "contact": "Contact Us"
+    }
+  },
+  "stories": {
+    "title": "Exploring the Profound Heritage of Chinese Culture",
+    "description": "Through real stories and in-depth cultural interpretations, understand the cultural wisdom behind Chinese naming. Each name carries profound cultural connotations and beautiful expectations.",
+    "getStarted": "Start Naming",
+    "categories": {
+      "title": "Story Categories",
+      "all": "All",
+      "cultural": "Cultural Heritage",
+      "poetry": "Poetry Culture",
+      "traditional": "Traditional Culture",
+      "crossCultural": "Cross-Cultural",
+      "business": "Business Application",
+      "userStories": "User Stories"
+    },
+    "featured": {
+      "title": "Featured Stories",
+      "badge": "Featured",
+      "readMore": "Read Full Article"
+    },
+    "latest": {
+      "title": "Latest Stories"
+    },
+    "cta": {
+      "title": "Share Your Story",
+      "description": "Every name has a unique story. Share your naming experience and let more people feel the charm of Chinese culture",
+      "share": "Share Story",
+      "contact": "Contact Us"
+    },
+    "posts": {
+      "culturalRoots": {
+        "title": "Finding Cultural Roots: Chinese Name Stories of Overseas Chinese",
+        "excerpt": "The touching story of overseas Chinese second generation reconnecting with Chinese culture through AI naming...",
+        "author": "Cultural Companion Team"
+      },
+      "poetry": {
+        "title": "Beautiful Names in Ancient Poetry: The Art of Poetic Naming",
+        "excerpt": "Exploring the naming wisdom contained in classical poetry, how to make names both culturally rich and modern...",
+        "author": "Classical Literature Researcher"
+      },
+      "fiveElements": {
+        "title": "Five Elements and Eight Characters and Modern Naming: New Applications of Traditional Wisdom",
+        "excerpt": "In-depth understanding of how Five Elements and Eight Characters theory combines with modern AI technology to create personalized naming experiences...",
+        "author": "AI R&D Team"
+      },
+      "crossCultural": {
+        "title": "Cross-Cultural Naming Stories: Bridges Connecting Eastern and Western Cultures",
+        "excerpt": "How international families choose Chinese names for their children that both respect tradition and adapt to modern life...",
+        "author": "User Submission"
+      },
+      "enterprise": {
+        "title": "Cultural Considerations in Enterprise Naming: Balance Between Brand and Tradition",
+        "excerpt": "How modern enterprises express cultural values through Chinese naming and establish deep brand identity...",
+        "author": "Brand Strategy Expert"
+      },
+      "userStory": {
+        "title": "Stories Behind Names: Real User Sharing",
+        "excerpt": "Real naming experiences collected from global users, each name carries unique cultural significance...",
+        "author": "Community Editor"
+      }
+    }
+  },
+  "help": {
+    "title": "We're Here to Help You Anytime",
+    "description": "Find all the answers you need here. From quick start to advanced features, we have prepared detailed guides and frequently asked questions for you.",
+    "search": {
+      "placeholder": "Search help documentation...",
+      "button": "Search"
+    },
+    "categories": {
+      "title": "Browse Help Topics",
+      "quickStart": {
+        "title": "Quick Start",
+        "description": "Learn how to use AI naming service"
+      },
+      "account": {
+        "title": "Account Settings",
+        "description": "Manage your personal information and preferences"
+      },
+      "billing": {
+        "title": "Payment & Subscription",
+        "description": "Understand pricing and subscription related issues"
+      },
+      "privacy": {
+        "title": "Privacy & Security",
+        "description": "Protect your data and privacy"
+      },
+      "ai": {
+        "title": "AI Features",
+        "description": "In-depth understanding of AI naming's special features"
+      },
+      "support": {
+        "title": "Technical Support",
+        "description": "Solve technical problems and failures"
+      }
+    },
+    "popular": {
+      "title": "Popular Articles",
+      "articles": {
+        "firstTime": {
+          "title": "How to Start Your First AI Naming?",
+          "description": "Detailed guide for new users to complete their first naming experience"
+        },
+        "fiveElements": {
+          "title": "What is Five Elements and Eight Characters Analysis?",
+          "description": "In-depth understanding of Five Elements and Eight Characters theory in traditional culture"
+        },
+        "subscription": {
+          "title": "How to Choose the Right Subscription Plan?",
+          "description": "Compare different plan features and choose the most suitable option"
+        },
+        "privacy": {
+          "title": "How is Personal Information Protected?",
+          "description": "Learn how we protect your privacy data"
+        },
+        "account": {
+          "title": "Changing Password and Email",
+          "description": "Learn how to update your account information"
+        }
+      },
+      "viewAll": "View All Articles"
+    },
+    "quickActions": {
+      "title": "Need More Help?",
+      "contact": {
+        "title": "Contact Support",
+        "description": "Chat directly with our support team",
+        "action": "Contact Now"
+      },
+      "email": {
+        "title": "Send Email",
+        "description": "Get detailed help via email",
+        "action": "Send Email"
+      },
+      "chat": {
+        "title": "Online Chat",
+        "description": "Get real-time technical support",
+        "action": "Start Chat"
+      }
+    },
+    "hours": {
+      "title": "Support Hours",
+      "weekdays": "Monday - Friday",
+      "weekends": "Saturday - Sunday",
+      "email": "Email Support",
+      "response": {
+        "title": "Average Response Time",
+        "time": "2 hours"
+      }
+    },
+    "cta": {
+      "title": "Didn't Find an Answer?",
+      "description": "Our support team is ready to provide personalized help and solutions anytime",
+      "contact": "Contact Support",
+      "community": "View Community"
+    }
+  },
+  "contact": {
+    "title": "Always Here to Help",
+    "description": "Whether you have any questions, suggestions, or need technical support, our professional team is always at your service. We are committed to providing every user with a quality service experience.",
+    "methods": {
+      "title": "Contact Methods",
+      "email": {
+        "title": "Email Support",
+        "description": "24-hour response",
+        "action": "Contact Now"
+      },
+      "chat": {
+        "title": "Online Support",
+        "description": "Real-time response during business hours",
+        "value": "Click to start conversation"
+      },
+      "phone": {
+        "title": "Phone Support",
+        "description": "Monday to Friday 9:00-18:00"
+      },
+      "address": {
+        "title": "Address",
+        "description": "Welcome to schedule a visit",
+        "value": "Beijing Chaoyang District Technology Park"
+      }
+    },
+    "form": {
+      "title": "Send Message",
+      "description": "Fill out the form below and we'll get back to you soon",
+      "name": "Name",
+      "namePlaceholder": "Please enter your name",
+      "email": "Email",
+      "emailPlaceholder": "Please enter your email",
+      "category": "Issue Type",
+      "categoryPlaceholder": "Please select issue type",
+      "categories": {
+        "technical": "Technical Support",
+        "billing": "Billing Issues",
+        "feature": "Feature Suggestions",
+        "partnership": "Business Cooperation",
+        "other": "Other Issues"
+      },
+      "subject": "Subject",
+      "subjectPlaceholder": "Please briefly describe your issue",
+      "message": "Detailed Description",
+      "messagePlaceholder": "Please describe your issue or suggestion in detail, this will help us serve you better",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "success": "Message sent! We will reply to you soon.",
+      "error": "Sending failed, please try again later or send an email directly to us."
+    },
+    "supportHours": {
+      "title": "Support Hours",
+      "description": "Our support team service hours",
+      "weekdays": {
+        "days": "Monday - Friday",
+        "hours": "9:00 - 18:00",
+        "type": "Full Support"
+      },
+      "weekends": {
+        "days": "Saturday - Sunday",
+        "hours": "10:00 - 16:00",
+        "type": "Basic Support"
+      },
+      "holidays": {
+        "days": "Holidays",
+        "hours": "Email Support",
+        "type": "24-hour response"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "description": "Find answers quickly",
+      "items": {
+        "password": {
+          "question": "How to reset my password?",
+          "answer": "You can click 'Forgot Password' on the login page, and we will send a reset link to your email."
+        },
+        "credits": {
+          "question": "When do credits expire?",
+          "answer": "Different plans have different credit validity periods. Please check your account information or pricing page for details."
+        },
+        "refund": {
+          "question": "Do you support refunds?",
+          "answer": "We provide a 7-day no-questions-asked refund guarantee. Please see the Terms of Service for detailed policies."
+        },
+        "support": {
+          "question": "How to get technical support?",
+          "answer": "You can contact our technical support team via email, online chat, or phone."
+        }
+      },
+      "viewAll": "View Complete Help Center"
+    },
+    "enterprise": {
+      "title": "Enterprise Services",
+      "description": "Providing exclusive services and customized solutions for enterprise clients",
+      "features": {
+        "manager": {
+          "title": "Dedicated Account Manager",
+          "description": "One-on-one professional service"
+        },
+        "custom": {
+          "title": "Customized Solutions",
+          "description": "Tailored to your needs"
+        },
+        "priority": {
+          "title": "Priority Technical Support",
+          "description": "Quick response guarantee"
+        }
+      },
+      "contact": "Contact Enterprise Services"
+    },
+    "promise": {
+      "title": "Our Promise:",
+      "description": "General issues replied within 24 hours, urgent issues within 2 hours. We are committed to providing timely and professional service support to every user."
+    }
+  },
+  "apiDocs": {
+    "title": "Developer API Documentation",
+    "description": "Powerful RESTful API for easy integration of our AI Chinese naming service. Simple to use, feature-rich, helping your application go live quickly.",
+    "quickStart": "Quick Start",
+    "downloadSDK": "Download SDK",
+    "stats": {
+      "uptime": "Service Availability",
+      "response": "Average Response Time",
+      "encryption": "SSL Encryption",
+      "endpoints": "API Endpoints"
+    },
+    "tabs": {
+      "quickStart": "Quick Start",
+      "authentication": "Authentication",
+      "endpoints": "API Endpoints",
+      "examples": "Code Examples",
+      "sdks": "SDKs"
+    },
+    "quickStartContent": {
+      "title": "Quick Start",
+      "description": "Start using our API in minutes",
+      "steps": {
+        "getKey": {
+          "title": "Get API Key",
+          "description": "Create an application in the console and get your API key",
+          "action": "Get Key"
+        },
+        "firstRequest": {
+          "title": "Send First Request",
+          "description": "Use our API to generate your first Chinese name",
+          "action": "View Example"
+        },
+        "integrate": {
+          "title": "Integrate into Application",
+          "description": "Integrate the API into your application",
+          "action": "Download SDK"
+        }
+      },
+      "baseUrl": "Base URL"
+    },
+    "authentication": {
+      "title": "Authentication",
+      "description": "Learn how to securely access our API",
+      "apiKey": {
+        "title": "API Key Authentication",
+        "description": "Add API key in request header"
+      },
+      "oauth": {
+        "title": "OAuth 2.0",
+        "description": "Suitable for third-party application integration"
+      }
+    },
+    "endpoints": {
+      "title": "API Endpoints",
+      "description": "Detailed API endpoint documentation and parameter descriptions",
+      "generate": {
+        "name": "Generate Names",
+        "description": "Generate personalized Chinese names based on user input"
+      },
+      "analyze": {
+        "name": "Name Analysis",
+        "description": "Analyze cultural connotations and Five Elements properties of existing names"
+      },
+      "history": {
+        "name": "History Records",
+        "description": "Get user's naming history records"
+      },
+      "parameters": "Request Parameters",
+      "response": "Response Example",
+      "required": "Required",
+      "optional": "Optional"
+    },
+    "examples": {
+      "title": "Code Examples",
+      "description": "Using our API in different programming languages"
+    },
+    "sdks": {
+      "title": "SDKs and Tools",
+      "description": "Official SDKs and development tools to make integration easier",
+      "status": {
+        "available": "Available",
+        "development": "In Development",
+        "planned": "Planned"
+      },
+      "download": "Download"
+    },
+    "support": {
+      "title": "Need Technical Support?",
+      "description": "Our developer support team is ready to provide technical help and integration guidance anytime",
+      "contact": "Contact Support",
+      "community": "Developer Community"
+    }
+  },
+  "blog": {
+    "title": "Exploring Culture, Sharing Wisdom",
+    "description": "Here, we share in-depth insights about Chinese culture, AI technology, and the art of naming. Each article is a perfect combination of cultural heritage and technological innovation.",
+    "search": {
+      "placeholder": "Search articles..."
+    },
+    "categories": {
+      "all": "All",
+      "tech": "Tech Innovation",
+      "culture": "Cultural Heritage",
+      "tradition": "Traditional Culture",
+      "international": "Internationalization",
+      "userStory": "User Stories",
+      "business": "Business Application"
+    },
+    "featured": {
+      "title": "Featured Articles",
+      "badge": "Featured",
+      "readMore": "Read Full Article"
+    },
+    "latest": {
+      "title": "Latest Articles",
+      "filter": "Filter",
+      "loadMore": "Load More Articles"
+    },
+    "trending": {
+      "title": "Trending Tags"
+    },
+    "newsletter": {
+      "title": "Subscribe to Our Blog",
+      "description": "Get the latest cultural insights, technology updates, and naming wisdom delivered directly to your inbox",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe",
+      "note": "Weekly curated content, unsubscribe anytime"
+    },
+    "posts": {
+      "aiTech": {
+        "title": "How AI Technology Revolutionizes Traditional Chinese Naming Art",
+        "excerpt": "Exploring how artificial intelligence combines ancient Chinese cultural wisdom to bring new possibilities to modern naming. In-depth understanding of machine learning's important role in cultural heritage...",
+        "author": "AI R&D Team"
+      },
+      "poetry": {
+        "title": "Naming Wisdom in Classical Poetry: From Book of Songs to Modern Times",
+        "excerpt": "Drawing naming inspiration from ancient classical poetry, understanding how to make traditional culture shine with new vitality in modern naming. Exploring the deep cultural connotations behind poetry...",
+        "author": "Cultural Researcher"
+      },
+      "fiveElements": {
+        "title": "Application of Five Elements and Eight Characters Theory in Modern Naming",
+        "excerpt": "In-depth understanding of how traditional Five Elements and Eight Characters theory combines with modern science to provide more personalized and accurate guidance for naming...",
+        "author": "Traditional Culture Expert"
+      },
+      "crossCultural": {
+        "title": "Cross-Cultural Naming: Bridges Connecting Eastern and Western Cultures",
+        "excerpt": "In the era of globalization, how to choose Chinese names for children of cross-cultural families that both have Chinese cultural characteristics and adapt to international environments...",
+        "author": "Internationalization Expert"
+      },
+      "userStory": {
+        "title": "User Story: My Chinese Name Changed My Life",
+        "excerpt": "Real sharing from global users, understanding how a good Chinese name affects personal cultural identity and life experience...",
+        "author": "User Submission"
+      },
+      "enterprise": {
+        "title": "Enterprise Naming Strategy: Deep Expression of Brand Culture",
+        "excerpt": "Exploring how modern enterprises express brand culture through Chinese naming and establish deep emotional connections with consumers...",
+        "author": "Brand Strategist"
+      }
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last Updated",
+    "sections": {
+      "introduction": {
+        "title": "Introduction",
+        "content": "Cultural Companion (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI Chinese naming service."
+      },
+      "collection": {
+        "title": "Information We Collect",
+        "content": "We collect information you provide directly to us, information we collect automatically when you use our service, and information from third-party sources with your consent."
+      },
+      "usage": {
+        "title": "How We Use Your Information",
+        "content": "We use the information we collect to provide, maintain, and improve our services, communicate with you, and comply with legal obligations."
+      },
+      "sharing": {
+        "title": "Information Sharing and Disclosure",
+        "content": "We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy."
+      },
+      "security": {
+        "title": "Data Security",
+        "content": "We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction."
+      },
+      "rights": {
+        "title": "Your Rights",
+        "content": "You have certain rights regarding your personal information, including the right to access, update, delete, or restrict the processing of your data."
+      },
+      "contact": {
+        "title": "Contact Us",
+        "content": "If you have any questions about this Privacy Policy, please contact us using the information provided in our Contact section."
+      }
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last Updated",
+    "sections": {
+      "acceptance": {
+        "title": "Acceptance of Terms",
+        "content": "By accessing and using Cultural Companion's AI Chinese naming service, you accept and agree to be bound by the terms and provision of this agreement."
+      },
+      "description": {
+        "title": "Service Description",
+        "content": "Cultural Companion provides AI-powered Chinese name generation services, combining traditional cultural wisdom with modern technology to create meaningful names."
+      },
+      "eligibility": {
+        "title": "User Eligibility",
+        "content": "You must be at least 13 years old to use our service. If you are under 18, you must have parental consent to use our service."
+      },
+      "conduct": {
+        "title": "User Conduct",
+        "content": "You agree to use our service only for lawful purposes and in accordance with these terms. You are prohibited from using the service in any way that could damage or impair the service."
+      },
+      "intellectual": {
+        "title": "Intellectual Property",
+        "content": "The service and its original content, features, and functionality are owned by Cultural Companion and are protected by international copyright, trademark, and other intellectual property laws."
+      },
+      "limitation": {
+        "title": "Limitation of Liability",
+        "content": "In no event shall Cultural Companion be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the service."
+      },
+      "termination": {
+        "title": "Termination",
+        "content": "We may terminate or suspend your account and access to the service immediately, without prior notice, for conduct that we believe violates these terms."
+      },
+      "changes": {
+        "title": "Changes to Terms",
+        "content": "We reserve the right to modify these terms at any time. We will notify you of any changes by posting the new terms on this page."
+      }
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": {
+      "title": "Profile Settings",
+      "name": "Display Name",
+      "email": "Email Address",
+      "avatar": "Profile Picture",
+      "bio": "Bio",
+      "save": "Save Changes"
+    },
+    "preferences": {
+      "title": "Naming Preferences",
+      "style": "Preferred Style",
+      "elements": "Five Elements Preference",
+      "length": "Name Length",
+      "notifications": "Email Notifications",
+      "newsletter": "Marketing Emails"
+    },
+    "account": {
+      "title": "Account Settings",
+      "password": "Change Password",
+      "subscription": "Subscription Management",
+      "billing": "Billing Information",
+      "delete": "Delete Account"
+    },
+    "language": {
+      "title": "Language & Region",
+      "interface": "Interface Language",
+      "timezone": "Timezone",
+      "currency": "Currency"
+    }
+  },
+  "generate": {
+    "title": "AI Chinese Name Generator",
+    "description": "Create beautiful, meaningful Chinese names with our advanced AI technology",
+    "form": {
+      "gender": "Gender",
+      "surname": "Surname",
+      "style": "Naming Style",
+      "preferences": "Preferences",
+      "generate": "Generate Names"
+    }
+  }
+}

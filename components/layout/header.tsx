@@ -1,19 +1,23 @@
 'use client'
 
 import React, { useState } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Menu, X, User, LogOut, Settings, CreditCard } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { useAuth } from '@/components/providers/auth-provider'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/routing'
+import LanguageSwitcher from '@/components/locale/language-switcher'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const { user, profile, signOut, loading } = useAuth()
   const router = useRouter()
+  const t = useTranslations('navigation')
+  const tHero = useTranslations('hero')
 
   const handleSignOut = async () => {
     try {
@@ -26,11 +30,11 @@ export function Header() {
   }
 
   const navigation = [
-    { name: '首页', href: '/' },
-    { name: 'AI起名', href: '/generate' },
-    { name: '功能特色', href: '/#features' },
-    { name: '定价方案', href: '/pricing' },
-    { name: '文化故事', href: '/stories' },
+    { name: t('home'), href: '/' },
+    { name: t('generate'), href: '/generate' },
+    { name: t('pricing'), href: '/pricing' },
+    { name: t('about'), href: '/about' },
+    { name: t('stories'), href: '/stories' },
   ]
 
   return (
@@ -42,7 +46,7 @@ export function Header() {
             文
           </div>
           <span className="font-bold text-xl text-foreground">
-            文化伴侣
+            {tHero('subtitle')}
           </span>
         </Link>
 
@@ -61,6 +65,9 @@ export function Header() {
 
         {/* User Actions */}
         <div className="flex items-center space-x-4">
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+
           {/* Desktop Auth */}
           <div className="hidden md:flex items-center space-x-2">
             {loading ? (
@@ -76,7 +83,7 @@ export function Header() {
                     {profile?.display_name?.[0] || user.email?.[0] || 'U'}
                   </div>
                   <span className="text-sm">
-                    {profile?.display_name || '用户'}
+                    {profile?.display_name || t('sign_in')}
                   </span>
                 </Button>
 
@@ -147,10 +154,10 @@ export function Header() {
             ) : (
               <div className="flex items-center space-x-2">
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href="/auth/login">登录</Link>
+                  <Link href="/auth/login">{t('sign_in')}</Link>
                 </Button>
                 <Button variant="chinese" size="sm" asChild>
-                  <Link href="/auth/register">免费注册</Link>
+                  <Link href="/auth/register">{t('register')}</Link>
                 </Button>
               </div>
             )}
