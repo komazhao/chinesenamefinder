@@ -104,7 +104,7 @@ async function generateNamesWithOpenRouter(formData: any): Promise<GeneratedName
         'X-Title': 'Chinese Name Finder'
       },
       body: JSON.stringify({
-        model: 'openai/gpt-4-turbo',
+        model: 'openai/gpt-4o',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: prompt }
@@ -264,7 +264,7 @@ export async function POST(request: NextRequest) {
               source_data: {
                 request: formData,
                 generation_id: `openrouter_${Date.now()}`,
-                model: 'openai/gpt-4-turbo'
+                model: 'openai/gpt-4o'
               },
               quality_score: name.suitability,
               metadata: {
@@ -304,7 +304,7 @@ export async function POST(request: NextRequest) {
               style: formData.style,
               gender: formData.gender,
               names_generated: generatedNames.length,
-              model: 'openrouter/gpt-4-turbo'
+              model: 'openrouter/gpt-4o'
             }
           })
       } catch (analyticsError) {

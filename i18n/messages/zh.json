@@ -84,6 +84,16 @@
   "pricing": {
     "title": "选择您的方案",
     "subtitle": "简单透明的定价",
+    "badge": "定价方案",
+    "heading": "选择适合您的",
+    "headingHighlight": "起名方案",
+    "description": "无论您是个人用户还是企业客户，我们都有适合的方案。所有方案均包含AI智能起名和文化解释功能。",
+    "billingToggle": {
+      "oneTime": "一次性购买",
+      "monthly": "月度订阅",
+      "save": "省30%"
+    },
+    "paymentPending": "我们正在接入支付，请耐心等待",
     "free": {
       "title": "免费版",
       "price": "¥0",
@@ -122,6 +132,133 @@
         "API接口访问"
       ],
       "cta": "联系销售"
+    },
+    "plans": {
+      "basic": {
+        "name": "基础包",
+        "description": "适合尝试服务的新用户",
+        "credits": "20次起名机会",
+        "features": [
+          "20次AI起名机会",
+          "5种命名风格",
+          "基础文化解释",
+          "名字收藏功能",
+          "导出PDF报告",
+          "30天有效期"
+        ],
+        "limitations": [
+          "不含五行分析",
+          "不含诗意命名",
+          "无优先支持"
+        ]
+      },
+      "standard": {
+        "name": "标准包",
+        "description": "最受欢迎的选择",
+        "credits": "50次起名机会",
+        "originalPrice": "原价",
+        "features": [
+          "50次AI起名机会",
+          "全部命名风格",
+          "深度文化解释",
+          "五行八字分析",
+          "名字收藏无限制",
+          "导出多种格式",
+          "60天有效期",
+          "邮件支持"
+        ],
+        "limitations": [
+          "不含定制服务"
+        ]
+      },
+      "premium": {
+        "name": "高级包",
+        "description": "为专业需求设计",
+        "credits": "100次起名机会",
+        "features": [
+          "100次AI起名机会",
+          "全部高级功能",
+          "深度文化+历史解释",
+          "完整五行八字分析",
+          "诗意命名系统",
+          "智能推荐算法",
+          "批量生成模式",
+          "90天有效期",
+          "优先邮件支持",
+          "API访问权限"
+        ]
+      },
+      "monthlyPro": {
+        "name": "专业版",
+        "description": "每月订阅，随时取消",
+        "credits": "每月200次起名",
+        "features": [
+          "每月200次起名",
+          "全部功能解锁",
+          "优先生成队列",
+          "专属客服支持",
+          "数据分析报告",
+          "团队协作功能",
+          "自定义品牌",
+          "API无限调用"
+        ]
+      },
+      "monthlyEnterprise": {
+        "name": "企业版",
+        "description": "为团队和企业定制",
+        "credits": "无限次起名",
+        "features": [
+          "无限次起名",
+          "全部高级功能",
+          "专属账户经理",
+          "定制化服务",
+          "SLA保证",
+          "批量API接口",
+          "数据导出工具",
+          "培训和咨询",
+          "发票和报销"
+        ]
+      }
+    },
+    "mostPopular": "最受欢迎",
+    "purchaseNow": "立即购买",
+    "processing": "处理中...",
+    "freeTrial": {
+      "title": "免费体验",
+      "description": "新用户注册即可获得",
+      "highlight": "5次免费起名机会",
+      "subtitle": "体验我们的AI起名服务。无需信用卡，立即开始！",
+      "registerButton": "免费注册"
+    },
+    "faq": {
+      "title": "常见问题",
+      "items": {
+        "expiry": {
+          "question": "积分会过期吗？",
+          "answer": "一次性购买的积分有效期如方案所示（30-90天）。月度订阅的积分每月重置。"
+        },
+        "refund": {
+          "question": "可以退款吗？",
+          "answer": "我们提供7天无理由退款保证。如果您不满意，可以申请全额退款。"
+        },
+        "upgrade": {
+          "question": "如何升级方案？",
+          "answer": "您可以随时在账户设置中升级方案。升级后立即生效，未使用的积分会保留。"
+        },
+        "payment": {
+          "question": "支持哪些支付方式？",
+          "answer": "我们支持信用卡、借记卡、支付宝、微信支付等多种支付方式。"
+        }
+      }
+    },
+    "trust": {
+      "title": "受到全球用户信赖",
+      "badges": {
+        "ssl": "SSL安全加密",
+        "stripe": "Stripe安全支付",
+        "gdpr": "GDPR合规",
+        "guarantee": "7天退款保证"
+      }
     }
   },
   "cta": {
@@ -820,12 +957,87 @@
   "generate": {
     "title": "AI中文起名生成器",
     "description": "使用我们先进的AI技术创造美丽、有意义的中文名字",
+    "creditsRemaining": "剩余次数",
+    "steps": {
+      "basicInfo": "基本信息",
+      "stylePreference": "风格偏好",
+      "culturalPreference": "文化偏好",
+      "results": "生成结果"
+    },
     "form": {
-      "gender": "性别",
-      "surname": "姓氏",
-      "style": "起名风格",
-      "preferences": "偏好设置",
-      "generate": "生成名字"
+      "basicInfoTitle": "基本信息",
+      "basicInfoDescription": "告诉我们一些基本信息，以便生成最适合的名字",
+      "englishName": "英文名或原名",
+      "englishNamePlaceholder": "例如：John, Sarah, 或您的原名",
+      "genderPreference": "性别偏好",
+      "male": "男性",
+      "female": "女性",
+      "neutral": "中性",
+      "birthYear": "出生年份（可选）",
+      "birthYearPlaceholder": "例如：1995",
+      "birthYearHint": "用于生肖和五行分析",
+
+      "styleTitle": "风格偏好",
+      "styleDescription": "选择您喜欢的名字风格",
+      "nameStyle": "名字风格",
+      "nameLength": "名字长度",
+      "characters": "字",
+
+      "styles": {
+        "traditional": {
+          "label": "传统经典",
+          "description": "源自古籍诗词"
+        },
+        "modern": {
+          "label": "现代简约",
+          "description": "简洁易记"
+        },
+        "elegant": {
+          "label": "优雅诗意",
+          "description": "富有文学气息"
+        },
+        "nature": {
+          "label": "自然清新",
+          "description": "取自自然元素"
+        },
+        "literary": {
+          "label": "文学典故",
+          "description": "引经据典"
+        }
+      },
+
+      "culturalTitle": "文化偏好",
+      "culturalDescription": "个性化您的名字（可选）",
+      "expectedMeaning": "期望寓意",
+      "expectedMeaningPlaceholder": "例如：希望名字寓意智慧、勇敢、善良等",
+      "avoidWords": "避免使用的字",
+      "avoidWordsPlaceholder": "例如：某些不喜欢的字或音",
+      "aiNote": "AI将根据您的偏好生成最合适的名字。留空将使用默认设置。",
+
+      "next": "下一步",
+      "previous": "上一步",
+      "generating": "生成中...",
+      "generateNames": "生成名字"
+    },
+    "results": {
+      "title": "生成结果",
+      "description": "为您生成了 {{count}} 个名字",
+      "matchRate": "匹配度",
+      "meaningExplanation": "寓意解释",
+      "culturalBackground": "文化背景",
+      "regenerate": "重新生成",
+      "resetSettings": "重新设置",
+      "nameDetails": "名字详情",
+      "copyName": "复制名字",
+      "saveToCollection": "保存到收藏",
+      "copiedToClipboard": "已复制到剪贴板",
+      "savedSuccessfully": "名字已保存到收藏",
+      "saveFailed": "保存失败，请稍后重试"
+    },
+    "errors": {
+      "pleaseLogin": "请先登录",
+      "insufficientCredits": "积分不足，请充值",
+      "generationFailed": "生成失败，请稍后重试"
     }
   }
 }

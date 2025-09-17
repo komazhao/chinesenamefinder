@@ -34,43 +34,43 @@ export default function HelpPage() {
   const helpCategories = [
     {
       icon: Book,
-      title: '快速开始',
-      description: '了解如何使用AI起名服务',
+      title: t('help.categories.quickStart.title'),
+      description: t('help.categories.quickStart.description'),
       articles: 12,
       color: 'from-blue-500 to-blue-600'
     },
     {
       icon: Settings,
-      title: '账户设置',
-      description: '管理您的个人信息和偏好',
+      title: t('help.categories.account.title'),
+      description: t('help.categories.account.description'),
       articles: 8,
       color: 'from-green-500 to-green-600'
     },
     {
       icon: CreditCard,
-      title: '付费与订阅',
-      description: '了解定价和订阅相关问题',
+      title: t('help.categories.billing.title'),
+      description: t('help.categories.billing.description'),
       articles: 15,
       color: 'from-purple-500 to-purple-600'
     },
     {
       icon: Shield,
-      title: '隐私与安全',
-      description: '保护您的数据和隐私',
+      title: t('help.categories.privacy.title'),
+      description: t('help.categories.privacy.description'),
       articles: 6,
       color: 'from-red-500 to-red-600'
     },
     {
       icon: Zap,
-      title: 'AI功能',
-      description: '深入了解AI起名的特色功能',
+      title: t('help.categories.ai.title'),
+      description: t('help.categories.ai.description'),
       articles: 20,
       color: 'from-amber-500 to-amber-600'
     },
     {
       icon: MessageCircle,
-      title: '技术支持',
-      description: '解决技术问题和故障',
+      title: t('help.categories.support.title'),
+      description: t('help.categories.support.description'),
       articles: 10,
       color: 'from-indigo-500 to-indigo-600'
     }
@@ -78,37 +78,37 @@ export default function HelpPage() {
 
   const popularArticles = [
     {
-      title: '如何开始您的第一次AI起名？',
-      description: '详细指导新用户完成第一次起名体验',
-      category: '快速开始',
+      title: t('help.popular.articles.firstTime.title'),
+      description: t('help.popular.articles.firstTime.description'),
+      category: t('help.categories.quickStart.title'),
       readTime: '3分钟',
       views: 1520
     },
     {
-      title: '什么是五行八字分析？',
-      description: '深入了解传统文化中的五行八字理论',
-      category: 'AI功能',
+      title: t('help.popular.articles.fiveElements.title'),
+      description: t('help.popular.articles.fiveElements.description'),
+      category: t('help.categories.ai.title'),
       readTime: '5分钟',
       views: 1240
     },
     {
-      title: '如何选择合适的订阅套餐？',
-      description: '对比不同套餐功能，选择最适合的方案',
-      category: '付费与订阅',
+      title: t('help.popular.articles.subscription.title'),
+      description: t('help.popular.articles.subscription.description'),
+      category: t('help.categories.billing.title'),
       readTime: '4分钟',
       views: 980
     },
     {
-      title: '个人信息如何保护？',
-      description: '了解我们如何保护您的隐私数据',
-      category: '隐私与安全',
+      title: t('help.popular.articles.privacy.title'),
+      description: t('help.popular.articles.privacy.description'),
+      category: t('help.categories.privacy.title'),
       readTime: '6分钟',
       views: 750
     },
     {
-      title: '修改密码和邮箱',
-      description: '学会如何更新您的账户信息',
-      category: '账户设置',
+      title: t('help.popular.articles.account.title'),
+      description: t('help.popular.articles.account.description'),
+      category: t('help.categories.account.title'),
       readTime: '2分钟',
       views: 680
     }
@@ -117,23 +117,23 @@ export default function HelpPage() {
   const quickActions = [
     {
       icon: Phone,
-      title: '联系客服',
-      description: '直接与我们的支持团队对话',
-      action: '立即联系',
+      title: t('help.quickActions.contact.title'),
+      description: t('help.quickActions.contact.description'),
+      action: t('help.quickActions.contact.action'),
       href: '/contact'
     },
     {
       icon: Mail,
-      title: '发送邮件',
-      description: '通过邮件获得详细帮助',
-      action: '发送邮件',
+      title: t('help.quickActions.email.title'),
+      description: t('help.quickActions.email.description'),
+      action: t('help.quickActions.email.action'),
       href: 'mailto:support@chinesenamefinder.com'
     },
     {
       icon: MessageCircle,
-      title: '在线聊天',
-      description: '实时获得技术支持',
-      action: '开始聊天',
+      title: t('help.quickActions.chat.title'),
+      description: t('help.quickActions.chat.description'),
+      action: t('help.quickActions.chat.action'),
       href: '#'
     }
   ]
@@ -146,27 +146,26 @@ export default function HelpPage() {
         <section className="container mx-auto px-4 py-16">
           <div className="text-center max-w-4xl mx-auto">
             <Badge className="mb-4" variant="secondary">
-              帮助中心
+              {t('help.title')}
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              我们随时为您提供帮助
+              {t('help.title')}
             </h1>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              在这里找到您需要的所有答案。从快速入门到高级功能，
-              我们为您准备了详细的指南和常见问题解答。
+              {t('help.description')}
             </p>
 
             {/* Search Bar */}
             <div className="max-w-2xl mx-auto relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input
-                placeholder="搜索帮助文档..."
+                placeholder={t('help.search.placeholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-12 py-6 text-lg"
               />
               <Button className="absolute right-2 top-1/2 transform -translate-y-1/2">
-                搜索
+                {t('help.search.button')}
               </Button>
             </div>
           </div>
@@ -175,7 +174,7 @@ export default function HelpPage() {
         {/* Help Categories */}
         <section className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-8">浏览帮助主题</h2>
+            <h2 className="text-3xl font-bold text-center mb-8">{t('help.categories.title')}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {helpCategories.map((category, index) => {
                 const Icon = category.icon
@@ -211,7 +210,7 @@ export default function HelpPage() {
         {/* Popular Articles */}
         <section className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8">热门文章</h2>
+            <h2 className="text-3xl font-bold mb-8">{t('help.popular.title')}</h2>
             <div className="space-y-4">
               {popularArticles.map((article, index) => (
                 <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer">
@@ -247,7 +246,7 @@ export default function HelpPage() {
 
             <div className="text-center mt-8">
               <Button variant="outline" size="lg">
-                查看所有文章
+                {t('help.popular.viewAll')}
               </Button>
             </div>
           </div>
@@ -256,7 +255,7 @@ export default function HelpPage() {
         {/* Quick Actions */}
         <section className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-8">还需要帮助？</h2>
+            <h2 className="text-3xl font-bold text-center mb-8">{t('help.quickActions.title')}</h2>
             <div className="grid md:grid-cols-3 gap-6">
               {quickActions.map((action, index) => {
                 const Icon = action.icon

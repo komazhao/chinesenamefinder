@@ -84,6 +84,16 @@
   "pricing": {
     "title": "Choose Your Plan",
     "subtitle": "Simple, transparent pricing",
+    "badge": "Pricing Plans",
+    "heading": "Choose Your",
+    "headingHighlight": "Naming Plan",
+    "description": "Whether you're an individual user or enterprise customer, we have the right plan for you. All plans include AI intelligent naming and cultural explanations.",
+    "billingToggle": {
+      "oneTime": "One-time Purchase",
+      "monthly": "Monthly Subscription",
+      "save": "Save 30%"
+    },
+    "paymentPending": "We are integrating payment system, please be patient",
     "free": {
       "title": "Free",
       "price": "$0",
@@ -122,6 +132,133 @@
         "API access"
       ],
       "cta": "Contact Sales"
+    },
+    "plans": {
+      "basic": {
+        "name": "Basic Package",
+        "description": "Perfect for new users trying the service",
+        "credits": "20 naming opportunities",
+        "features": [
+          "20 AI naming opportunities",
+          "5 naming styles",
+          "Basic cultural explanations",
+          "Name collection feature",
+          "Export PDF report",
+          "30-day validity"
+        ],
+        "limitations": [
+          "No Five Elements analysis",
+          "No poetic naming",
+          "No priority support"
+        ]
+      },
+      "standard": {
+        "name": "Standard Package",
+        "description": "Most popular choice",
+        "credits": "50 naming opportunities",
+        "originalPrice": "Original price",
+        "features": [
+          "50 AI naming opportunities",
+          "All naming styles",
+          "Deep cultural explanations",
+          "Five Elements analysis",
+          "Unlimited name collection",
+          "Export multiple formats",
+          "60-day validity",
+          "Email support"
+        ],
+        "limitations": [
+          "No custom service"
+        ]
+      },
+      "premium": {
+        "name": "Premium Package",
+        "description": "Designed for professional needs",
+        "credits": "100 naming opportunities",
+        "features": [
+          "100 AI naming opportunities",
+          "All advanced features",
+          "Deep cultural + historical explanations",
+          "Complete Five Elements analysis",
+          "Poetic naming system",
+          "Smart recommendation algorithm",
+          "Batch generation mode",
+          "90-day validity",
+          "Priority email support",
+          "API access"
+        ]
+      },
+      "monthlyPro": {
+        "name": "Professional",
+        "description": "Monthly subscription, cancel anytime",
+        "credits": "200 names per month",
+        "features": [
+          "200 names per month",
+          "All features unlocked",
+          "Priority generation queue",
+          "Dedicated customer support",
+          "Data analysis reports",
+          "Team collaboration",
+          "Custom branding",
+          "Unlimited API calls"
+        ]
+      },
+      "monthlyEnterprise": {
+        "name": "Enterprise",
+        "description": "Customized for teams and enterprises",
+        "credits": "Unlimited naming",
+        "features": [
+          "Unlimited naming",
+          "All premium features",
+          "Dedicated account manager",
+          "Customized service",
+          "SLA guarantee",
+          "Batch API interface",
+          "Data export tools",
+          "Training and consulting",
+          "Invoice and reimbursement"
+        ]
+      }
+    },
+    "mostPopular": "Most Popular",
+    "purchaseNow": "Purchase Now",
+    "processing": "Processing...",
+    "freeTrial": {
+      "title": "Free Trial",
+      "description": "New users get",
+      "highlight": "5 free naming opportunities",
+      "subtitle": "upon registration to experience our AI naming service. No credit card required!",
+      "registerButton": "Free Registration"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": {
+        "expiry": {
+          "question": "Do credits expire?",
+          "answer": "One-time purchase credits are valid as shown in the plan (30-90 days). Monthly subscription credits reset monthly."
+        },
+        "refund": {
+          "question": "Can I get a refund?",
+          "answer": "We offer a 7-day money-back guarantee. If you're not satisfied, you can request a full refund."
+        },
+        "upgrade": {
+          "question": "How do I upgrade my plan?",
+          "answer": "You can upgrade your plan anytime in account settings. Upgrades take effect immediately, unused credits are retained."
+        },
+        "payment": {
+          "question": "What payment methods are supported?",
+          "answer": "We support credit cards, debit cards, Alipay, WeChat Pay, and other payment methods."
+        }
+      }
+    },
+    "trust": {
+      "title": "Trusted by users worldwide",
+      "badges": {
+        "ssl": "SSL Secure Encryption",
+        "stripe": "Stripe Secure Payment",
+        "gdpr": "GDPR Compliant",
+        "guarantee": "7-day Money Back Guarantee"
+      }
     }
   },
   "cta": {
@@ -715,7 +852,10 @@
   },
   "privacy": {
     "title": "Privacy Policy",
-    "lastUpdated": "Last Updated",
+    "heading": "Protecting Your Privacy and Security",
+    "description": "We understand the importance of privacy protection and are committed to handling your personal information in a transparent and responsible manner. This privacy policy details our data processing practices.",
+    "lastUpdated": "March 15, 2024",
+    "global": "Global coverage",
     "sections": {
       "introduction": {
         "title": "Introduction",
@@ -740,16 +880,113 @@
       "rights": {
         "title": "Your Rights",
         "content": "You have certain rights regarding your personal information, including the right to access, update, delete, or restrict the processing of your data."
-      },
-      "contact": {
-        "title": "Contact Us",
-        "content": "If you have any questions about this Privacy Policy, please contact us using the information provided in our Contact section."
       }
+    },
+    "quickActions": {
+      "security": {
+        "title": "Data Security",
+        "description": "Bank-level security measures to protect your data",
+        "action": "Learn More"
+      },
+      "transparency": {
+        "title": "Transparent Processing",
+        "description": "Clear explanation of data collection and usage purposes",
+        "action": "View Details"
+      },
+      "control": {
+        "title": "User Control",
+        "description": "You can manage and control your data at any time",
+        "action": "Manage Data"
+      }
+    },
+    "dataProcessing": {
+      "title": "Data Processing Details",
+      "description": "Specific data types we process and their purposes",
+      "table": {
+        "dataType": "Data Type",
+        "purpose": "Processing Purpose",
+        "retention": "Retention Period",
+        "required": "Required",
+        "requiredYes": "Required",
+        "requiredNo": "Optional"
+      }
+    },
+    "dataTypes": {
+      "account": {
+        "name": "Account Information",
+        "purpose": "User authentication and account management",
+        "retention": "Account lifetime"
+      },
+      "preferences": {
+        "name": "Naming Preferences",
+        "purpose": "Personalized service recommendations",
+        "retention": "2 years"
+      },
+      "usage": {
+        "name": "Usage Statistics",
+        "purpose": "Product improvement and analysis",
+        "retention": "1 year"
+      },
+      "payment": {
+        "name": "Payment Records",
+        "purpose": "Financial management and customer service",
+        "retention": "5 years"
+      },
+      "support": {
+        "name": "Customer Service Records",
+        "purpose": "Problem resolution and service improvement",
+        "retention": "3 years"
+      }
+    },
+    "thirdParty": {
+      "title": "Third-Party Service Providers",
+      "description": "Our partner third-party service providers and their data processing scope",
+      "purposeLabel": "Purpose",
+      "dataTypesLabel": "Data Types"
+    },
+    "thirdPartyServices": {
+      "alibaba": {
+        "name": "Alibaba Cloud",
+        "purpose": "Cloud computing and data storage",
+        "dataTypes": "Encrypted user data"
+      },
+      "wechat": {
+        "name": "WeChat Pay",
+        "purpose": "Payment processing",
+        "dataTypes": "Transaction information"
+      },
+      "alipay": {
+        "name": "Alipay",
+        "purpose": "Payment processing",
+        "dataTypes": "Transaction information"
+      },
+      "tencent": {
+        "name": "Tencent Cloud",
+        "purpose": "Content delivery network",
+        "dataTypes": "Anonymized access logs"
+      }
+    },
+    "notices": {
+      "children": "Children's Privacy Protection: Our service is intended for users aged 18 and above. If you are under 18, please use our service under parental guidance.",
+      "changes": "Policy Change Notice: If our privacy policy undergoes significant changes, we will notify you 30 days in advance via email or website announcement.",
+      "crossBorder": "Cross-Border Data Transfer: Your data is primarily stored on servers within China. If cross-border transfer is required, we will take appropriate security measures."
+    },
+    "contact": {
+      "title": "Have Privacy Questions? Contact Us",
+      "description": "If you have any questions about our privacy policy or need to exercise your data rights, please feel free to contact our data protection team",
+      "email": "privacy@chinesenamefinder.com",
+      "phone": "+86 400-123-4567",
+      "contactUs": "Contact Us",
+      "manageData": "Manage Data"
     }
   },
   "terms": {
     "title": "Terms of Service",
-    "lastUpdated": "Last Updated",
+    "heading": "Terms of Service Agreement",
+    "description": "Please read these terms carefully. By using our service, you agree to abide by these terms. We are committed to providing quality service while protecting the legitimate rights of both parties.",
+    "lastUpdated": "March 15, 2024",
+    "effectiveDate": "January 1, 2024",
+    "global": "Applicable globally",
     "sections": {
       "acceptance": {
         "title": "Acceptance of Terms",
@@ -783,7 +1020,76 @@
         "title": "Changes to Terms",
         "content": "We reserve the right to modify these terms at any time. We will notify you of any changes by posting the new terms on this page."
       }
-    }
+    },
+    "keyPoints": {
+      "title": "Key Terms Overview",
+      "service": {
+        "title": "Service Nature",
+        "description": "AI-based naming suggestions for reference only"
+      },
+      "user": {
+        "title": "User Responsibility",
+        "description": "Responsible for account security and compliance"
+      },
+      "payment": {
+        "title": "Payment Rules",
+        "description": "Transparent pricing with 7-day money-back guarantee"
+      },
+      "intellectual": {
+        "title": "Intellectual Property",
+        "description": "Respect IP rights and use service content appropriately"
+      }
+    },
+    "importantNotice": "Important Notice: These Terms of Service constitute a legally binding agreement between you and Cultural Companion. Please read all terms carefully before using the service. If you have questions, please contact our legal team.",
+    "dispute": {
+      "title": "Dispute Resolution",
+      "description": "How to handle potential disputes and disagreements",
+      "steps": {
+        "negotiation": {
+          "title": "Friendly Negotiation",
+          "description": "Priority resolution through direct communication"
+        },
+        "mediation": {
+          "title": "Mediation",
+          "description": "Resolution through third-party mediation"
+        },
+        "legal": {
+          "title": "Legal Proceedings",
+          "description": "Final resolution through Beijing courts"
+        }
+      },
+      "jurisdiction": "These terms are governed by the laws of the People's Republic of China. Any disputes shall be resolved through friendly negotiation first. If negotiation fails, the matter shall be submitted to the competent People's Court in Beijing."
+    },
+    "company": {
+      "title": "Company Information",
+      "description": "Legal entity information of the service provider",
+      "details": {
+        "title": "Company Details",
+        "name": "Company Name",
+        "nameValue": "Cultural Companion Technology Co., Ltd.",
+        "address": "Registered Address",
+        "addressValue": "Science Park, Chaoyang District, Beijing",
+        "code": "Unified Social Credit Code",
+        "codeValue": "91110000XXXXXXXXXX",
+        "representative": "Legal Representative",
+        "representativeValue": "Zhang XX"
+      }
+    },
+    "contact": {
+      "title": "Contact Information",
+      "legal": "Legal Email",
+      "phone": "Customer Service",
+      "address": "Company Address",
+      "addressValue": "Science Park, Chaoyang District, Beijing"
+    },
+    "cta": {
+      "title": "Questions About Terms? We Can Help",
+      "description": "If you have any questions about the Terms of Service or need legal advice, our legal team is ready to provide professional answers",
+      "hours": "Business Days",
+      "contactLegal": "Contact Legal",
+      "privacy": "Privacy Policy"
+    },
+    "finalNotice": "Thank you for choosing Cultural Companion! We are committed to complying with all applicable laws and regulations to provide you with safe and reliable services. Your trust is our motivation for continuous improvement."
   },
   "settings": {
     "title": "Settings",
@@ -820,12 +1126,87 @@
   "generate": {
     "title": "AI Chinese Name Generator",
     "description": "Create beautiful, meaningful Chinese names with our advanced AI technology",
+    "creditsRemaining": "Credits Remaining",
+    "steps": {
+      "basicInfo": "Basic Information",
+      "stylePreference": "Style Preference",
+      "culturalPreference": "Cultural Preference",
+      "results": "Generation Results"
+    },
     "form": {
-      "gender": "Gender",
-      "surname": "Surname",
-      "style": "Naming Style",
-      "preferences": "Preferences",
-      "generate": "Generate Names"
+      "basicInfoTitle": "Basic Information",
+      "basicInfoDescription": "Tell us some basic information to generate the most suitable name",
+      "englishName": "English Name or Original Name",
+      "englishNamePlaceholder": "e.g., John, Sarah, or your original name",
+      "genderPreference": "Gender Preference",
+      "male": "Male",
+      "female": "Female",
+      "neutral": "Neutral",
+      "birthYear": "Birth Year (Optional)",
+      "birthYearPlaceholder": "e.g., 1995",
+      "birthYearHint": "For zodiac and Five Elements analysis",
+
+      "styleTitle": "Style Preference",
+      "styleDescription": "Choose your preferred name style",
+      "nameStyle": "Name Style",
+      "nameLength": "Name Length",
+      "characters": "characters",
+
+      "styles": {
+        "traditional": {
+          "label": "Traditional Classic",
+          "description": "Derived from ancient texts and poetry"
+        },
+        "modern": {
+          "label": "Modern Simple",
+          "description": "Concise and memorable"
+        },
+        "elegant": {
+          "label": "Elegant Poetic",
+          "description": "Rich literary atmosphere"
+        },
+        "nature": {
+          "label": "Natural Fresh",
+          "description": "Inspired by natural elements"
+        },
+        "literary": {
+          "label": "Literary Allusion",
+          "description": "Based on classical references"
+        }
+      },
+
+      "culturalTitle": "Cultural Preference",
+      "culturalDescription": "Personalize your name (optional)",
+      "expectedMeaning": "Expected Meaning",
+      "expectedMeaningPlaceholder": "e.g., wisdom, courage, kindness, etc.",
+      "avoidWords": "Words to Avoid",
+      "avoidWordsPlaceholder": "e.g., certain characters or sounds you dislike",
+      "aiNote": "AI will generate the most suitable names based on your preferences. Leave blank to use default settings.",
+
+      "next": "Next",
+      "previous": "Previous",
+      "generating": "Generating...",
+      "generateNames": "Generate Names"
+    },
+    "results": {
+      "title": "Generation Results",
+      "description": "Generated {{count}} names for you",
+      "matchRate": "Match Rate",
+      "meaningExplanation": "Meaning",
+      "culturalBackground": "Cultural Context",
+      "regenerate": "Regenerate",
+      "resetSettings": "Reset Settings",
+      "nameDetails": "Name Details",
+      "copyName": "Copy Name",
+      "saveToCollection": "Save to Collection",
+      "copiedToClipboard": "Copied to clipboard",
+      "savedSuccessfully": "Name saved successfully",
+      "saveFailed": "Save failed, please try again"
+    },
+    "errors": {
+      "pleaseLogin": "Please log in first",
+      "insufficientCredits": "Insufficient credits, please purchase",
+      "generationFailed": "Generation failed, please try again"
     }
   }
 }

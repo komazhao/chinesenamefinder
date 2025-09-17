@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { Check, X, Sparkles, Zap, Crown, ArrowRight, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -14,12 +15,13 @@ import { toast } from 'sonner'
 
 interface PricingPlan {
   id: string
-  name: string
-  description: string
+  nameKey: string
+  descriptionKey: string
   price: number
   originalPrice?: number
   currency: string
   period?: string
+  creditsKey: string
   credits: number
   features: string[]
   limitations?: string[]
@@ -30,134 +32,95 @@ interface PricingPlan {
 export default function PricingPage() {
   const router = useRouter()
   const { user, profile } = useAuth()
+  const t = useTranslations()
   const [isLoading, setIsLoading] = useState<string | null>(null)
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'one-time'>('one-time')
 
   const oneTimePlans: PricingPlan[] = [
     {
       id: 'basic',
-      name: '基础包',
-      description: '适合尝试服务的新用户',
+      nameKey: 'pricing.plans.basic.name',
+      descriptionKey: 'pricing.plans.basic.description',
       price: 9.99,
       currency: '$',
       credits: 20,
+      creditsKey: 'pricing.plans.basic.credits',
       icon: Sparkles,
-      features: [
-        '20次AI起名机会',
-        '5种命名风格',
-        '基础文化解释',
-        '名字收藏功能',
-        '导出PDF报告',
-        '30天有效期'
-      ],
-      limitations: [
-        '不含五行分析',
-        '不含诗意命名',
-        '无优先支持'
-      ]
+      features: t.raw('pricing.plans.basic.features') as string[],
+      limitations: t.raw('pricing.plans.basic.limitations') as string[]
     },
     {
       id: 'standard',
-      name: '标准包',
-      description: '最受欢迎的选择',
+      nameKey: 'pricing.plans.standard.name',
+      descriptionKey: 'pricing.plans.standard.description',
       price: 19.99,
       originalPrice: 24.99,
       currency: '$',
       credits: 50,
+      creditsKey: 'pricing.plans.standard.credits',
       icon: Zap,
       recommended: true,
-      features: [
-        '50次AI起名机会',
-        '全部命名风格',
-        '深度文化解释',
-        '五行八字分析',
-        '名字收藏无限制',
-        '导出多种格式',
-        '60天有效期',
-        '邮件支持'
-      ],
-      limitations: [
-        '不含定制服务'
-      ]
+      features: t.raw('pricing.plans.standard.features') as string[],
+      limitations: t.raw('pricing.plans.standard.limitations') as string[]
     },
     {
       id: 'premium',
-      name: '高级包',
-      description: '为专业需求设计',
+      nameKey: 'pricing.plans.premium.name',
+      descriptionKey: 'pricing.plans.premium.description',
       price: 34.99,
       originalPrice: 49.99,
       currency: '$',
       credits: 100,
+      creditsKey: 'pricing.plans.premium.credits',
       icon: Crown,
-      features: [
-        '100次AI起名机会',
-        '全部高级功能',
-        '深度文化+历史解释',
-        '完整五行八字分析',
-        '诗意命名系统',
-        '智能推荐算法',
-        '批量生成模式',
-        '90天有效期',
-        '优先邮件支持',
-        'API访问权限'
-      ]
+      features: t.raw('pricing.plans.premium.features') as string[]
     }
   ]
 
   const monthlyPlans: PricingPlan[] = [
     {
       id: 'monthly-pro',
-      name: '专业版',
-      description: '每月订阅，随时取消',
+      nameKey: 'pricing.plans.monthlyPro.name',
+      descriptionKey: 'pricing.plans.monthlyPro.description',
       price: 29.99,
       currency: '$',
       period: '/月',
       credits: 200,
+      creditsKey: 'pricing.plans.monthlyPro.credits',
       icon: Zap,
-      features: [
-        '每月200次起名',
-        '全部功能解锁',
-        '优先生成队列',
-        '专属客服支持',
-        '数据分析报告',
-        '团队协作功能',
-        '自定义品牌',
-        'API无限调用'
-      ]
+      features: t.raw('pricing.plans.monthlyPro.features') as string[]
     },
     {
       id: 'monthly-enterprise',
-      name: '企业版',
-      description: '为团队和企业定制',
+      nameKey: 'pricing.plans.monthlyEnterprise.name',
+      descriptionKey: 'pricing.plans.monthlyEnterprise.description',
       price: 99.99,
       currency: '$',
       period: '/月',
       credits: 1000,
+      creditsKey: 'pricing.plans.monthlyEnterprise.credits',
       icon: Crown,
       recommended: true,
-      features: [
-        '无限次起名',
-        '全部高级功能',
-        '专属账户经理',
-        '定制化服务',
-        'SLA保证',
-        '批量API接口',
-        '数据导出工具',
-        '培训和咨询',
-        '发票和报销'
-      ]
+      features: t.raw('pricing.plans.monthlyEnterprise.features') as string[]
     }
   ]
 
   const handlePurchase = async (plan: PricingPlan) => {
     if (!user) {
-      toast.error('请先登录')
+      toast.error(t('generate.errors.pleaseLogin'))
       router.push('/auth/login')
       return
     }
 
     setIsLoading(plan.id)
 
+    // Show payment pending message instead of processing Stripe payment
+    setTimeout(() => {
+      toast.info(t('pricing.paymentPending'))
+      setIsLoading(null)
+    }, 1000)
+
+    /* Stripe payment code - commented out but preserved
     try {
       const response = await fetch('/api/create-payment', {
         method: 'POST',
@@ -183,9 +146,25 @@ export default function PricingPage() {
     } finally {
       setIsLoading(null)
     }
+    */
   }
 
   const plans = billingPeriod === 'monthly' ? monthlyPlans : oneTimePlans
+
+  // Helper function to format features array properly
+  const getFeatures = (key: string) => {
+    const featuresStr = t.raw(key) as string | string[]
+    return Array.isArray(featuresStr) ? featuresStr : []
+  }
+
+  const getLimitations = (key: string) => {
+    try {
+      const limitationsStr = t.raw(key) as string | string[]
+      return Array.isArray(limitationsStr) ? limitationsStr : []
+    } catch {
+      return []
+    }
+  }
 
   return (
     <>
@@ -195,14 +174,14 @@ export default function PricingPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <Badge className="mb-4" variant="secondary">
-              定价方案
+              {t('pricing.badge')}
             </Badge>
             <h1 className="text-4xl font-bold mb-4">
-              选择适合您的
-              <span className="text-gradient bg-gradient-to-r from-red-600 to-amber-600 bg-clip-text text-transparent"> 起名方案</span>
+              {t('pricing.heading')}
+              <span className="text-gradient bg-gradient-to-r from-red-600 to-amber-600 bg-clip-text text-transparent"> {t('pricing.headingHighlight')}</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              无论您是个人用户还是企业客户，我们都有适合的方案。所有方案均包含AI智能起名和文化解释功能。
+              {t('pricing.description')}
             </p>
           </div>
 
@@ -210,10 +189,10 @@ export default function PricingPage() {
           <div className="flex justify-center mb-8">
             <Tabs value={billingPeriod} onValueChange={(v) => setBillingPeriod(v as 'monthly' | 'one-time')}>
               <TabsList className="grid w-[400px] grid-cols-2">
-                <TabsTrigger value="one-time">一次性购买</TabsTrigger>
+                <TabsTrigger value="one-time">{t('pricing.billingToggle.oneTime')}</TabsTrigger>
                 <TabsTrigger value="monthly">
-                  月度订阅
-                  <Badge className="ml-2" variant="secondary">省30%</Badge>
+                  {t('pricing.billingToggle.monthly')}
+                  <Badge className="ml-2" variant="secondary">{t('pricing.billingToggle.save')}</Badge>
                 </TabsTrigger>
               </TabsList>
             </Tabs>
@@ -223,6 +202,9 @@ export default function PricingPage() {
           <div className="grid gap-8 lg:grid-cols-3 max-w-6xl mx-auto">
             {plans.map((plan) => {
               const Icon = plan.icon
+              const features = getFeatures(plan.nameKey.replace('.name', '.features'))
+              const limitations = plan.limitations ? getLimitations(plan.nameKey.replace('.name', '.limitations')) : []
+
               return (
                 <Card
                   key={plan.id}
@@ -235,7 +217,7 @@ export default function PricingPage() {
                   {plan.recommended && (
                     <div className="absolute -top-4 left-0 right-0 flex justify-center">
                       <Badge className="px-3 py-1" variant="default">
-                        最受欢迎
+                        {t('pricing.mostPopular')}
                       </Badge>
                     </div>
                   )}
@@ -244,8 +226,8 @@ export default function PricingPage() {
                     <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                       <Icon className="w-6 h-6 text-primary" />
                     </div>
-                    <CardTitle className="text-2xl mb-2">{plan.name}</CardTitle>
-                    <CardDescription>{plan.description}</CardDescription>
+                    <CardTitle className="text-2xl mb-2">{t(plan.nameKey)}</CardTitle>
+                    <CardDescription>{t(plan.descriptionKey)}</CardDescription>
                     <div className="mt-4">
                       <div className="flex items-baseline justify-center">
                         <span className="text-lg font-medium text-muted-foreground">{plan.currency}</span>
@@ -256,24 +238,24 @@ export default function PricingPage() {
                       </div>
                       {plan.originalPrice && (
                         <p className="text-sm text-muted-foreground line-through mt-1">
-                          原价 {plan.currency}{plan.originalPrice}
+                          {t('pricing.plans.standard.originalPrice')} {plan.currency}{plan.originalPrice}
                         </p>
                       )}
                       <p className="text-sm font-medium text-primary mt-2">
-                        {plan.credits} 次起名机会
+                        {t(plan.creditsKey)}
                       </p>
                     </div>
                   </CardHeader>
 
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      {plan.features.map((feature, index) => (
+                      {features.map((feature, index) => (
                         <div key={index} className="flex items-start gap-2">
                           <Check className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
                           <span className="text-sm">{feature}</span>
                         </div>
                       ))}
-                      {plan.limitations?.map((limitation, index) => (
+                      {limitations.map((limitation, index) => (
                         <div key={index} className="flex items-start gap-2">
                           <X className="w-5 h-5 text-gray-400 shrink-0 mt-0.5" />
                           <span className="text-sm text-muted-foreground">{limitation}</span>
@@ -293,11 +275,11 @@ export default function PricingPage() {
                       {isLoading === plan.id ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          处理中...
+                          {t('pricing.processing')}
                         </>
                       ) : (
                         <>
-                          立即购买
+                          {t('pricing.purchaseNow')}
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </>
                       )}
@@ -316,15 +298,15 @@ export default function PricingPage() {
                   <Sparkles className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2">免费体验</h3>
+                  <h3 className="font-semibold mb-2">{t('pricing.freeTrial.title')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    新用户注册即可获得 <span className="font-medium text-foreground">5次免费起名机会</span>，
-                    体验我们的AI起名服务。无需信用卡，立即开始！
+                    {t('pricing.freeTrial.description')} <span className="font-medium text-foreground">{t('pricing.freeTrial.highlight')}</span>
+                    {t('pricing.freeTrial.subtitle')}
                   </p>
                   {!user && (
                     <Button className="mt-4" variant="outline" asChild>
                       <a href="/auth/register">
-                        免费注册
+                        {t('pricing.freeTrial.registerButton')}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </a>
                     </Button>
@@ -336,48 +318,48 @@ export default function PricingPage() {
 
           {/* FAQ Section */}
           <div className="mt-16 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-center mb-8">常见问题</h2>
+            <h2 className="text-2xl font-bold text-center mb-8">{t('pricing.faq.title')}</h2>
             <div className="grid gap-4 md:grid-cols-2">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">积分会过期吗？</CardTitle>
+                  <CardTitle className="text-base">{t('pricing.faq.items.expiry.question')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    一次性购买的积分有效期如方案所示（30-90天）。月度订阅的积分每月重置。
+                    {t('pricing.faq.items.expiry.answer')}
                   </p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">可以退款吗？</CardTitle>
+                  <CardTitle className="text-base">{t('pricing.faq.items.refund.question')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    我们提供7天无理由退款保证。如果您不满意，可以申请全额退款。
+                    {t('pricing.faq.items.refund.answer')}
                   </p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">如何升级方案？</CardTitle>
+                  <CardTitle className="text-base">{t('pricing.faq.items.upgrade.question')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    您可以随时在账户设置中升级方案。升级后立即生效，未使用的积分会保留。
+                    {t('pricing.faq.items.upgrade.answer')}
                   </p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">支持哪些支付方式？</CardTitle>
+                  <CardTitle className="text-base">{t('pricing.faq.items.payment.question')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    我们支持信用卡、借记卡、支付宝、微信支付等多种支付方式。
+                    {t('pricing.faq.items.payment.answer')}
                   </p>
                 </CardContent>
               </Card>
@@ -386,23 +368,25 @@ export default function PricingPage() {
 
           {/* Trust Badges */}
           <div className="mt-16 text-center">
-            <p className="text-sm text-muted-foreground mb-4">受到全球用户信赖</p>
+            <p className="text-sm text-muted-foreground mb-4">{t('pricing.trust.title')}</p>
             <div className="flex justify-center items-center gap-8 flex-wrap">
               <div className="flex items-center gap-2">
                 <Check className="w-5 h-5 text-green-500" />
-                <span className="text-sm font-medium">SSL安全加密</span>
+                <span className="text-sm font-medium">{t('pricing.trust.badges.ssl')}</span>
+              </div>
+              {/* Commented out Stripe badge
+              <div className="flex items-center gap-2">
+                <Check className="w-5 h-5 text-green-500" />
+                <span className="text-sm font-medium">{t('pricing.trust.badges.stripe')}</span>
+              </div>
+              */}
+              <div className="flex items-center gap-2">
+                <Check className="w-5 h-5 text-green-500" />
+                <span className="text-sm font-medium">{t('pricing.trust.badges.gdpr')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-5 h-5 text-green-500" />
-                <span className="text-sm font-medium">Stripe安全支付</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-5 h-5 text-green-500" />
-                <span className="text-sm font-medium">GDPR合规</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-5 h-5 text-green-500" />
-                <span className="text-sm font-medium">7天退款保证</span>
+                <span className="text-sm font-medium">{t('pricing.trust.badges.guarantee')}</span>
               </div>
             </div>
           </div>

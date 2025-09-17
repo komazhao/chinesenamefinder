@@ -94,12 +94,12 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body>
+      <body className="min-h-screen bg-background antialiased font-chinese-sans">
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
-            enableSystem
+            enableSystem={false}
             disableTransitionOnChange
           >
             <AuthProvider>

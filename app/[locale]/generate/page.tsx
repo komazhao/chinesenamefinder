@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import {
   Sparkles,
   User,
@@ -44,6 +45,7 @@ interface GeneratedName {
 export default function GeneratePage() {
   const router = useRouter()
   const { user, profile } = useAuth()
+  const t = useTranslations()
   const [isGenerating, setIsGenerating] = useState(false)
   const [generatedNames, setGeneratedNames] = useState<GeneratedName[]>([])
   const [selectedName, setSelectedName] = useState<GeneratedName | null>(null)
@@ -72,22 +74,42 @@ export default function GeneratePage() {
   })
 
   const styles = [
-    { value: 'traditional', label: '传统经典', description: '源自古籍诗词' },
-    { value: 'modern', label: '现代简约', description: '简洁易记' },
-    { value: 'elegant', label: '优雅诗意', description: '富有文学气息' },
-    { value: 'nature', label: '自然清新', description: '取自自然元素' },
-    { value: 'literary', label: '文学典故', description: '引经据典' },
+    {
+      value: 'traditional',
+      label: t('generate.form.styles.traditional.label'),
+      description: t('generate.form.styles.traditional.description')
+    },
+    {
+      value: 'modern',
+      label: t('generate.form.styles.modern.label'),
+      description: t('generate.form.styles.modern.description')
+    },
+    {
+      value: 'elegant',
+      label: t('generate.form.styles.elegant.label'),
+      description: t('generate.form.styles.elegant.description')
+    },
+    {
+      value: 'nature',
+      label: t('generate.form.styles.nature.label'),
+      description: t('generate.form.styles.nature.description')
+    },
+    {
+      value: 'literary',
+      label: t('generate.form.styles.literary.label'),
+      description: t('generate.form.styles.literary.description')
+    },
   ]
 
   const handleGenerate = async () => {
     if (!user) {
-      toast.error('请先登录')
+      toast.error(t('generate.errors.pleaseLogin'))
       router.push('/auth/login')
       return
     }
 
     if (profile?.credits_remaining === 0) {
-      toast.error('积分不足，请充值')
+      toast.error(t('generate.errors.insufficientCredits'))
       router.push('/pricing')
       return
     }
@@ -104,16 +126,16 @@ export default function GeneratePage() {
       })
 
       if (!response.ok) {
-        throw new Error('生成失败')
+        throw new Error('Generation failed')
       }
 
       const data = await response.json()
       setGeneratedNames(data.names)
       setStep(4) // Move to results step
-      toast.success('名字生成成功！')
+      toast.success(t('generate.results.savedSuccessfully'))
     } catch (error) {
       console.error('Generation error:', error)
-      toast.error('生成失败，请稍后重试')
+      toast.error(t('generate.errors.generationFailed'))
     } finally {
       setIsGenerating(false)
     }
@@ -136,20 +158,27 @@ export default function GeneratePage() {
       })
 
       if (!response.ok) {
-        throw new Error('保存失败')
+        throw new Error('Save failed')
       }
 
-      toast.success('名字已保存到收藏')
+      toast.success(t('generate.results.savedSuccessfully'))
     } catch (error) {
       console.error('Save error:', error)
-      toast.error('保存失败，请稍后重试')
+      toast.error(t('generate.results.saveFailed'))
     }
   }
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
-    toast.success('已复制到剪贴板')
+    toast.success(t('generate.results.copiedToClipboard'))
   }
+
+  const stepTitles = [
+    t('generate.steps.basicInfo'),
+    t('generate.steps.stylePreference'),
+    t('generate.steps.culturalPreference'),
+    t('generate.steps.results')
+  ]
 
   return (
     <>
@@ -162,7 +191,7 @@ export default function GeneratePage() {
               <CardContent className="flex items-center gap-2 p-4">
                 <Sparkles className="h-4 w-4 text-primary" />
                 <span className="text-sm font-medium">
-                  剩余次数: <span className="text-primary">{profile?.credits_remaining || 0}</span>
+                  {t('generate.creditsRemaining')}: <span className="text-primary">{profile?.credits_remaining || 0}</span>
                 </span>
               </CardContent>
             </Card>
@@ -193,22 +222,22 @@ export default function GeneratePage() {
             {step === 1 && (
               <Card>
                 <CardHeader>
-                  <CardTitle>基本信息</CardTitle>
-                  <CardDescription>告诉我们一些基本信息，以便生成最适合的名字</CardDescription>
+                  <CardTitle>{t('generate.form.basicInfoTitle')}</CardTitle>
+                  <CardDescription>{t('generate.form.basicInfoDescription')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-2">
-                    <Label htmlFor="englishName">英文名或原名</Label>
+                    <Label htmlFor="englishName">{t('generate.form.englishName')}</Label>
                     <Input
                       id="englishName"
-                      placeholder="例如: John, Sarah, 或您的原名"
+                      placeholder={t('generate.form.englishNamePlaceholder')}
                       value={formData.englishName}
                       onChange={(e) => setFormData({ ...formData, englishName: e.target.value })}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label>性别偏好</Label>
+                    <Label>{t('generate.form.genderPreference')}</Label>
                     <RadioGroup
                       value={formData.gender}
                       onValueChange={(value) => setFormData({ ...formData, gender: value })}
@@ -216,32 +245,32 @@ export default function GeneratePage() {
                       <div className="flex gap-4">
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="male" id="male" />
-                          <Label htmlFor="male">男性</Label>
+                          <Label htmlFor="male">{t('generate.form.male')}</Label>
                         </div>
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="female" id="female" />
-                          <Label htmlFor="female">女性</Label>
+                          <Label htmlFor="female">{t('generate.form.female')}</Label>
                         </div>
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="neutral" id="neutral" />
-                          <Label htmlFor="neutral">中性</Label>
+                          <Label htmlFor="neutral">{t('generate.form.neutral')}</Label>
                         </div>
                       </div>
                     </RadioGroup>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="birthYear">出生年份（可选）</Label>
+                    <Label htmlFor="birthYear">{t('generate.form.birthYear')}</Label>
                     <Input
                       id="birthYear"
                       type="number"
-                      placeholder="例如: 1995"
+                      placeholder={t('generate.form.birthYearPlaceholder')}
                       value={formData.birthYear}
                       onChange={(e) => setFormData({ ...formData, birthYear: parseInt(e.target.value) })}
                       min="1900"
                       max={new Date().getFullYear()}
                     />
-                    <p className="text-xs text-muted-foreground">用于生肖和五行分析</p>
+                    <p className="text-xs text-muted-foreground">{t('generate.form.birthYearHint')}</p>
                   </div>
 
                   <div className="flex justify-end gap-4">
@@ -249,7 +278,7 @@ export default function GeneratePage() {
                       onClick={() => setStep(2)}
                       disabled={!formData.englishName}
                     >
-                      下一步
+                      {t('generate.form.next')}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Button>
                   </div>
@@ -260,12 +289,12 @@ export default function GeneratePage() {
             {step === 2 && (
               <Card>
                 <CardHeader>
-                  <CardTitle>风格偏好</CardTitle>
-                  <CardDescription>选择您喜欢的名字风格</CardDescription>
+                  <CardTitle>{t('generate.form.styleTitle')}</CardTitle>
+                  <CardDescription>{t('generate.form.styleDescription')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-3">
-                    <Label>名字风格</Label>
+                    <Label>{t('generate.form.nameStyle')}</Label>
                     <div className="grid gap-3">
                       {styles.map((style) => (
                         <div
@@ -296,7 +325,7 @@ export default function GeneratePage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label>名字长度</Label>
+                    <Label>{t('generate.form.nameLength')}</Label>
                     <div className="flex items-center gap-4">
                       <Slider
                         value={[formData.length]}
@@ -306,16 +335,16 @@ export default function GeneratePage() {
                         step={1}
                         className="flex-1"
                       />
-                      <span className="w-12 text-center font-medium">{formData.length}字</span>
+                      <span className="w-12 text-center font-medium">{formData.length}{t('generate.form.characters')}</span>
                     </div>
                   </div>
 
                   <div className="flex justify-between">
                     <Button variant="outline" onClick={() => setStep(1)}>
-                      上一步
+                      {t('generate.form.previous')}
                     </Button>
                     <Button onClick={() => setStep(3)}>
-                      下一步
+                      {t('generate.form.next')}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Button>
                   </div>
@@ -326,15 +355,15 @@ export default function GeneratePage() {
             {step === 3 && (
               <Card>
                 <CardHeader>
-                  <CardTitle>文化偏好</CardTitle>
-                  <CardDescription>个性化您的名字（可选）</CardDescription>
+                  <CardTitle>{t('generate.form.culturalTitle')}</CardTitle>
+                  <CardDescription>{t('generate.form.culturalDescription')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-2">
-                    <Label htmlFor="meaning">期望寓意</Label>
+                    <Label htmlFor="meaning">{t('generate.form.expectedMeaning')}</Label>
                     <Textarea
                       id="meaning"
-                      placeholder="例如：希望名字寓意智慧、勇敢、善良等"
+                      placeholder={t('generate.form.expectedMeaningPlaceholder')}
                       value={formData.meaning}
                       onChange={(e) => setFormData({ ...formData, meaning: e.target.value })}
                       rows={3}
@@ -342,10 +371,10 @@ export default function GeneratePage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="avoidWords">避免使用的字</Label>
+                    <Label htmlFor="avoidWords">{t('generate.form.avoidWords')}</Label>
                     <Input
                       id="avoidWords"
-                      placeholder="例如：某些不喜欢的字或音"
+                      placeholder={t('generate.form.avoidWordsPlaceholder')}
                       value={formData.avoidWords}
                       onChange={(e) => setFormData({ ...formData, avoidWords: e.target.value })}
                     />
@@ -354,13 +383,13 @@ export default function GeneratePage() {
                   <Alert>
                     <Info className="h-4 w-4" />
                     <AlertDescription>
-                      AI将根据您的偏好生成最合适的名字。留空将使用默认设置。
+                      {t('generate.form.aiNote')}
                     </AlertDescription>
                   </Alert>
 
                   <div className="flex justify-between">
                     <Button variant="outline" onClick={() => setStep(2)}>
-                      上一步
+                      {t('generate.form.previous')}
                     </Button>
                     <Button
                       onClick={handleGenerate}
@@ -369,12 +398,12 @@ export default function GeneratePage() {
                       {isGenerating ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          生成中...
+                          {t('generate.form.generating')}
                         </>
                       ) : (
                         <>
                           <Sparkles className="mr-2 h-4 w-4" />
-                          生成名字
+                          {t('generate.form.generateNames')}
                         </>
                       )}
                     </Button>
@@ -387,8 +416,10 @@ export default function GeneratePage() {
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>生成结果</CardTitle>
-                    <CardDescription>为您生成了 {generatedNames.length} 个名字</CardDescription>
+                    <CardTitle>{t('generate.results.title')}</CardTitle>
+                    <CardDescription>
+                      {t('generate.results.description', { count: generatedNames.length })}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="grid gap-4">
@@ -409,7 +440,7 @@ export default function GeneratePage() {
                                   <h3 className="text-2xl font-bold font-chinese">{name.chinese}</h3>
                                   <span className="text-lg text-muted-foreground">{name.pinyin}</span>
                                   <Badge variant="secondary">
-                                    匹配度 {name.suitability}%
+                                    {t('generate.results.matchRate')} {name.suitability}%
                                   </Badge>
                                 </div>
                                 <p className="text-sm text-muted-foreground">{name.meaning}</p>
@@ -445,11 +476,11 @@ export default function GeneratePage() {
 
                     <div className="flex justify-center gap-4 mt-6">
                       <Button variant="outline" onClick={() => setStep(3)}>
-                        重新设置
+                        {t('generate.results.resetSettings')}
                       </Button>
                       <Button onClick={handleGenerate}>
                         <RefreshCw className="mr-2 h-4 w-4" />
-                        重新生成
+                        {t('generate.results.regenerate')}
                       </Button>
                     </div>
                   </CardContent>
@@ -458,7 +489,7 @@ export default function GeneratePage() {
                 {selectedName && (
                   <Card>
                     <CardHeader>
-                      <CardTitle>名字详情</CardTitle>
+                      <CardTitle>{t('generate.results.nameDetails')}</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="text-center py-8">
@@ -480,11 +511,11 @@ export default function GeneratePage() {
 
                       <div className="space-y-3">
                         <div>
-                          <h4 className="font-medium mb-1">寓意解释</h4>
+                          <h4 className="font-medium mb-1">{t('generate.results.meaningExplanation')}</h4>
                           <p className="text-sm text-muted-foreground">{selectedName.meaning}</p>
                         </div>
                         <div>
-                          <h4 className="font-medium mb-1">文化背景</h4>
+                          <h4 className="font-medium mb-1">{t('generate.results.culturalBackground')}</h4>
                           <p className="text-sm text-muted-foreground">{selectedName.culturalContext}</p>
                         </div>
                       </div>
@@ -492,11 +523,11 @@ export default function GeneratePage() {
                       <div className="flex justify-center gap-4">
                         <Button onClick={() => copyToClipboard(`${selectedName.chinese} (${selectedName.pinyin})`)}>
                           <Copy className="mr-2 h-4 w-4" />
-                          复制名字
+                          {t('generate.results.copyName')}
                         </Button>
                         <Button variant="outline" onClick={() => handleSaveName(selectedName)}>
                           <Save className="mr-2 h-4 w-4" />
-                          保存到收藏
+                          {t('generate.results.saveToCollection')}
                         </Button>
                       </div>
                     </CardContent>
