@@ -23,8 +23,26 @@ interface GeneratedName {
   elements?: string[]
 }
 
+interface OpenRouterFormData {
+  englishName: string
+  gender: 'male' | 'female' | 'neutral'
+  style: 'traditional' | 'modern' | 'elegant' | 'nature' | 'literary'
+  length?: number
+  meaning?: string
+  avoidWords?: string
+  birthYear?: number
+}
+
+interface OpenRouterNameResponse {
+  chinese?: string
+  pinyin?: string
+  meaning?: string
+  culturalContext?: string
+  suitability?: number
+}
+
 // OpenRouter API integration
-async function generateNamesWithOpenRouter(formData: any): Promise<GeneratedName[]> {
+async function generateNamesWithOpenRouter(formData: OpenRouterFormData): Promise<GeneratedName[]> {
   const openRouterApiKey = process.env.OPENROUTER_API_KEY
   const openRouterUrl = process.env.OPENROUTER_API_URL || 'https://openrouter.ai/api/v1/chat/completions'
 
@@ -129,19 +147,21 @@ async function generateNamesWithOpenRouter(formData: any): Promise<GeneratedName
       throw new Error('Empty response from OpenRouter')
     }
 
-    const parsedResult = JSON.parse(content)
+    const parsedResult = JSON.parse(content) as {
+      names?: OpenRouterNameResponse[]
+    }
 
     if (!parsedResult.names || !Array.isArray(parsedResult.names)) {
       throw new Error('Invalid response format from AI')
     }
 
-    return parsedResult.names.map((name: any, index: number) => ({
+    return parsedResult.names.map((name, index) => ({
       id: `name_${Date.now()}_${index}`,
-      chinese: name.chinese || '',
-      pinyin: name.pinyin || '',
-      meaning: name.meaning || '',
-      culturalContext: name.culturalContext || name.meaning || '',
-      suitability: name.suitability || 85,
+      chinese: name.chinese ?? '',
+      pinyin: name.pinyin ?? '',
+      meaning: name.meaning ?? '',
+      culturalContext: name.culturalContext ?? name.meaning ?? '',
+      suitability: name.suitability ?? 85,
       elements: []
     }))
 

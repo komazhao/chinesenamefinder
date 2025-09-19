@@ -11,6 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { useAuth } from '@/components/providers/auth-provider'
 import { Link } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
+import { toast } from 'sonner'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -54,8 +55,9 @@ export default function LoginPage() {
     try {
       await signIn(formData.email, formData.password)
       router.push('/dashboard')
-    } catch (err: any) {
-      setError(err.message || t('loginError'))
+    } catch (err: unknown) {
+      const authError = err instanceof Error ? err : new Error(t('loginError'))
+      setError(authError.message || t('loginError'))
     } finally {
       setIsLoading(false)
     }
@@ -68,10 +70,15 @@ export default function LoginPage() {
     try {
       await signInWithGoogle()
       // Google OAuth会重定向，所以这里不需要手动导航
-    } catch (err: any) {
-      setError(err.message || t('googleLoginError'))
+    } catch (err: unknown) {
+      const authError = err instanceof Error ? err : new Error(t('googleLoginError'))
+      setError(authError.message || t('googleLoginError'))
       setIsLoading(false)
     }
+  }
+
+  const handleForgotPassword = () => {
+    toast.info(t('comingSoon'))
   }
 
   return (
@@ -120,9 +127,14 @@ export default function LoginPage() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">{t('password')}</Label>
-                  <Link href="/auth/forgot-password" className="text-sm text-primary hover:underline">
+                  <button
+                    type="button"
+                    onClick={handleForgotPassword}
+                    className="text-sm text-primary hover:underline"
+                    disabled={isLoading}
+                  >
                     {t('forgotPassword')}
-                  </Link>
+                  </button>
                 </div>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />

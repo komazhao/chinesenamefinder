@@ -9,7 +9,7 @@ import { ThemeProvider } from '@/components/providers/theme-provider'
 
 type Props = {
   children: React.ReactNode
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }
 
 export function generateStaticParams() {
@@ -84,7 +84,7 @@ export default async function LocaleLayout({
 }: Props) {
   const { locale } = await params
   // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale)) {
     notFound()
   }
 

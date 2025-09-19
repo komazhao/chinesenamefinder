@@ -5,15 +5,10 @@ import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import {
   Sparkles,
-  User,
-  Calendar,
-  MapPin,
-  Heart,
   Loader2,
   RefreshCw,
   Star,
   Copy,
-  Download,
   Save,
   Info,
   ChevronRight
@@ -25,12 +20,12 @@ import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Slider } from '@/components/ui/slider'
 import { useAuth } from '@/components/providers/auth-provider'
 import { Header } from '@/components/layout/header'
 import { toast } from 'sonner'
+import { supabase } from '@/lib/supabase'
 
 interface GeneratedName {
   id: string
@@ -186,13 +181,6 @@ export default function GeneratePage() {
     navigator.clipboard.writeText(text)
     toast.success(t('generate.results.copiedToClipboard'))
   }
-
-  const stepTitles = [
-    t('generate.steps.basicInfo'),
-    t('generate.steps.stylePreference'),
-    t('generate.steps.culturalPreference'),
-    t('generate.steps.results')
-  ]
 
   return (
     <>

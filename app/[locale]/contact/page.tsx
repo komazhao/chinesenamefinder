@@ -160,7 +160,7 @@ export default function ContactPage() {
         category: '',
         message: ''
       })
-    } catch (error) {
+    } catch {
       toast.error(t('contact.form.error'))
     } finally {
       setIsSubmitting(false)

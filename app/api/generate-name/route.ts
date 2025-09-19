@@ -219,11 +219,13 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Unexpected error in generate-name API:', error)
 
+    const message = error instanceof Error ? error.message : undefined
+
     return NextResponse.json(
       {
         error: '服务器内部错误',
         code: 'INTERNAL_ERROR',
-        message: process.env.NODE_ENV === 'development' ? error.message : undefined
+        message: process.env.NODE_ENV === 'development' ? message : undefined
       },
       { status: 500 }
     )
@@ -268,6 +270,10 @@ export async function GET(request: NextRequest) {
       .eq('event_type', 'name_generation')
       .gte('created_at', `${today}T00:00:00Z`)
       .lt('created_at', `${today}T23:59:59Z`)
+
+    if (usageError) {
+      console.warn('Failed to fetch usage analytics:', usageError)
+    }
 
     const todayCount = todayUsage?.length || 0
 

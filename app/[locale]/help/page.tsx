@@ -1,12 +1,13 @@
 import { redirect } from 'next/navigation'
 
 type HelpPageProps = {
-  params: {
+  params: Promise<{
     locale: string
-  }
+  }>
 }
 
-export default function HelpPage({ params }: HelpPageProps) {
-  const locale = params?.locale || 'en'
-  redirect(`/${locale}/contact`)
+export default async function HelpPage({ params }: HelpPageProps) {
+  const { locale } = await params
+  const normalizedLocale = locale && locale !== '' ? locale : 'en'
+  redirect(`/${normalizedLocale}/contact`)
 }

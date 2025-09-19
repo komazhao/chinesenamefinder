@@ -7,10 +7,10 @@ export const runtime = 'edge'
 // 获取单个名字详情
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const nameId = params.id
+    const { id: nameId } = await context.params
 
     // 验证用户身份
     const authHeader = request.headers.get('Authorization')
@@ -70,10 +70,10 @@ const updateNameSchema = z.object({
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const nameId = params.id
+    const { id: nameId } = await context.params
 
     // 验证用户身份
     const authHeader = request.headers.get('Authorization')
@@ -144,10 +144,10 @@ export async function PATCH(
 // 删除名字
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const nameId = params.id
+    const { id: nameId } = await context.params
 
     // 验证用户身份
     const authHeader = request.headers.get('Authorization')

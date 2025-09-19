@@ -9,7 +9,7 @@ export function TestimonialsSection() {
         <div className="grid md:grid-cols-3 gap-8">
           {[1, 2, 3].map((i) => (
             <div key={i} className="bg-muted/30 p-6 rounded-lg">
-              <p className="mb-4">"非常棒的起名体验！"</p>
+              <p className="mb-4">&quot;非常棒的起名体验！&quot;</p>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-primary/20 rounded-full mr-3" />
                 <div>

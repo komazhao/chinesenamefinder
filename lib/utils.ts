@@ -112,7 +112,7 @@ export function sleep(ms: number): Promise<void> {
 /**
  * 防抖函数
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -132,7 +132,7 @@ export function debounce<T extends (...args: any[]) => any>(
 /**
  * 节流函数
  */
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {
@@ -177,15 +177,23 @@ export function deepClone<T>(obj: T): T {
 /**
  * 获取对象的深度嵌套值
  */
-export function getNestedValue(obj: any, path: string, defaultValue: any = undefined): any {
+export function getNestedValue<T = unknown>(
+  obj: unknown,
+  path: string,
+  defaultValue?: T
+): T | unknown {
   const keys = path.split('.')
-  let result = obj
+  let result: unknown = obj
 
   for (const key of keys) {
-    if (result === null || result === undefined || typeof result !== 'object') {
+    if (
+      result === null ||
+      result === undefined ||
+      (typeof result !== 'object' && typeof result !== 'function')
+    ) {
       return defaultValue
     }
-    result = result[key]
+    result = (result as Record<string, unknown>)[key]
   }
 
   return result !== undefined ? result : defaultValue
@@ -194,16 +202,16 @@ export function getNestedValue(obj: any, path: string, defaultValue: any = undef
 /**
  * 设置对象的深度嵌套值
  */
-export function setNestedValue(obj: any, path: string, value: any): void {
+export function setNestedValue(obj: Record<string, unknown>, path: string, value: unknown): void {
   const keys = path.split('.')
   const lastKey = keys.pop()!
-  let current = obj
+  let current: Record<string, unknown> = obj
 
   for (const key of keys) {
     if (!current[key] || typeof current[key] !== 'object') {
       current[key] = {}
     }
-    current = current[key]
+    current = current[key] as Record<string, unknown>
   }
 
   current[lastKey] = value
@@ -212,12 +220,12 @@ export function setNestedValue(obj: any, path: string, value: any): void {
 /**
  * 数组去重
  */
-export function uniqueArray<T>(array: T[], keySelector?: (item: T) => any): T[] {
+export function uniqueArray<T>(array: T[], keySelector?: (item: T) => unknown): T[] {
   if (!keySelector) {
     return [...new Set(array)]
   }
 
-  const seen = new Set()
+  const seen = new Set<unknown>()
   return array.filter(item => {
     const key = keySelector(item)
     if (seen.has(key)) {
@@ -385,19 +393,19 @@ export function getDeviceType(): 'mobile' | 'tablet' | 'desktop' {
  * 本地存储工具
  */
 export const storage = {
-  get: (key: string, defaultValue: any = null) => {
+  get: <T>(key: string, defaultValue: T | null = null): T | null => {
     if (typeof window === 'undefined') return defaultValue
 
     try {
       const item = window.localStorage.getItem(key)
-      return item ? JSON.parse(item) : defaultValue
+      return item ? (JSON.parse(item) as T) : defaultValue
     } catch (error) {
       console.error('Error reading from localStorage:', error)
       return defaultValue
     }
   },
 
-  set: (key: string, value: any) => {
+  set: (key: string, value: unknown) => {
     if (typeof window === 'undefined') return
 
     try {

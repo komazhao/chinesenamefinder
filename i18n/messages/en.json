@@ -101,6 +101,7 @@
       "save": "Save 30%"
     },
     "paymentPending": "We are integrating payment system, please be patient",
+    "comingSoon": "Coming soon, please stay tuned",
     "free": {
       "title": "Free",
       "price": "$0",
@@ -310,6 +311,7 @@
     "loginError": "Login failed, please check your email and password",
     "googleLogin": "Sign in with Google",
     "googleLoginError": "Google sign in failed",
+    "comingSoon": "This feature is coming soon",
     "or": "or",
     "noAccount": "Don't have an account?",
     "registerNow": "Sign up now",
@@ -387,7 +389,8 @@
     "close": "Close",
     "next": "Next",
     "previous": "Previous",
-    "submit": "Submit"
+    "submit": "Submit",
+    "comingSoon": "Coming soon, please stay tuned"
   },
   "about": {
     "title": "About Us",

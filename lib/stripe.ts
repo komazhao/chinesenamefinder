@@ -259,15 +259,13 @@ export async function createPortalSession(
 
 // 获取使用情况
 export async function getUsageRecord(
-  subscriptionItemId: string,
-  startDate: Date,
-  endDate: Date
-): Promise<Stripe.UsageRecord[]> {
+  subscriptionItemId: string
+): Promise<Stripe.UsageRecordSummary[]> {
   try {
-    const usageRecords = await stripe.usageRecords.list({
-      subscription_item: subscriptionItemId,
-      limit: 100,
-    })
+    const usageRecords = await stripe.subscriptionItems.listUsageRecordSummaries(
+      subscriptionItemId,
+      { limit: 100 }
+    )
     return usageRecords.data
   } catch (error) {
     console.error('Error fetching usage records:', error)
@@ -292,7 +290,7 @@ export function isValidWebhookSignature(
   try {
     stripe.webhooks.constructEvent(body, signature, secret)
     return true
-  } catch (error) {
+  } catch {
     return false
   }
 }

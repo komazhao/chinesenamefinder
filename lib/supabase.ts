@@ -1,5 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
-import type { Database } from './database.types'
+import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
 // 客户端配置 - 使用占位符以避免构建错误
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
@@ -14,7 +13,7 @@ if (isMissingConfig && !isDevelopment) {
 }
 
 // 客户端实例
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,
@@ -23,14 +22,14 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
 })
 
 // 服务端客户端（用于API路由）
-export const createServiceClient = () => {
+export const createServiceClient = (): SupabaseClient => {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
   if (!serviceKey) {
     throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY environment variable')
   }
 
-  return createClient<Database>(
+  return createClient(
     supabaseUrl,
     serviceKey,
     {
@@ -43,6 +42,6 @@ export const createServiceClient = () => {
 }
 
 // 管理员客户端（用于管理操作）
-export const createAdminClient = () => {
+export const createAdminClient = (): SupabaseClient => {
   return createServiceClient()
 }

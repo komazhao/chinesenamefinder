@@ -16,10 +16,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import {
   User,
-  Mail,
   Shield,
   Bell,
-  Globe,
   Key,
   CreditCard,
   Download,
@@ -31,11 +29,7 @@ import {
   AlertCircle,
   Settings as SettingsIcon,
   Smartphone,
-  Monitor,
-  Moon,
-  Sun,
-  Volume2,
-  VolumeX
+  Monitor
 } from 'lucide-react'
 import { toast } from 'sonner'
 
@@ -70,13 +64,15 @@ export default function SettingsPage() {
     soundEnabled: true
   })
 
-  const handleSave = async (section: string) => {
+  const handleSave = async (
+    messageKey: 'profileSaved' | 'preferencesSaved' | 'notificationsSaved' | 'passwordSaved'
+  ) => {
     setIsLoading(true)
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000))
-      toast.success(t('toast.profileSaved'))
-    } catch (error) {
+      toast.success(t(`toast.${messageKey}`))
+    } catch {
       toast.error(t('toast.saveFailed'))
     } finally {
       setIsLoading(false)
@@ -232,7 +228,7 @@ export default function SettingsPage() {
                         rows={3}
                       />
                     </div>
-                    <Button onClick={() => handleSave(t('profile.title'))} disabled={isLoading}>
+                    <Button onClick={() => handleSave('profileSaved')} disabled={isLoading}>
                       <Save className="mr-2 h-4 w-4" />
                       {t('profile.saveProfile')}
                     </Button>
@@ -341,7 +337,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <Button onClick={() => handleSave(t('preferences.title'))} disabled={isLoading}>
+                    <Button onClick={() => handleSave('preferencesSaved')} disabled={isLoading}>
                       <Save className="mr-2 h-4 w-4" />
                       {t('preferences.savePreferences')}
                     </Button>
@@ -405,7 +401,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <Button onClick={() => handleSave(t('notifications.title'))} disabled={isLoading}>
+                    <Button onClick={() => handleSave('notificationsSaved')} disabled={isLoading}>
                       <Save className="mr-2 h-4 w-4" />
                       {t('notifications.saveNotifications')}
                     </Button>
@@ -471,7 +467,7 @@ export default function SettingsPage() {
                       </AlertDescription>
                     </Alert>
 
-                    <Button onClick={() => handleSave('密码')} disabled={isLoading}>
+                    <Button onClick={() => handleSave('passwordSaved')} disabled={isLoading}>
                       <Key className="mr-2 h-4 w-4" />
                       {t('security.updatePassword')}
                     </Button>

@@ -1,11 +1,6 @@
-import type { Metadata } from 'next'
 import { Inter, Noto_Serif_SC, Fira_Code } from 'next/font/google'
 import './globals.css'
 import { cn } from '@/lib/utils'
-import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
-import { notFound } from 'next/navigation'
-import { routing } from '@/i18n/routing'
 
 // 字体配置
 const inter = Inter({

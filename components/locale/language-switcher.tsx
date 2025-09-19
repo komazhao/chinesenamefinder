@@ -5,7 +5,6 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { Languages } from "lucide-react";
@@ -17,7 +16,10 @@ interface LanguageSwitcherProps {
 
 export default function LanguageSwitcher({ isIcon = false }: LanguageSwitcherProps) {
   const params = useParams();
-  const locale = params.locale as string || 'en';
+  const rawLocale = params?.locale;
+  const locale = Array.isArray(rawLocale)
+    ? rawLocale[0] ?? 'en'
+    : (typeof rawLocale === 'string' ? rawLocale : 'en');
   const router = useRouter();
   const pathname = usePathname();
 

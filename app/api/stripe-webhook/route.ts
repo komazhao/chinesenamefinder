@@ -91,20 +91,7 @@ export async function POST(request: NextRequest) {
 
           if (addCreditsError) {
             console.error('Failed to add credits:', addCreditsError)
-
-            // 尝试直接更新用户档案
-            const { error: directUpdateError } = await supabase
-              .from('user_profiles')
-              .update({
-                credits_remaining: supabase.sql`credits_remaining + ${credits}`,
-                updated_at: new Date().toISOString()
-              })
-              .eq('email', customerEmail)
-
-            if (directUpdateError) {
-              console.error('Failed to directly update credits:', directUpdateError)
-              throw new Error('Failed to add credits to user account')
-            }
+            throw new Error('Failed to add credits to user account')
           }
 
           console.log(`Successfully added ${credits} credits to user ${customerEmail}`)
@@ -175,7 +162,6 @@ export async function POST(request: NextRequest) {
         console.log('New subscription created:', subscription.id)
 
         // 处理订阅创建
-        const customerId = subscription.customer as string
         const planType = subscription.metadata?.plan_type
         const userId = subscription.metadata?.user_id
 
@@ -263,10 +249,12 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Webhook handler error:', error)
 
+    const message = error instanceof Error ? error.message : undefined
+
     return NextResponse.json(
       {
         error: 'Webhook handler failed',
-        message: process.env.NODE_ENV === 'development' ? error.message : undefined
+        message: process.env.NODE_ENV === 'development' ? message : undefined
       },
       { status: 500 }
     )

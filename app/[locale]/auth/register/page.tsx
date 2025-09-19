@@ -54,16 +54,15 @@ export default function RegisterPage() {
     setIsLoading(true)
 
     try {
-      const { error } = await signUp(formData.email, formData.password, formData.name)
-
-      if (error) throw error
+      await signUp(formData.email, formData.password, formData.name)
 
       setSuccess(true)
       setTimeout(() => {
         router.push('/auth/login')
       }, 3000)
-    } catch (err: any) {
-      setError(err.message || t('registrationError'))
+    } catch (err: unknown) {
+      const authError = err instanceof Error ? err : new Error(t('registrationError'))
+      setError(authError.message || t('registrationError'))
     } finally {
       setIsLoading(false)
     }
@@ -75,8 +74,9 @@ export default function RegisterPage() {
 
     try {
       await signInWithGoogle()
-    } catch (err: any) {
-      setError(err.message || t('googleRegistrationError'))
+    } catch (err: unknown) {
+      const authError = err instanceof Error ? err : new Error(t('googleRegistrationError'))
+      setError(authError.message || t('googleRegistrationError'))
       setIsLoading(false)
     }
   }

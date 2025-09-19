@@ -12,7 +12,7 @@ interface AuthContextType {
   loading: boolean
   error: Error | null
   signIn: (email: string, password: string) => Promise<void>
-  signUp: (email: string, password: string, fullName?: string) => Promise<{ data: any; error: Error | null }>
+  signUp: (email: string, password: string, fullName?: string) => Promise<void>
   signOut: () => Promise<void>
   signInWithGoogle: () => Promise<void>
   updateProfile: (updates: Partial<UserProfile>) => Promise<UserProfile>
@@ -147,7 +147,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   // 注册
-  const signUp = async (email: string, password: string, fullName?: string) => {
+  const signUp = async (email: string, password: string, fullName?: string): Promise<void> => {
     setLoading(true)
     setError(null)
 
@@ -157,7 +157,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         throw new Error('Supabase未正确配置：请在.env.local中设置真实的SUPABASE密钥')
       }
 
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -168,12 +168,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
 
       if (error) throw error
-
-      return { data, error: null }
     } catch (error) {
       const authError = error instanceof Error ? error : new Error('Sign up failed')
       setError(authError)
-      return { data: null, error: authError }
+      throw authError
     } finally {
       setLoading(false)
     }

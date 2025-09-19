@@ -101,6 +101,7 @@
       "save": "省30%"
     },
     "paymentPending": "我们正在接入支付，请耐心等待",
+    "comingSoon": "该功能即将上线，敬请期待",
     "free": {
       "title": "免费版",
       "price": "¥0",
@@ -310,6 +311,7 @@
     "loginError": "登录失败，请检查您的邮箱和密码",
     "googleLogin": "使用 Google 账号登录",
     "googleLoginError": "Google 登录失败",
+    "comingSoon": "该功能即将上线，敬请期待",
     "or": "或",
     "noAccount": "还没有账户？",
     "registerNow": "立即注册",
@@ -387,7 +389,8 @@
     "close": "关闭",
     "next": "下一步",
     "previous": "上一步",
-    "submit": "提交"
+    "submit": "提交",
+    "comingSoon": "该功能即将上线，敬请期待"
   },
   "about": {
     "title": "关于我们",

@@ -7,11 +7,12 @@ import { Check, X, Sparkles, Zap, Crown, ArrowRight, Loader2 } from 'lucide-reac
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useAuth } from '@/components/providers/auth-provider'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { toast } from 'sonner'
+import { Link } from '@/i18n/routing'
 
 interface PricingPlan {
   id: string
@@ -31,7 +32,7 @@ interface PricingPlan {
 
 export default function PricingPage() {
   const router = useRouter()
-  const { user, profile } = useAuth()
+  const { user } = useAuth()
   const t = useTranslations()
   const [isLoading, setIsLoading] = useState<string | null>(null)
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'one-time'>('one-time')
@@ -114,11 +115,11 @@ export default function PricingPage() {
 
     setIsLoading(plan.id)
 
-    // Show payment pending message instead of processing Stripe payment
+    // 暂未接入 Stripe，展示占位提示
     setTimeout(() => {
-      toast.info(t('pricing.paymentPending'))
+      toast.info(t('pricing.comingSoon'))
       setIsLoading(null)
-    }, 1000)
+    }, 600)
 
     /* Stripe payment code - commented out but preserved
     try {
@@ -228,6 +229,9 @@ export default function PricingPage() {
                     </div>
                     <CardTitle className="text-2xl mb-2">{t(plan.nameKey)}</CardTitle>
                     <CardDescription>{t(plan.descriptionKey)}</CardDescription>
+                    <Badge variant="outline" className="mt-3 border-dashed bg-muted/40 text-muted-foreground">
+                      {t('pricing.comingSoon')}
+                    </Badge>
                     <div className="mt-4">
                       <div className="flex items-baseline justify-center">
                         <span className="text-lg font-medium text-muted-foreground">{plan.currency}</span>
@@ -305,10 +309,10 @@ export default function PricingPage() {
                   </p>
                   {!user && (
                     <Button className="mt-4" variant="outline" asChild>
-                      <a href="/auth/register">
+                      <Link href="/auth/register">
                         {t('pricing.freeTrial.registerButton')}
                         <ArrowRight className="ml-2 h-4 w-4" />
-                      </a>
+                      </Link>
                     </Button>
                   )}
                 </div>

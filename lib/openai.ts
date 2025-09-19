@@ -22,6 +22,18 @@ export interface NameResult {
   qualityScore?: number
 }
 
+type RawNameResponse = {
+  chinese?: string
+  pinyin?: string
+  meaning?: string
+  pronunciationTips?: string
+}
+
+type CompletionUsage = {
+  prompt_tokens?: number | null
+  completion_tokens?: number | null
+}
+
 // 生成结果接口
 export interface GenerationResult {
   names: NameResult[]
@@ -159,7 +171,6 @@ export class NameGenerator {
     requestCount: number
   }> {
     const today = new Date().toISOString().split('T')[0]
-    const month = today.substring(0, 7)
     const key = userId ? `${userId}-${today}` : today
 
     const dailyStats = this.costTracker.get(key) || {
@@ -311,12 +322,11 @@ export class NameGenerator {
       }
 
       return {
-        names: parsed.names.map((name: any) => ({
-          chinese: name.chinese || '',
-          pinyin: name.pinyin || '',
-          meaning: name.meaning || '',
-          pronunciationTips: name.pronunciationTips || '',
-          qualityScore: this.calculateQualityScore(name)
+        names: parsed.names.map((name: RawNameResponse) => ({
+          chinese: name.chinese ?? '',
+          pinyin: name.pinyin ?? '',
+          meaning: name.meaning ?? '',
+          pronunciationTips: name.pronunciationTips ?? ''
         }))
       }
     } catch (error) {
@@ -450,12 +460,12 @@ export class NameGenerator {
   /**
    * 计算API调用成本
    */
-  private calculateCost(usage: any): number {
+  private calculateCost(usage: CompletionUsage | undefined): number {
     if (!usage) return this.COST_PER_REQUEST
 
     // 基于实际token消耗计算成本
-    const inputTokens = usage.prompt_tokens || 0
-    const outputTokens = usage.completion_tokens || 0
+    const inputTokens = usage.prompt_tokens ?? 0
+    const outputTokens = usage.completion_tokens ?? 0
 
     // GPT-4-turbo定价：输入$0.01/1K tokens，输出$0.03/1K tokens
     const cost = (inputTokens * 0.01 + outputTokens * 0.03) / 1000

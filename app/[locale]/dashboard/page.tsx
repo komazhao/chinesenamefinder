@@ -1,16 +1,12 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import {
-  User,
   Heart,
-  Clock,
   Sparkles,
-  Download,
   Copy,
   Trash2,
-  Star,
   TrendingUp,
   Calendar,
   CreditCard,
@@ -51,7 +47,7 @@ interface UsageStats {
 
 export default function DashboardPage() {
   const router = useRouter()
-  const { user, profile, loading } = useAuth()
+  const { user, profile, session, loading } = useAuth()
   const [savedNames, setSavedNames] = useState<SavedName[]>([])
   const [favoriteNames, setFavoriteNames] = useState<SavedName[]>([])
   const [usageStats, setUsageStats] = useState<UsageStats>({
@@ -63,25 +59,14 @@ export default function DashboardPage() {
 
   const t = useTranslations('dashboard')
 
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/auth/login')
-      return
-    }
-
-    if (user) {
-      fetchDashboardData()
-    }
-  }, [user, loading, router])
-
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       setIsLoading(true)
 
       // Fetch saved names
       const namesResponse = await fetch('/api/names', {
         headers: {
-          'Authorization': `Bearer ${user?.access_token || ''}`
+          'Authorization': `Bearer ${session?.access_token || ''}`
         }
       })
 
@@ -95,7 +80,7 @@ export default function DashboardPage() {
       const statsResponse = await fetch('/api/generate', {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${user?.access_token || ''}`
+          'Authorization': `Bearer ${session?.access_token || ''}`
         }
       })
 
@@ -114,7 +99,18 @@ export default function DashboardPage() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [session?.access_token, t])
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/auth/login')
+      return
+    }
+
+    if (user && session?.access_token) {
+      fetchDashboardData()
+    }
+  }, [user, session?.access_token, loading, router, fetchDashboardData])
 
   const handleCopyName = (name: SavedName) => {
     navigator.clipboard.writeText(`${name.chinese_name} (${name.pinyin})`)
@@ -127,7 +123,7 @@ export default function DashboardPage() {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user?.access_token || ''}`
+          'Authorization': `Bearer ${session?.access_token || ''}`
         },
         body: JSON.stringify({
           is_favorite: !savedNames.find(n => n.id === nameId)?.is_favorite
@@ -149,7 +145,7 @@ export default function DashboardPage() {
       const response = await fetch(`/api/names/${nameId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${user?.access_token || ''}`
+          'Authorization': `Bearer ${session?.access_token || ''}`
         }
       })
 

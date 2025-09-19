@@ -1,791 +1,303 @@
-# 📋 部署指南和上线流程
+# 部署与集成操作手册
 
-本文档详细描述了文化伴侣中文起名网站的完整部署流程，包括本地测试、生产环境配置和上线后的维护操作。
-
-## 📚 目录
-
-- [部署前准备](#部署前准备)
-- [本地环境搭建](#本地环境搭建)
-- [数据库配置](#数据库配置)
-- [第三方服务配置](#第三方服务配置)
-- [Cloudflare Pages 部署](#cloudflare-pages-部署)
-- [生产环境验证](#生产环境验证)
-- [监控和维护](#监控和维护)
-- [故障排除](#故障排除)
-
-## 🚀 部署前准备
-
-### 环境要求
-
-- **Node.js**: >= 18.17.0
-- **npm**: >= 8.0.0 或 yarn >= 1.22.0
-- **Git**: 最新版本
-- **操作系统**: macOS、Linux 或 Windows (WSL2)
-
-### 账户准备
-
-在开始部署前，请确保已注册并配置以下服务账户：
-
-1. **GitHub** - 代码仓库和 CI/CD
-2. **Supabase** - 数据库和认证服务
-3. **OpenAI** - AI 起名引擎
-4. **Stripe** - 支付处理
-5. **Cloudflare** - CDN 和部署平台
-6. **Sentry** (可选) - 错误监控
-7. **Google Analytics** (可选) - 网站分析
-
-### 成本预算规划
-
-```typescript
-const monthlyBudget = {
-  // 基础设施成本
-  cloudflare: 0,        // Pages 免费计划
-  supabase: 0,          // 免费计划 (500MB数据库)
-
-  // AI 服务成本
-  openai: 80 * 30,      // $80/天 × 30天 = $2400/月
-
-  // 支付处理费
-  stripe: '2.9% + $0.30 per transaction',
-
-  // 可选服务
-  sentry: 0,            // 免费计划 (10K errors/月)
-  customDomain: 0,      // Cloudflare 免费
-
-  // 总估算
-  estimatedTotal: '$2400-3000/月 (主要为 AI 成本)'
-}
-```
-
-## 🏠 本地环境搭建
-
-### 1. 克隆项目
-
-```bash
-# 克隆仓库
-git clone https://github.com/your-org/chinesenamefinder.git
-cd chinesenamefinder
-
-# 检查项目结构
-ls -la
-```
-
-### 2. 安装依赖
-
-```bash
-# 安装 Node.js 依赖
-npm install
-
-# 验证安装
-npm list --depth=0
-
-# 检查可能的安全漏洞
-npm audit
-```
-
-### 3. 环境变量配置
-
-```bash
-# 创建本地环境变量文件
-cp .env.example .env.local
-
-# 使用编辑器配置环境变量
-code .env.local  # VSCode
-# 或
-vim .env.local   # Vim
-```
-
-### 4. 本地开发服务器
-
-```bash
-# 启动开发服务器
-npm run dev
-
-# 验证服务器启动
-curl http://localhost:3000/api/health
-
-# 在浏览器中访问
-open http://localhost:3000
-```
-
-## 🗄️ 数据库配置
-
-### Supabase 项目设置
-
-1. **创建 Supabase 项目**
-```bash
-# 访问 Supabase 控制台
-https://app.supabase.com/
-
-# 创建新项目
-- 项目名称: chinesenamefinder
-- 数据库密码: 强密码 (记录保存)
-- 区域: 选择离目标用户最近的区域
-```
-
-2. **配置数据库架构**
-```sql
--- 在 Supabase SQL Editor 中执行
--- 运行 lib/database-schema.sql 中的所有SQL语句
-
--- 验证表结构
-SELECT table_name
-FROM information_schema.tables
-WHERE table_schema = 'public';
-
--- 应该看到以下表:
--- user_profiles, names, payments, content_sources, user_works
-```
-
-3. **配置认证设置**
-```bash
-# 在 Supabase Dashboard > Authentication > Settings
-
-# 启用邮箱认证
-Email Auth: ✅ 启用
-
-# 启用 Google OAuth (可选)
-Google OAuth: ✅ 启用
-Client ID: your-google-client-id
-Client Secret: your-google-client-secret
-
-# 配置重定向 URL
-Site URL: http://localhost:3000 (开发环境)
-Redirect URLs:
-  - http://localhost:3000/auth/callback
-  - https://your-domain.com/auth/callback (生产环境)
-```
-
-4. **获取数据库连接信息**
-```bash
-# 在 Supabase Dashboard > Settings > API
-
-# 复制以下信息到 .env.local:
-NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-```
-
-### 数据库测试验证
-
-```bash
-# 测试数据库连接
-npm run test:db-connection
-
-# 测试用户注册流程
-curl -X POST http://localhost:3000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "test@example.com",
-    "password": "testpassword123",
-    "fullName": "Test User"
-  }'
-```
-
-## 🔌 第三方服务配置
-
-### OpenAI API 设置
-
-1. **获取 API 密钥**
-```bash
-# 访问 OpenAI Platform
-https://platform.openai.com/api-keys
-
-# 创建新的 API Key
-- Name: ChineseNameFinder Production
-- Permissions: All
-- 复制 API Key 到环境变量
-```
-
-2. **配置使用限制**
-```bash
-# 设置使用限制
-https://platform.openai.com/account/billing/limits
-
-# 建议设置:
-- Monthly Budget: $3000
-- Email Alerts: 80%, 100%
-- Hard Limit: 启用
-```
-
-3. **测试 AI 服务**
-```bash
-# 测试 OpenAI 连接
-curl https://api.openai.com/v1/models \
-  -H "Authorization: Bearer $OPENAI_API_KEY"
-
-# 测试起名 API
-curl -X POST http://localhost:3000/api/generate-name \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-supabase-jwt" \
-  -d '{
-    "englishName": "John",
-    "gender": "male",
-    "style": "modern"
-  }'
-```
-
-### Stripe 支付配置
-
-1. **Stripe 账户设置**
-```bash
-# Stripe Dashboard
-https://dashboard.stripe.com/
-
-# 获取 API 密钥
-Test Keys:
-- Publishable key: pk_test_...
-- Secret key: sk_test_...
-
-Production Keys (上线后):
-- Publishable key: pk_live_...
-- Secret key: sk_live_...
-```
-
-2. **配置 Webhook**
-```bash
-# Stripe Dashboard > Developers > Webhooks
-
-# 创建 Endpoint:
-URL: https://your-domain.com/api/stripe-webhook
-Description: Chinese Name Finder Webhooks
-
-# 监听事件:
-- checkout.session.completed
-- checkout.session.expired
-- payment_intent.succeeded
-- payment_intent.payment_failed
-- customer.subscription.created
-- customer.subscription.updated
-- customer.subscription.deleted
-
-# 复制 Webhook Secret
-STRIPE_WEBHOOK_SECRET=whsec_...
-```
-
-3. **测试支付流程**
-```bash
-# 使用测试卡号
-Card Number: 4242 4242 4242 4242
-Expiry: 任意未来日期
-CVC: 任意3位数字
-ZIP: 任意有效邮编
-
-# 测试支付 API
-curl -X POST http://localhost:3000/api/create-payment \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-jwt" \
-  -d '{
-    "planType": "basic"
-  }'
-```
-
-## ☁️ Cloudflare Pages 部署
-
-### 1. Cloudflare 账户设置
-
-```bash
-# 注册 Cloudflare 账户
-https://dash.cloudflare.com/sign-up
-
-# 获取 API Token
-Dashboard > My Profile > API Tokens > Create Token
-
-# 选择 "Custom Token":
-Token Name: ChineseNameFinder Deploy
-Permissions:
-- Zone:Zone:Read
-- Zone:DNS:Edit
-- Account:Cloudflare Pages:Edit
-
-# 获取 Account ID
-Dashboard > 右侧边栏 > Account ID
-```
-
-### 2. GitHub Repository 设置
-
-```bash
-# 推送代码到 GitHub
-git add .
-git commit -m "feat: initial deployment setup"
-git push origin main
-
-# 配置 GitHub Secrets
-# Settings > Secrets and variables > Actions
-
-# 添加以下 Secrets:
-CLOUDFLARE_API_TOKEN=your-api-token
-CLOUDFLARE_ACCOUNT_ID=your-account-id
-
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-
-# OpenAI
-OPENAI_API_KEY=your-openai-key
-
-# Stripe
-STRIPE_SECRET_KEY=your-stripe-secret
-STRIPE_WEBHOOK_SECRET=your-webhook-secret
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-stripe-public
-
-# Site
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
-
-# Optional
-NEXT_PUBLIC_GA_ID=your-ga-id
-NEXT_PUBLIC_SENTRY_DSN=your-sentry-dsn
-```
-
-### 3. Cloudflare Pages 项目创建
-
-```bash
-# 方法1: 通过 Cloudflare Dashboard
-https://dash.cloudflare.com/pages
-
-# Create a project > Connect to Git
-- 选择 GitHub repository
-- Project name: chinesenamefinder
-- Production branch: main
-- Build command: npm run build && npx @cloudflare/next-on-pages
-- Build output directory: .vercel/output/static
-```
-
-```bash
-# 方法2: 通过 Wrangler CLI
-npm install -g wrangler
-
-# 登录 Cloudflare
-wrangler login
-
-# 创建 Pages 项目
-wrangler pages project create chinesenamefinder
-
-# 部署
-wrangler pages deploy .vercel/output/static
-```
-
-### 4. 环境变量配置
-
-```bash
-# 在 Cloudflare Pages Dashboard > Settings > Environment variables
-
-# Production 环境变量:
-NODE_ENV=production
-NEXT_PUBLIC_SUPABASE_URL=your-production-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-production-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-production-service-role-key
-OPENAI_API_KEY=your-production-openai-key
-STRIPE_SECRET_KEY=your-production-stripe-secret
-STRIPE_WEBHOOK_SECRET=your-production-webhook-secret
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-production-stripe-public
-NEXT_PUBLIC_SITE_URL=https://your-custom-domain.com
-NEXT_PUBLIC_GA_ID=your-google-analytics-id
-NEXT_PUBLIC_SENTRY_DSN=your-sentry-dsn
-
-# Preview 环境变量:
-NODE_ENV=development
-# ... (同样的变量，但使用测试值)
-```
-
-### 5. 自定义域名配置
-
-```bash
-# 在 Cloudflare Pages > Custom domains
-
-# 添加自定义域名
-Domain: chinesenamefinder.com
-Subdomain: www.chinesenamefinder.com
-
-# DNS 记录将自动创建
-# 等待 SSL 证书激活 (通常 2-10 分钟)
-```
-
-### 6. 部署验证
-
-```bash
-# 触发部署
-git push origin main
-
-# 查看部署状态
-https://dash.cloudflare.com/pages/chinesenamefinder/deployments
-
-# 测试部署后的网站
-curl -I https://your-domain.com
-curl https://your-domain.com/api/health
-```
-
-## ✅ 生产环境验证
-
-### 功能测试检查清单
-
-```bash
-# 1. 网站基本功能
-□ 首页加载正常
-□ 用户注册流程
-□ 用户登录流程
-□ Google OAuth 登录
-□ AI 起名生成功能
-□ 名字保存和收藏
-□ 支付流程测试
-□ 响应式设计 (手机/平板/桌面)
-
-# 2. API 端点测试
-□ GET /api/health - 健康检查
-□ POST /api/generate-name - AI起名
-□ GET /api/names - 获取名字列表
-□ POST /api/create-payment - 创建支付
-□ POST /api/stripe-webhook - Webhook处理
-
-# 3. 性能测试
-□ 首页加载时间 < 3秒
-□ API 响应时间 < 2秒
-□ 图片加载优化
-□ CDN 缓存配置
-
-# 4. SEO 和可访问性
-□ Meta 标签配置
-□ Open Graph 标签
-□ 结构化数据
-□ 无障碍性标准
-□ 多语言支持
-```
-
-### 自动化测试脚本
-
-```bash
-#!/bin/bash
-# test-production.sh
-
-DOMAIN="https://your-domain.com"
-echo "Testing production deployment at $DOMAIN"
-
-# 1. 健康检查
-echo "1. Health Check..."
-curl -f "$DOMAIN/api/health" || exit 1
-
-# 2. 首页加载
-echo "2. Homepage Load..."
-curl -f "$DOMAIN" > /dev/null || exit 1
-
-# 3. API 响应时间测试
-echo "3. API Response Time..."
-time curl -f "$DOMAIN/api/health" > /dev/null
-
-# 4. SSL 证书检查
-echo "4. SSL Certificate..."
-curl -I "$DOMAIN" | grep -i "HTTP/2 200" || exit 1
-
-# 5. 性能测试 (需要安装 lighthouse)
-echo "5. Lighthouse Performance..."
-lighthouse "$DOMAIN" --only-categories=performance --quiet --chrome-flags="--headless"
-
-echo "All tests passed! 🎉"
-```
-
-### 监控设置
-
-```bash
-# 1. Cloudflare Analytics
-# Dashboard > Analytics & Logs > Web Analytics
-# 启用 Web Analytics
-
-# 2. Uptime 监控
-# 使用第三方服务如 Pingdom, UptimeRobot
-curl -X POST "https://api.uptimerobot.com/v2/newMonitor" \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "api_key=your-api-key&format=json&type=1&url=https://your-domain.com&friendly_name=ChineseNameFinder"
-
-# 3. Error 监控 (Sentry)
-# 已通过环境变量 NEXT_PUBLIC_SENTRY_DSN 配置
-
-# 4. Performance 监控
-# Google PageSpeed Insights API
-curl "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://your-domain.com&key=YOUR_API_KEY"
-```
-
-## 📊 监控和维护
-
-### 日常监控指标
-
-```typescript
-const monitoringMetrics = {
-  // 业务指标
-  userRegistrations: 'daily', // 每日新用户注册数
-  nameGenerations: 'daily',   // 每日AI起名次数
-  paymentConversions: 'daily', // 每日付费转化数
-
-  // 技术指标
-  apiResponseTime: '< 2 seconds', // API响应时间
-  pageLoadTime: '< 3 seconds',    // 页面加载时间
-  errorRate: '< 1%',              // 错误率
-  uptime: '> 99.9%',             // 可用性
-
-  // AI成本控制
-  dailyAICost: '< $80',          // 每日AI成本
-  monthlyAICost: '< $2400',      // 每月AI成本
-  costPerGeneration: '< $0.05',  // 每次生成成本
-
-  // 用户体验
-  conversionRate: '> 3%',        // 注册转化率
-  userRetention: '> 30%',        // 用户留存率
-  averageRating: '> 4.5/5'       // 平均评分
-}
-```
-
-### 自动化运维脚本
-
-```bash
-#!/bin/bash
-# daily-maintenance.sh
-
-echo "=== Daily Maintenance Script ==="
-date
-
-# 1. 检查 AI 成本
-echo "1. Checking AI costs..."
-node scripts/check-ai-costs.js
-
-# 2. 数据库健康检查
-echo "2. Database health check..."
-node scripts/check-database-health.js
-
-# 3. 清理过期数据
-echo "3. Cleaning expired data..."
-node scripts/cleanup-expired-data.js
-
-# 4. 备份关键数据
-echo "4. Backing up critical data..."
-node scripts/backup-data.js
-
-# 5. 性能报告
-echo "5. Generating performance report..."
-node scripts/generate-performance-report.js
-
-echo "Maintenance completed at $(date)"
-```
-
-### 扩容策略
-
-```typescript
-// 扩容阈值配置
-const scalingThresholds = {
-  // 用户量阈值
-  users: {
-    stage1: 1000,    // 1K用户 - 当前配置充足
-    stage2: 10000,   // 10K用户 - 考虑升级 Supabase Pro
-    stage3: 100000,  // 100K用户 - 考虑数据库集群
-  },
-
-  // API 请求阈值
-  apiRequests: {
-    stage1: 1000,    // 1K请求/小时
-    stage2: 10000,   // 10K请求/小时 - 考虑 Redis 缓存
-    stage3: 100000,  // 100K请求/小时 - 考虑负载均衡
-  },
-
-  // AI 成本阈值
-  aiCosts: {
-    daily: 80,       // $80/天
-    monthly: 2400,   // $2400/月
-    alert: 2000,     // $2000/月 - 发送告警
-  }
-}
-```
-
-### 更新和维护流程
-
-```bash
-# 1. 依赖更新 (每月)
-npm audit                    # 检查安全漏洞
-npm update                   # 更新依赖
-npm audit fix               # 修复安全问题
-
-# 2. 数据库维护 (每周)
--- 清理过期会话
-DELETE FROM auth.sessions WHERE expires_at < NOW();
-
--- 更新统计信息
-ANALYZE;
-
--- 检查索引使用情况
-SELECT * FROM pg_stat_user_indexes WHERE schemaname = 'public';
-
-# 3. 性能优化 (每月)
--- 查询慢查询
-SELECT query, mean_time, calls, total_time
-FROM pg_stat_statements
-ORDER BY total_time DESC
-LIMIT 10;
-
--- 优化图片和静态资源
-npm run optimize-images
-npm run analyze-bundle
-
-# 4. 安全审计 (每季度)
-npm audit                    # 依赖安全检查
-node scripts/security-audit.js  # 自定义安全检查
-```
-
-## 🔧 故障排除
-
-### 常见部署问题
-
-#### 1. 构建失败
-
-```bash
-# 错误: "Module not found"
-# 解决方案:
-rm -rf node_modules .next
-npm install
-npm run build
-
-# 错误: "Memory limit exceeded"
-# 解决方案:
-export NODE_OPTIONS="--max_old_space_size=4096"
-npm run build
-
-# 错误: "@cloudflare/next-on-pages 兼容性"
-# 解决方案:
-npm install @cloudflare/next-on-pages@latest
-npx @cloudflare/next-on-pages --help
-```
-
-#### 2. 数据库连接问题
-
-```bash
-# 错误: "connection refused"
-# 诊断步骤:
-echo $NEXT_PUBLIC_SUPABASE_URL
-echo $NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-# 测试连接
-curl -H "apikey: $NEXT_PUBLIC_SUPABASE_ANON_KEY" \
-     "$NEXT_PUBLIC_SUPABASE_URL/rest/v1/"
-
-# 检查防火墙和网络
-nslookup your-supabase-url.supabase.co
-ping your-supabase-url.supabase.co
-```
-
-#### 3. AI 服务问题
-
-```bash
-# 错误: "OpenAI API limit exceeded"
-# 解决方案:
-# 1. 检查 API 配额
-curl https://api.openai.com/v1/dashboard/billing/usage \
-  -H "Authorization: Bearer $OPENAI_API_KEY"
-
-# 2. 实施请求限流
-# 在 lib/openai.ts 中调整 DAILY_BUDGET
-
-# 3. 启用缓存机制
-# 检查 Redis 或 KV 缓存配置
-
-# 错误: "API key invalid"
-# 解决方案:
-# 验证 API key 格式和权限
-curl https://api.openai.com/v1/models \
-  -H "Authorization: Bearer $OPENAI_API_KEY"
-```
-
-#### 4. 支付系统问题
-
-```bash
-# 错误: "Webhook signature verification failed"
-# 解决方案:
-# 1. 检查 webhook secret
-echo $STRIPE_WEBHOOK_SECRET
-
-# 2. 验证 endpoint URL
-curl -X POST https://your-domain.com/api/stripe-webhook \
-  -H "stripe-signature: test"
-
-# 3. 检查请求体处理
-# 确保使用 request.text() 而不是 request.json()
-
-# 错误: "Payment intent creation failed"
-# 解决方案:
-# 检查 Stripe API 密钥环境
-curl https://api.stripe.com/v1/payment_intents \
-  -u $STRIPE_SECRET_KEY: \
-  -d amount=2000 \
-  -d currency=usd
-```
-
-### 性能问题诊断
-
-```bash
-# 1. 页面加载速度慢
-# 使用 Lighthouse 分析
-npm install -g lighthouse
-lighthouse https://your-domain.com --view
-
-# 检查 CDN 缓存
-curl -I https://your-domain.com | grep -i cache
-
-# 2. API 响应慢
-# 分析数据库查询
--- 在 Supabase Dashboard > Reports > Query Performance
-
-# 检查索引使用
-EXPLAIN ANALYZE SELECT * FROM names WHERE user_id = 'uuid';
-
-# 3. 内存泄漏
-# Node.js 内存监控
-node --inspect scripts/memory-check.js
-
-# 检查 Cloudflare Analytics
-# Dashboard > Analytics > Performance
-```
-
-### 紧急恢复程序
-
-```bash
-#!/bin/bash
-# emergency-recovery.sh
-
-echo "=== EMERGENCY RECOVERY PROCEDURE ==="
-
-# 1. 回滚到上一个稳定版本
-git revert HEAD --no-edit
-git push origin main
-
-# 2. 切换到维护模式
-# 创建维护页面
-echo "<h1>网站维护中，请稍后访问</h1>" > maintenance.html
-# 通过 Cloudflare Page Rules 重定向
-
-# 3. 通知团队
-curl -X POST YOUR_SLACK_WEBHOOK_URL \
-  -H 'Content-type: application/json' \
-  --data '{"text":"🚨 紧急情况: 网站已切换到维护模式"}'
-
-# 4. 数据库备份
-pg_dump $DATABASE_URL > emergency_backup_$(date +%Y%m%d_%H%M%S).sql
-
-# 5. 日志收集
-mkdir emergency_logs_$(date +%Y%m%d_%H%M%S)
-# 收集 Cloudflare、Supabase、Sentry 日志
-
-echo "Recovery procedure completed. Check logs and investigate issues."
-```
-
-### 联系支持
-
-如果遇到无法解决的问题，请按以下优先级联系支持：
-
-1. **技术支持邮箱**: tech@culturecompanion.com
-2. **GitHub Issues**: [提交技术问题](https://github.com/your-org/chinesenamefinder/issues)
-3. **Slack 频道**: #tech-support (内部团队)
-4. **紧急联系**: +1-xxx-xxx-xxxx (仅限生产环境故障)
+> 本文档整合了原 `DEPLOYMENT.md` 与 `SUPABASE_GOOGLE_OAUTH_SETUP.md` 的内容，覆盖本地开发、第三方服务配置、Cloudflare Pages 上线及常见问题排查。完成以下步骤即可从零搭建并上线文化伴侣中文起名网站。
 
 ---
 
-📝 **注意**: 本文档会随着项目发展持续更新。请定期检查最新版本。
+## 0. 快速流程总览
 
-🔐 **安全提醒**: 请妥善保管所有 API 密钥和敏感信息，切勿将其提交到代码仓库。
+1. 准备账号与本地开发环境
+2. 创建 Supabase 项目，初始化数据库与认证（含 Google OAuth）
+3. 配置 OpenAI、Stripe 等第三方服务并写入环境变量
+4. 在本地跑通 `npm run dev`、`npm run lint`、`npm run type-check`、`npm run build`
+5. 推送至 GitHub，使用 Cloudflare Pages 构建并部署，配置自定义域名
+6. 根据上线验收清单逐项确认，并持续监控
 
-🎯 **成功标准**: 部署成功的标志是所有功能测试通过，网站在生产环境下稳定运行，性能指标达到预期要求。
+---
+
+## 1. 必备账号与工具
+
+| 分类 | 说明 | 备注 |
+| ---- | ---- | ---- |
+| 基础工具 | Node.js >= 18.17、npm >= 8、Git | 推荐使用 Volta 或 nvm 管理 Node 版本 |
+| 代码托管 | GitHub | 必须 – Cloudflare Pages 可直接连接仓库 |
+| 托管平台 | Cloudflare 账号 | Pages、DNS、SSL |
+| 数据与认证 | Supabase 项目 | 提供 Postgres、Auth、Storage |
+| AI 引擎 | OpenAI API Key | 用于名称生成 |
+| 支付 | Stripe 账户 | 支付及订阅（先用 Test Mode） |
+| 监控（可选） | Sentry、Google Analytics、Uptime Robot | 视需求启用 |
+
+> 💡 建议在团队密码库中集中管理上述密钥，确保最小权限与定期轮换。
+
+---
+
+## 2. 本地环境搭建
+
+### 2.1 克隆与依赖安装
+
+```bash
+git clone https://github.com/your-org/chinesenamefinder.git
+cd chinesenamefinder
+npm install
+```
+
+### 2.2 环境变量模板
+
+复制模板并填写各项值：
+
+```bash
+cp .env.example .env.local
+```
+
+常用环境变量说明（开发环境）：
+
+| 变量 | 必填 | 示例 | 说明 |
+| ---- | ---- | ---- | ---- |
+| `NEXT_PUBLIC_SITE_URL` | ✅ | `http://localhost:3000` | 站点基础 URL |
+| `NEXT_PUBLIC_SUPABASE_URL` | ✅ | `https://xxxx.supabase.co` | Supabase 项目 URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | ✅ | `eyJhbGciOiJI...` | Supabase 公钥（客户端） |
+| `SUPABASE_SERVICE_ROLE_KEY` | ✅ | `eyJhbGciOiJI...` | Supabase Service Role（仅服务器端使用） |
+| `OPENAI_API_KEY` | ✅ | `sk-...` | OpenAI 密钥 |
+| `STRIPE_SECRET_KEY` | ✅ | `sk_test_...` | Stripe Secret Key（测试） |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | ✅ | `pk_test_...` | Stripe Publishable Key |
+| `STRIPE_WEBHOOK_SECRET` | ✅ | `whsec_...` | Stripe Webhook Secret |
+| `NEXT_PUBLIC_GA_ID` | ⭕ | `G-XXXXXXX` | Google Analytics（可选） |
+| `NEXT_PUBLIC_SENTRY_DSN` | ⭕ | `https://...` | Sentry DSN（可选） |
+
+> ✅ 必填：缺失会导致核心功能失败；⭕ 可选：按需配置。
+
+---
+
+## 3. Supabase 与 Google OAuth 配置
+
+### 3.1 创建项目
+
+1. 登陆 [Supabase Dashboard](https://app.supabase.com)
+2. `New Project` → 填写名称（如 `chinesenamefinder`）、强密码、选择靠近用户的区域
+3. 记录 `Project URL`、`Anon Key`、`Service Role Key`
+
+### 3.2 初始化数据库
+
+在 Supabase SQL Editor 中执行项目内 `lib/database-schema.sql` 内容：
+
+```sql
+-- 上传/粘贴文件内容并运行
+-- 验证主要表存在
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = 'public'
+  AND table_name IN ('user_profiles','names','payments','usage_analytics');
+```
+
+确认行级安全（Row Level Security）在上述表上已启用。
+
+### 3.3 认证基础设置
+
+`Authentication → Settings`：
+
+- **Site URL**：`http://localhost:3000`
+- **Redirect URLs**：
+  - `http://localhost:3000/auth/callback`
+  - `http://localhost:3000/en/auth/callback`
+  - `http://localhost:3000/zh/auth/callback`
+  - `https://your-domain.com/auth/callback`
+- **Email Auth**：启用邮箱注册、推荐启用邮箱确认
+
+### 3.4 Google OAuth 详细步骤
+
+1. **Google Cloud 项目**：在 [Google Cloud Console](https://console.cloud.google.com) 创建或选择项目
+2. **启用 API**：`APIs & Services → Library` 搜索并启用 *Google People API*（Google+ API 已弃用，People API 可返回基本信息）
+3. **OAuth 同意屏幕**：设置应用名称、支持邮箱、隐私政策/服务条款链接，添加 `.../auth/userinfo.email` 与 `.../auth/userinfo.profile` 范围，若未发布需添加测试用户
+4. **创建 OAuth Client**：`Credentials → Create Credentials → OAuth client ID`
+   - 类型：`Web application`
+   - Authorized JavaScript origins：`http://localhost:3000`、`https://your-domain.com`
+   - Authorized redirect URIs：`https://xxxx.supabase.co/auth/v1/callback`、`http://localhost:3000/auth/callback`、`https://your-domain.com/auth/callback`
+   - 记录 Client ID / Client Secret
+5. **回到 Supabase**：`Authentication → Providers → Google`
+   - 启用 Google，填入 Client ID 与 Client Secret
+
+### 3.5 连接测试
+
+在项目根目录执行：
+
+```bash
+# 检查 Supabase REST 接口可用性
+curl -H "apikey: $NEXT_PUBLIC_SUPABASE_ANON_KEY" \
+     "$NEXT_PUBLIC_SUPABASE_URL/rest/v1/"
+
+# 验证 Google OAuth 回调 URL 是否生效
+open "https://accounts.google.com/o/oauth2/v2/auth?client_id=$GOOGLE_CLIENT_ID&redirect_uri=$NEXT_PUBLIC_SUPABASE_URL/auth/v1/callback&response_type=code&scope=openid%20email%20profile"
+```
+
+若能跳转到授权页面即配置成功。
+
+---
+
+## 4. 第三方服务配置
+
+### 4.1 OpenAI
+
+1. 访问 [OpenAI Keys](https://platform.openai.com/api-keys) 创建密钥
+2. `Billing → Usage limits` 设置月度/警戒额度（建议：硬限制 $3000，80% 时邮件提醒）
+3. 测试连通性：
+
+```bash
+curl https://api.openai.com/v1/models \
+  -H "Authorization: Bearer $OPENAI_API_KEY"
+```
+
+### 4.2 Stripe
+
+1. 切换到 Test Mode，复制 `Publishable key` 与 `Secret key`
+2. `Developers → Webhooks` 新建 Endpoint：`https://your-domain.com/api/stripe-webhook`，监听 checkout/payment/subscription 相关事件
+3. 记录 Webhook Secret，写入 `.env.local`
+4. 使用测试卡 `4242 4242 4242 4242 / 12-34 / 123` 验证支付流程
+    > 当前暂无 Stripe 账号时，可先跳过实际支付配置。前端购买按钮会提示“该功能即将上线，敬请期待”，不会发起真实支付。
+
+### 4.3 可选服务
+
+| 服务 | 配置位置 | 备注 |
+| ---- | -------- | ---- |
+| Sentry | `NEXT_PUBLIC_SENTRY_DSN` | 安装后自动捕获错误 |
+| Google Analytics | `NEXT_PUBLIC_GA_ID` | 可通过 Cloudflare + GA 双重监控 |
+| UptimeRobot | 配置 HTTP 监控 `https://your-domain.com/api/health` | 保证可用性报警 |
+
+---
+
+## 5. 本地开发与测试流程
+
+1. **启动开发环境**
+   ```bash
+   npm run dev
+   open http://localhost:3000
+   ```
+2. **代码质量检查**
+   ```bash
+   npm run lint
+   npm run type-check
+   ```
+   > 💡 `npm run lint` 会调用 Next.js 自带的 `next lint`，命令仍可正常运行，但控制台会提示该子命令将在 Next.js 16 版本弃用，可在后续迁移到 ESLint CLI。
+3. **构建自测**
+   ```bash
+   npm run build
+   ```
+   - Cloudflare Pages 构建期间需要访问 Google Fonts；若构建环境无法联网，可临时设置 `NEXT_FONT_GOOGLE_ENABLE=0` 并改用自托管字体，或手动预下载字体后改用 `next/font/local`
+4. **关键功能手动验证**
+   - 多语言路由切换（/en、/zh）
+   - 邮箱注册 / 登录、Google OAuth 登录
+   - AI 起名、收藏、控制台统计
+   - Stripe 购买流程（Test Mode）
+   - 反馈入口 `/contact` 与用户资料更新
+
+> 建议使用 Supabase Dashboard 删除测试数据，保持数据库整洁。
+
+---
+
+## 6. Cloudflare Pages 部署
+
+### 6.1 连接 GitHub 仓库
+
+1. 推送代码：`git push origin main`
+2. Cloudflare Dashboard → Pages → `Create a project`
+3. 选择仓库与分支（默认 `main`）
+4. 构建设置：
+   - Build command: `npm install && npm run build && npx @cloudflare/next-on-pages --experimental-minify`
+   - Output directory: `.vercel/output/static`
+   - Root directory: `/`
+
+> Cloudflare 会自动缓存 `node_modules`，首次构建稍长。
+
+### 6.2 环境变量
+
+在 Cloudflare Pages → Settings → Environment variables 中分别配置 `Production` 与 `Preview` 的变量。推荐结构如下：
+
+| Key | Production | Preview/Dev |
+| --- | ---------- | ------------ |
+| `NODE_ENV` | `production` | `development` |
+| `NEXT_PUBLIC_SITE_URL` | `https://your-domain.com` | `https://<preview>.pages.dev` |
+| `NEXT_PUBLIC_SUPABASE_URL` | 生产 Supabase URL | 同上（或测试项目） |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | 生产 Anon Key | 测试 Anon Key |
+| `SUPABASE_SERVICE_ROLE_KEY` | 生产 Service Role | 测试 Service Role |
+| `OPENAI_API_KEY` | 生产密钥 | 测试/受限密钥 |
+| `STRIPE_SECRET_KEY` | `sk_live_...` | `sk_test_...` |
+| `STRIPE_WEBHOOK_SECRET` | 生产 Webhook | 测试 Webhook |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | `pk_live_...` | `pk_test_...` |
+| 可选监控变量 | 按需填写 | 按需填写 |
+
+### 6.3 自定义域名
+
+1. Cloudflare Pages → Custom domains → `Set up a domain`
+2. 选择托管于 Cloudflare 的域名并添加子域（如 `www`）
+3. 等待 DNS 与 SSL 生效（通常 5~10 分钟）
+
+### 6.4 Wrangler CLI 手动部署（可选）
+
+```bash
+npm install -g wrangler
+wrangler login
+npm run build
+npx @cloudflare/next-on-pages
+wrangler pages deploy .vercel/output/static --project-name chinesenamefinder
+```
+
+> 手动部署适用于预发布验证或 CI/CD 之外的紧急更新。
+
+---
+
+## 7. 上线验收与监控
+
+### 7.1 功能验收清单
+
+- [ ] 首页与多语言路由正常
+- [ ] 认证流程（邮箱、Google OAuth）完整
+- [ ] AI 名字生成、收藏、控制台统计正确
+- [ ] Stripe 支付成功并在 Supabase `payments` 表落库
+- [ ] `/api/health` 返回 `200`，无跨域错误
+- [ ] 样式、字体、SEO 元信息与 OG 标签加载正常
+- [ ] 监控（Sentry/GA/Uptime Robot）开始接收数据
+
+### 7.2 自动化 Smoke Test（示例）
+
+```bash
+#!/bin/bash
+DOMAIN="https://your-domain.com"
+set -e
+
+curl -fsSL "$DOMAIN/api/health" >/dev/null
+echo "✅ Health OK"
+
+curl -I "$DOMAIN" | grep -i "HTTP/2 200" >/dev/null && echo "✅ Home OK"
+
+curl -fsSL -X POST "$DOMAIN/api/generate" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt":"test","gender":"neutral"}' | jq '.status'
+```
+
+> 将脚本加入 CI 或定期任务，可及时发现故障。
+
+---
+
+## 8. 常见问题排查
+
+| 场景 | 现象 | 解决方案 |
+| ---- | ---- | -------- |
+| Supabase 连接失败 | `connection refused` / 404 | 检查 URL、Anon Key；确认 IP 未被防火墙阻挡，可用 `curl` 验证 |
+| Google 登录报 `redirect_uri_mismatch` | 授权页提示 400 | 确保 Google Console & Supabase 中的回调 URI 完全匹配（含协议与末尾斜杠） |
+| `npm run build` 期间拉取字体失败 | Cloudflare Pages 构建报 `Failed to fetch Inter/Noto` | 允许构建环境访问外网，或设置 `NEXT_FONT_GOOGLE_ENABLE=0` 后改用 `next/font/local` 自托管字体 |
+| OpenAI `429`/额度超限 | AI 接口报错 | 在 OpenAI Billing 设置额度上限并监控 `usage`，在服务端增加限流逻辑 |
+| Stripe Webhook 校验失败 | 日志出现 `Signature verification failed` | 确认 Webhook Secret、确保使用原始请求体（`request.text()`），Stripe CLI 可用于本地调试 |
+| Cloudflare Preview 正常但 Production 404 | 自定义域名解析异常 | 检查 DNS CNAME 指向 `pages.dev`，确认 SSL 状态为 Active |
+
+---
+
+## 9. 维护建议
+
+- 每月检查依赖更新：`npm update`、`npm audit fix`
+- 使用 Supabase Scheduled Functions 清理过期数据（会话、临时起名记录）
+- 定期导出数据库备份并存储于加密对象存储
+- 对核心密钥（OpenAI、Stripe、Service Role）设置 90 天轮换计划
+- 遇到紧急故障先回滚上一稳定版本，再定位问题源码
+
+---
+
+若需进一步协助，可在 GitHub Issues 中提交问题或通过团队支持渠道联系。

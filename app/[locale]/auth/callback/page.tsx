@@ -75,9 +75,8 @@ export default function CallbackPage() {
                 .from('user_profiles')
                 .insert({
                   id: session.user.id,
-                  email: session.user.email,
-                  full_name: session.user.user_metadata?.full_name || session.user.user_metadata?.name,
-                  avatar_url: session.user.user_metadata?.avatar_url
+                  email: session.user.email ?? '',
+                  display_name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || null
                 })
 
               if (profileError) {

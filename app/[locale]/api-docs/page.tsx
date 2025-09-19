@@ -7,29 +7,25 @@ import { Footer } from '@/components/layout/footer'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Code,
   Key,
-  Book,
   Zap,
   Shield,
   Globe,
   Copy,
   ExternalLink,
-  CheckCircle,
-  AlertCircle,
   Terminal,
   FileText,
   Play,
-  Download,
-  ArrowRight
+  Download
 } from 'lucide-react'
-import Link from 'next/link'
+import { toast } from 'sonner'
+import { Link } from '@/i18n/routing'
 
 export default function ApiDocsPage() {
-  const t = useTranslations()
+  const tCommon = useTranslations('common')
   const [activeEndpoint, setActiveEndpoint] = useState('generate')
 
   const endpoints = [
@@ -187,11 +183,16 @@ curl -X POST "https://api.chinesenamefinder.com/v1/generate" \\
               简单易用，功能丰富，助力您的应用快速上线。
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg">
+              <Button size="lg" type="button" onClick={() => toast.info(tCommon('comingSoon'))}>
                 <Play className="mr-2 h-5 w-5" />
                 快速开始
               </Button>
-              <Button variant="outline" size="lg">
+              <Button
+                variant="outline"
+                size="lg"
+                type="button"
+                onClick={() => toast.info(tCommon('comingSoon'))}
+              >
                 <Download className="mr-2 h-5 w-5" />
                 下载 SDK
               </Button>

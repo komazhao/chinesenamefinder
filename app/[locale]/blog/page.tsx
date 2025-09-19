@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useTranslations } from 'next-intl'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -22,10 +21,8 @@ import {
   ArrowRight,
   Filter
 } from 'lucide-react'
-import Link from 'next/link'
 
 export default function BlogPage() {
-  const t = useTranslations()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
 
