@@ -253,6 +253,56 @@ curl https://openrouter.ai/api/v1/models \
 
 > ⚠️ Cloudflare Pages 会将 **Environment variables** 同时用于构建与运行时，敏感值同样需要填写在这里；若你希望加密存储，可在 **Secrets** 中再次添加同名变量以供运行时访问。
 
+**生产环境示例（Build & Runtime）**
+
+```bash
+APP_STAGE=production
+NEXT_PUBLIC_SITE_URL=https://chinesenamefinder.com
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJI...prod
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJI...prod
+OPENROUTER_API_KEY=or-prod-xxxx
+OPENROUTER_API_URL=https://openrouter.ai/api/v1/chat/completions
+OPENROUTER_MODEL=openai/gpt-4o-mini
+OPENROUTER_APP_NAME=Chinese Name Finder
+STRIPE_SECRET_KEY=sk_live_xxx
+STRIPE_WEBHOOK_SECRET=whsec_live_xxx
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxx
+STRIPE_BASIC_PRICE_ID=price_live_basic
+STRIPE_STANDARD_PRICE_ID=price_live_standard
+STRIPE_PREMIUM_PRICE_ID=price_live_premium
+NEXT_PUBLIC_GA_ID=G-XXXXXXX
+NEXT_PUBLIC_SENTRY_DSN=https://xxx.ingest.sentry.io/123
+GOOGLE_VERIFICATION_ID=abcdefg
+YANDEX_VERIFICATION_ID=hijklmn
+NEXT_PUBLIC_LOCALE_DETECTION=true
+```
+
+**预览环境示例（Build & Runtime）**
+
+```bash
+APP_STAGE=preview
+NEXT_PUBLIC_SITE_URL=https://<preview>.pages.dev
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJI...test
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJI...test
+OPENROUTER_API_KEY=or-test-xxxx
+OPENROUTER_API_URL=https://openrouter.ai/api/v1/chat/completions
+OPENROUTER_MODEL=openai/gpt-4o-mini
+OPENROUTER_APP_NAME=Chinese Name Finder (Preview)
+STRIPE_SECRET_KEY=sk_test_xxx
+STRIPE_WEBHOOK_SECRET=whsec_test_xxx
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
+STRIPE_BASIC_PRICE_ID=price_test_basic
+STRIPE_STANDARD_PRICE_ID=price_test_standard
+STRIPE_PREMIUM_PRICE_ID=price_test_premium
+NEXT_PUBLIC_GA_ID=
+NEXT_PUBLIC_SENTRY_DSN=https://xxx.ingest.sentry.io/456
+GOOGLE_VERIFICATION_ID=
+YANDEX_VERIFICATION_ID=
+NEXT_PUBLIC_LOCALE_DETECTION=false
+```
+
 ### 6.4 绑定 Pages 与自定义域名
 
 1. 在 Cloudflare Dashboard 中打开目标 Pages 项目。
