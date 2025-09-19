@@ -103,7 +103,7 @@ if [ -f ".env.example" ]; then
     required_vars=(
         "NEXT_PUBLIC_SUPABASE_URL"
         "NEXT_PUBLIC_SUPABASE_ANON_KEY"
-        "OPENAI_API_KEY"
+        "OPENROUTER_API_KEY"
         "STRIPE_SECRET_KEY"
     )
 

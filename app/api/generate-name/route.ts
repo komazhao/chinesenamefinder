@@ -85,9 +85,9 @@ export async function POST(request: NextRequest) {
     }
 
     // 4. 检查API密钥
-    const openaiApiKey = process.env.OPENAI_API_KEY
-    if (!openaiApiKey) {
-      console.error('OPENAI_API_KEY not configured')
+    const openrouterKey = process.env.OPENROUTER_API_KEY
+    if (!openrouterKey) {
+      console.error('OPENROUTER_API_KEY not configured')
       return NextResponse.json(
         { error: '服务配置错误', code: 'SERVICE_ERROR' },
         { status: 500 }
@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 5. 生成名字
-    const generator = new NameGenerator(openaiApiKey)
+    const generator = new NameGenerator(openrouterKey)
 
     let generationResult
     try {
@@ -277,12 +277,12 @@ export async function GET(request: NextRequest) {
 
     const todayCount = todayUsage?.length || 0
 
-    // 获取成本统计（如果配置了OpenAI API）
+    // 获取成本统计（如果配置了 OpenRouter API）
     let costStats = null
     try {
-      const openaiApiKey = process.env.OPENAI_API_KEY
-      if (openaiApiKey) {
-        const generator = new NameGenerator(openaiApiKey)
+      const openrouterKey = process.env.OPENROUTER_API_KEY
+      if (openrouterKey) {
+        const generator = new NameGenerator(openrouterKey)
         costStats = await generator.getCostStats(user.id)
       }
     } catch (error) {

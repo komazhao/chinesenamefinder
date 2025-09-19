@@ -1,5 +1,3 @@
-import OpenAI from 'openai'
-
 // 起名请求接口
 export interface NameRequest {
   englishName: string
@@ -51,7 +49,11 @@ interface CostTracker {
 }
 
 export class NameGenerator {
-  private openai: OpenAI
+  private readonly apiKey: string
+  private readonly apiUrl: string
+  private readonly model: string
+  private readonly referer: string
+  private readonly appName: string
   private readonly DAILY_BUDGET = 80 // $80/天
   private readonly MONTHLY_BUDGET = 2400 // $2400/月
   private readonly COST_PER_REQUEST = 0.05 // 预估每次请求成本
@@ -59,13 +61,14 @@ export class NameGenerator {
 
   constructor(apiKey: string) {
     if (!apiKey) {
-      throw new Error('OpenAI API key is required')
+      throw new Error('OpenRouter API key is required')
     }
 
-    this.openai = new OpenAI({
-      apiKey,
-      timeout: 30000, // 30秒超时
-    })
+    this.apiKey = apiKey
+    this.apiUrl = process.env.OPENROUTER_API_URL || 'https://openrouter.ai/api/v1/chat/completions'
+    this.model = process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini'
+    this.referer = process.env.NEXT_PUBLIC_SITE_URL || 'https://chinesenamefinder.com'
+    this.appName = process.env.OPENROUTER_APP_NAME || 'Chinese Name Finder'
   }
 
   /**
@@ -86,30 +89,49 @@ export class NameGenerator {
       const prompt = this.buildNamingPrompt(request)
       const systemPrompt = this.getSystemPrompt()
 
-      // 4. 调用OpenAI API
-      const response = await this.openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: prompt }
-        ],
-        response_format: { type: 'json_object' },
-        max_tokens: 1000,
-        temperature: 0.7,
-        top_p: 0.9,
+      // 4. 调用 OpenRouter API
+      const response = await fetch(this.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.apiKey}`,
+          'HTTP-Referer': this.referer,
+          'X-Title': this.appName,
+        },
+        body: JSON.stringify({
+          model: this.model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: prompt }
+          ],
+          response_format: { type: 'json_object' },
+          max_tokens: 1000,
+          temperature: 0.7,
+          top_p: 0.9,
+        })
       })
 
+      if (!response.ok) {
+        const errorText = await response.text()
+        throw new Error(`OpenRouter request failed: ${response.status} ${errorText}`)
+      }
+
+      const responseData = await response.json() as {
+        choices?: Array<{ message?: { content?: string } }>
+        usage?: CompletionUsage
+      }
+
       // 5. 解析结果
-      const content = response.choices[0]?.message?.content
+      const content = responseData.choices?.[0]?.message?.content
       if (!content) {
-        throw new Error('Empty response from OpenAI')
+        throw new Error('Empty response from OpenRouter')
       }
 
       const parsedResult = this.parseAIResponse(content)
       const enhancedNames = await this.enhanceResults(parsedResult.names, request)
 
       // 6. 记录成本
-      const totalCost = this.calculateCost(response.usage)
+      const totalCost = this.calculateCost(responseData.usage)
       await this.trackCost(totalCost, userId)
 
       const generationTime = Date.now() - startTime

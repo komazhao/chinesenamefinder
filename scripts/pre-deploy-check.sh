@@ -70,7 +70,7 @@ fi
 check_item "NEXT_PUBLIC_SUPABASE_URL" "[ ! -z \"\$NEXT_PUBLIC_SUPABASE_URL\" ]"
 check_item "NEXT_PUBLIC_SUPABASE_ANON_KEY" "[ ! -z \"\$NEXT_PUBLIC_SUPABASE_ANON_KEY\" ]"
 check_item "SUPABASE_SERVICE_ROLE_KEY" "[ ! -z \"\$SUPABASE_SERVICE_ROLE_KEY\" ]"
-check_item "OPENAI_API_KEY" "[ ! -z \"\$OPENAI_API_KEY\" ]"
+check_item "OPENROUTER_API_KEY" "[ ! -z \"\$OPENROUTER_API_KEY\" ]"
 check_item "STRIPE_SECRET_KEY" "[ ! -z \"\$STRIPE_SECRET_KEY\" ]"
 check_item "NEXT_PUBLIC_SITE_URL" "[ ! -z \"\$NEXT_PUBLIC_SITE_URL\" ]"
 
@@ -105,8 +105,8 @@ if [ ! -z "$NEXT_PUBLIC_SUPABASE_URL" ] && [ ! -z "$NEXT_PUBLIC_SUPABASE_ANON_KE
     check_item "Supabase 连接" "curl -f -H 'apikey: $NEXT_PUBLIC_SUPABASE_ANON_KEY' '$NEXT_PUBLIC_SUPABASE_URL/rest/v1/' >/dev/null 2>&1" false
 fi
 
-if [ ! -z "$OPENAI_API_KEY" ]; then
-    check_item "OpenAI API 连接" "curl -f -H 'Authorization: Bearer $OPENAI_API_KEY' 'https://api.openai.com/v1/models' >/dev/null 2>&1" false
+if [ ! -z "$OPENROUTER_API_KEY" ]; then
+    check_item "OpenRouter API 连接" "curl -f -H 'Authorization: Bearer $OPENROUTER_API_KEY' 'https://openrouter.ai/api/v1/models' >/dev/null 2>&1" false
 fi
 
 if [ ! -z "$STRIPE_SECRET_KEY" ]; then

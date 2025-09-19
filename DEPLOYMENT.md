@@ -8,7 +8,7 @@
 
 1. 准备账号与本地开发环境
 2. 创建 Supabase 项目，初始化数据库与认证（含 Google OAuth）
-3. 配置 OpenAI、Stripe 等第三方服务并写入环境变量
+3. 配置 OpenRouter、Stripe 等第三方服务并写入环境变量
 4. 在本地跑通 `npm run dev`、`npm run lint`、`npm run type-check`、`npm run build`
 5. 推送至 GitHub，使用 Cloudflare Pages 构建并部署，配置自定义域名
 6. 根据上线验收清单逐项确认，并持续监控
@@ -23,7 +23,7 @@
 | 代码托管 | GitHub | 必须 – Cloudflare Pages 可直接连接仓库 |
 | 托管平台 | Cloudflare 账号 | Pages、DNS、SSL |
 | 数据与认证 | Supabase 项目 | 提供 Postgres、Auth、Storage |
-| AI 引擎 | OpenAI API Key | 用于名称生成 |
+| AI 引擎 | OpenRouter API Key | 用于名称生成 |
 | 支付 | Stripe 账户 | 支付及订阅（先用 Test Mode） |
 | 监控（可选） | Sentry、Google Analytics、Uptime Robot | 视需求启用 |
 
@@ -57,7 +57,8 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_SUPABASE_URL` | ✅ | `https://xxxx.supabase.co` | Supabase 项目 URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | ✅ | `eyJhbGciOiJI...` | Supabase 公钥（客户端） |
 | `SUPABASE_SERVICE_ROLE_KEY` | ✅ | `eyJhbGciOiJI...` | Supabase Service Role（仅服务器端使用） |
-| `OPENAI_API_KEY` | ✅ | `sk-...` | OpenAI 密钥 |
+| `OPENROUTER_API_KEY` | ✅ | `or-...` | OpenRouter 密钥 |
+| `OPENROUTER_API_URL` | ⭕ | `https://openrouter.ai/api/v1/chat/completions` | 自定义 API Endpoint |
 | `STRIPE_SECRET_KEY` | ✅ | `sk_test_...` | Stripe Secret Key（测试） |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | ✅ | `pk_test_...` | Stripe Publishable Key |
 | `STRIPE_WEBHOOK_SECRET` | ✅ | `whsec_...` | Stripe Webhook Secret |
@@ -135,15 +136,19 @@ open "https://accounts.google.com/o/oauth2/v2/auth?client_id=$GOOGLE_CLIENT_ID&r
 
 ## 4. 第三方服务配置
 
-### 4.1 OpenAI
+### 4.1 OpenRouter API 设置
 
-1. 访问 [OpenAI Keys](https://platform.openai.com/api-keys) 创建密钥
-2. `Billing → Usage limits` 设置月度/警戒额度（建议：硬限制 $3000，80% 时邮件提醒）
-3. 测试连通性：
+1. 访问 [OpenRouter Dashboard](https://openrouter.ai/keys) 创建 API Key。
+2. 在 **Billing** 页面设置额度提醒，避免意外费用（建议按照日/月预算填写）。
+3. 建议额外设置以下环境变量：
+   - `OPENROUTER_API_URL`（可选）：自定义请求地址，默认 `https://openrouter.ai/api/v1/chat/completions`。
+   - `OPENROUTER_MODEL`（可选）：默认使用 `openai/gpt-4o-mini`。
+   - `OPENROUTER_APP_NAME`（可选）：会作为 `X-Title` 发送给 OpenRouter，默认 `Chinese Name Finder`。
+4. 测试连通性：
 
 ```bash
-curl https://api.openai.com/v1/models \
-  -H "Authorization: Bearer $OPENAI_API_KEY"
+curl https://openrouter.ai/api/v1/models \
+  -H "Authorization: Bearer $OPENROUTER_API_KEY"
 ```
 
 ### 4.2 Stripe
@@ -195,21 +200,33 @@ curl https://api.openai.com/v1/models \
 
 ## 6. Cloudflare Pages 部署
 
-### 6.1 连接 GitHub 仓库
+### 6.1 将域名托管到 Cloudflare（一次性操作）
 
-1. 推送代码：`git push origin main`
-2. Cloudflare Dashboard → Pages → `Create a project`
-3. 选择仓库与分支（默认 `main`）
-4. 构建设置：
-   - Build command: `npm install && npm run build && npx @cloudflare/next-on-pages --experimental-minify`
-   - Output directory: `.vercel/output/static`
-   - Root directory: `/`
+1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com) 后，在顶部导航选择 **Websites → Add a site**。
+2. 输入已购买的域名（例如 `chinesenamefinder.com`），选择 **Free** 计划继续。
+3. Cloudflare 会生成两条新的域名服务器（Nameserver），前往域名注册商后台替换为 Cloudflare 提供的记录。
+4. 等待 DNS 生效（通常 5-30 分钟），在 Cloudflare 网站列表中看到状态 `Active` 即表示托管成功。
 
-> Cloudflare 会自动缓存 `node_modules`，首次构建稍长。
+> 域名迁移完成后，后续的 DNS、SSL 等都可以在 Cloudflare 中配置，无需再回到原注册商。
 
-### 6.2 环境变量
+### 6.2 通过 Workers & Pages 部署静态站点
 
-在 Cloudflare Pages → Settings → Environment variables 中分别配置 `Production` 与 `Preview` 的变量。推荐结构如下：
+1. 代码准备好后推送到 GitHub：`git push origin main`
+2. Cloudflare Dashboard → 左侧导航选择 **Workers & Pages → Pages** → 点击 **Create application**。
+3. 选择 **Connect to Git**，授权 Cloudflare 访问 GitHub 仓库，并选择 `chinesenamefinder` 这个仓库及要部署的分支（通常是 `main`）。
+4. 在构建设置中填写：
+   - **Framework preset**：`Next.js`
+   - **Build command**：`npm install && npm run build && npx @cloudflare/next-on-pages --experimental-minify`
+   - **Build output directory**：`.vercel/output/static`
+   - **Root directory**：`/`
+5. 点击 **Save and Deploy** 触发第一次构建，首次安装依赖会稍慢。
+
+> 之后每次向目标分支推送代码，Cloudflare Pages 都会自动构建并发布最新版本。
+
+### 6.3 配置 Environment variables
+
+1. 打开 Pages 项目 → **Settings → Environment variables**。
+2. 分别在 `Production` 与 `Preview` 标签页下添加变量（键值与 `.env.local` 对应）。建议结构如下：
 
 | Key | Production | Preview/Dev |
 | --- | ---------- | ------------ |
@@ -218,17 +235,28 @@ curl https://api.openai.com/v1/models \
 | `NEXT_PUBLIC_SUPABASE_URL` | 生产 Supabase URL | 同上（或测试项目） |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | 生产 Anon Key | 测试 Anon Key |
 | `SUPABASE_SERVICE_ROLE_KEY` | 生产 Service Role | 测试 Service Role |
-| `OPENAI_API_KEY` | 生产密钥 | 测试/受限密钥 |
+| `OPENROUTER_API_KEY` | 生产密钥 | 测试/受限密钥 |
 | `STRIPE_SECRET_KEY` | `sk_live_...` | `sk_test_...` |
 | `STRIPE_WEBHOOK_SECRET` | 生产 Webhook | 测试 Webhook |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | `pk_live_...` | `pk_test_...` |
 | 可选监控变量 | 按需填写 | 按需填写 |
 
-### 6.3 自定义域名
+### 6.4 绑定 Pages 与自定义域名
 
-1. Cloudflare Pages → Custom domains → `Set up a domain`
-2. 选择托管于 Cloudflare 的域名并添加子域（如 `www`）
-3. 等待 DNS 与 SSL 生效（通常 5~10 分钟）
+1. 在 Cloudflare Dashboard 中打开目标 Pages 项目。
+2. 进入 **Custom domains → Set up a domain**，点击 `Select domain`，从弹窗中选择刚才托管的域名。
+3. 可以先绑定 `www.chinesenamefinder.com` 等子域名；如需让裸域（`chinesenamefinder.com`）指向同一站点，在 **Custom domains → Add domain** 中选择 `Root` 选项并确认。
+4. Cloudflare 会自动为这些域名创建 `CNAME`/`A` 记录，状态转为绿色 `Active` 即生效。如需查看具体 DNS，可在 **Websites → {domain} → DNS** 中确认记录指向 `your-project-name.pages.dev`。
+5. 初次绑定会自动申请 SSL 证书，平均 5-10 分钟内完成；如浏览器仍显示证书无效，可尝试清除缓存或等待完全传播。
+
+> 若希望把 `www` 重定向到裸域（或反向），可以在 **Websites → {domain} → Rules → Bulk redirects** 中添加 301 重定向规则。
+
+### 6.5 管理部署
+
+1. 每次推送到绑定分支会自动触发部署，可在 Pages 项目首页查看构建状态及预览链接。
+2. 如果需要手动回滚，进入 **Deployments** 列表，选择某次构建并点击 `Rollback`。
+3. 修改环境变量后必须点击 `Save and deploy` 重新构建，变更才会生效。
+4. 日常监控可借助 Pages 提供的 **Analytics** 或 Cloudflare 主面板的请求统计。
 
 ### 6.4 Wrangler CLI 手动部署（可选）
 
@@ -284,7 +312,7 @@ curl -fsSL -X POST "$DOMAIN/api/generate" \
 | Supabase 连接失败 | `connection refused` / 404 | 检查 URL、Anon Key；确认 IP 未被防火墙阻挡，可用 `curl` 验证 |
 | Google 登录报 `redirect_uri_mismatch` | 授权页提示 400 | 确保 Google Console & Supabase 中的回调 URI 完全匹配（含协议与末尾斜杠） |
 | `npm run build` 期间拉取字体失败 | Cloudflare Pages 构建报 `Failed to fetch Inter/Noto` | 允许构建环境访问外网，或设置 `NEXT_FONT_GOOGLE_ENABLE=0` 后改用 `next/font/local` 自托管字体 |
-| OpenAI `429`/额度超限 | AI 接口报错 | 在 OpenAI Billing 设置额度上限并监控 `usage`，在服务端增加限流逻辑 |
+| OpenRouter `429`/额度超限 | AI 接口报错 | 在 OpenRouter Billing 设置额度上限并监控 `usage`，在服务端增加限流逻辑 |
 | Stripe Webhook 校验失败 | 日志出现 `Signature verification failed` | 确认 Webhook Secret、确保使用原始请求体（`request.text()`），Stripe CLI 可用于本地调试 |
 | Cloudflare Preview 正常但 Production 404 | 自定义域名解析异常 | 检查 DNS CNAME 指向 `pages.dev`，确认 SSL 状态为 Active |
 
@@ -295,7 +323,7 @@ curl -fsSL -X POST "$DOMAIN/api/generate" \
 - 每月检查依赖更新：`npm update`、`npm audit fix`
 - 使用 Supabase Scheduled Functions 清理过期数据（会话、临时起名记录）
 - 定期导出数据库备份并存储于加密对象存储
-- 对核心密钥（OpenAI、Stripe、Service Role）设置 90 天轮换计划
+- 对核心密钥（OpenRouter、Stripe、Service Role）设置 90 天轮换计划
 - 遇到紧急故障先回滚上一稳定版本，再定位问题源码
 
 ---

@@ -38,7 +38,7 @@ const techStack = {
   storage: "Supabase Storage",
 
   // AI服务
-  ai: "OpenAI GPT-4 Turbo",
+  ai: "OpenRouter (GPT-4 family)",
 
   // 支付系统
   payment: "Stripe",
@@ -70,7 +70,7 @@ Cloudflare Pages (Next.js SSR)
     ↓
 ┌─────────────────┬─────────────────┐
 │  Supabase       │ External APIs    │
-│  • Auth         │ • OpenAI GPT-4   │
+│  • Auth         │ • OpenRouter AI  │
 │  • PostgreSQL   │ • Stripe         │
 │  • Storage      │ • TTS Services   │
 └─────────────────┴─────────────────┘
@@ -115,8 +115,9 @@ NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 
-# OpenAI API
-OPENAI_API_KEY=your-openai-api-key
+# OpenRouter API
+OPENROUTER_API_KEY=your-openrouter-api-key
+OPENROUTER_API_URL=https://openrouter.ai/api/v1/chat/completions
 
 # Stripe 配置
 STRIPE_SECRET_KEY=your-stripe-secret-key
@@ -193,7 +194,7 @@ chinesenamefinder/
 │   └── useAuth.ts
 ├── lib/                          # 工具库
 │   ├── supabase.ts              # Supabase客户端
-│   ├── openai.ts                # OpenAI起名引擎
+│   ├── openai.ts                # OpenRouter起名引擎
 │   ├── stripe.ts                # Stripe支付
 │   ├── database.types.ts        # 数据库类型
 │   ├── database-schema.sql      # 数据库架构
@@ -281,7 +282,7 @@ CLOUDFLARE_ACCOUNT_ID=your-account-id
 NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-key
-OPENAI_API_KEY=your-openai-key
+OPENROUTER_API_KEY=your-openrouter-api-key
 STRIPE_SECRET_KEY=your-stripe-secret
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-stripe-public-key
 STRIPE_WEBHOOK_SECRET=your-webhook-secret
@@ -315,7 +316,7 @@ NODE_ENV=production
 NEXT_PUBLIC_SUPABASE_URL=your-production-supabase-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-production-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-production-service-key
-OPENAI_API_KEY=your-production-openai-key
+OPENROUTER_API_KEY=your-production-openrouter-key
 STRIPE_SECRET_KEY=your-production-stripe-secret
 STRIPE_WEBHOOK_SECRET=your-production-webhook-secret
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-production-stripe-public
@@ -453,7 +454,7 @@ curl -w "@curl-format.txt" -o /dev/null -s http://localhost:3000/api/generate-na
 - [ ] 所有环境变量已正确配置
 - [ ] 数据库架构已部署
 - [ ] Stripe Webhook 已配置
-- [ ] OpenAI API 额度充足
+- [ ] OpenRouter API 额度充足
 - [ ] 域名 DNS 已正确解析
 - [ ] SSL 证书已安装
 - [ ] 监控和日志已配置
@@ -485,9 +486,9 @@ curl -H "apikey: $NEXT_PUBLIC_SUPABASE_ANON_KEY" \
 
 3. **AI 生成失败**
 ```bash
-# 检查 OpenAI API 密钥
-curl https://api.openai.com/v1/models \
-  -H "Authorization: Bearer $OPENAI_API_KEY"
+# 检查 OpenRouter API 密钥
+curl https://openrouter.ai/api/v1/models \
+  -H "Authorization: Bearer $OPENROUTER_API_KEY"
 
 # 检查成本限制
 # 查看 lib/openai.ts 中的预算配置
@@ -546,7 +547,7 @@ chore: 工程化配置
 
 - [Next.js](https://nextjs.org/) - 现代化 React 框架
 - [Supabase](https://supabase.com/) - 开源 Firebase 替代方案
-- [OpenAI](https://openai.com/) - 强大的AI能力
+- [OpenRouter](https://openrouter.ai/) - 多模型 AI 接入平台
 - [Tailwind CSS](https://tailwindcss.com/) - 实用优先的CSS框架
 - [Cloudflare](https://www.cloudflare.com/) - 全球CDN和部署平台
 

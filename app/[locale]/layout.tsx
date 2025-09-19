@@ -93,105 +93,106 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className="min-h-screen bg-background antialiased font-chinese-sans" suppressHydrationWarning>
-        <NextIntlClientProvider messages={messages}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            forcedTheme="light"
-            enableSystem={false}
-            disableTransitionOnChange
-            storageKey="theme"
-          >
-            <AuthProvider>
+    <>
+      <NextIntlClientProvider messages={messages}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          forcedTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange
+          storageKey="theme"
+        >
+          <AuthProvider>
+            <div
+              className="min-h-screen bg-background antialiased font-chinese-sans"
+              suppressHydrationWarning
+            >
               <div className="relative flex min-h-screen flex-col">
                 {children}
               </div>
               <ToastProvider />
-            </AuthProvider>
-          </ThemeProvider>
-        </NextIntlClientProvider>
+            </div>
+          </AuthProvider>
+        </ThemeProvider>
+      </NextIntlClientProvider>
 
-        {/* Performance monitoring and error reporting */}
-        {process.env.NODE_ENV === 'production' && (
-          <>
-            {/* Google Analytics */}
-            {process.env.NEXT_PUBLIC_GA_ID && (
-              <>
-                <script
-                  async
-                  src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-                />
-                <script
-                  dangerouslySetInnerHTML={{
-                    __html: `
-                      window.dataLayer = window.dataLayer || [];
-                      function gtag(){dataLayer.push(arguments);}
-                      gtag('js', new Date());
-                      gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
-                        page_title: document.title,
-                        page_location: window.location.href,
-                      });
-                    `,
-                  }}
-                />
-              </>
-            )}
-
-            {/* Sentry error monitoring */}
-            {process.env.NEXT_PUBLIC_SENTRY_DSN && (
+      {/* Performance monitoring and error reporting */}
+      {process.env.NODE_ENV === 'production' && (
+        <>
+          {process.env.NEXT_PUBLIC_GA_ID && (
+            <>
+              <script
+                async
+                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              />
               <script
                 dangerouslySetInnerHTML={{
                   __html: `
-                    if (window.Sentry) {
-                      Sentry.init({
-                        dsn: '${process.env.NEXT_PUBLIC_SENTRY_DSN}',
-                        environment: 'production',
-                        tracesSampleRate: 0.1,
-                      });
-                    }
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+                      page_title: document.title,
+                      page_location: window.location.href,
+                    });
                   `,
                 }}
               />
-            )}
-          </>
-        )}
+            </>
+          )}
 
-        {/* Structured data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebApplication',
-              name: locale === 'zh' ? '文化伴侣' : 'Cultural Companion',
-              description: locale === 'zh' ? '专业的AI中文起名服务平台' : 'Professional AI-powered Chinese name generation service',
-              url: process.env.NEXT_PUBLIC_SITE_URL,
-              applicationCategory: 'UtilitiesApplication',
-              operatingSystem: 'Any',
-              offers: {
-                '@type': 'Offer',
-                price: '0',
-                priceCurrency: 'USD'
-              },
-              featureList: locale === 'zh' ? [
-                'AI智能起名',
-                '五行命名',
-                '诗意命名',
-                '文化解释',
-                '发音指导'
-              ] : [
-                'AI-powered naming',
-                'Five Elements integration',
-                'Poetic naming',
-                'Cultural explanations',
-                'Pronunciation guidance'
-              ]
-            })
-          }}
-        />
-      </body>
-    </html>
+          {process.env.NEXT_PUBLIC_SENTRY_DSN && (
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  if (window.Sentry) {
+                    Sentry.init({
+                      dsn: '${process.env.NEXT_PUBLIC_SENTRY_DSN}',
+                      environment: 'production',
+                      tracesSampleRate: 0.1,
+                    });
+                  }
+                `,
+              }}
+            />
+          )}
+        </>
+      )}
+
+      {/* Structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebApplication',
+            name: locale === 'zh' ? '文化伴侣' : 'Cultural Companion',
+            description: locale === 'zh' ? '专业的AI中文起名服务平台' : 'Professional AI-powered Chinese name generation service',
+            url: process.env.NEXT_PUBLIC_SITE_URL,
+            applicationCategory: 'UtilitiesApplication',
+            operatingSystem: 'Any',
+            offers: {
+              '@type': 'Offer',
+              price: '0',
+              priceCurrency: 'USD'
+            },
+            featureList: locale === 'zh' ? [
+              'AI智能起名',
+              '五行命名',
+              '诗意命名',
+              '文化解释',
+              '发音指导'
+            ] : [
+              'AI-powered naming',
+              'Five Elements integration',
+              'Poetic naming',
+              'Cultural explanations',
+              'Pronunciation guidance'
+            ]
+          })
+        }}
+      />
+    </>
   )
 }

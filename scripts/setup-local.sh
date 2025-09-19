@@ -36,7 +36,7 @@ if [ ! -f .env.local ]; then
     echo "   - NEXT_PUBLIC_SUPABASE_URL"
     echo "   - NEXT_PUBLIC_SUPABASE_ANON_KEY"
     echo "   - SUPABASE_SERVICE_ROLE_KEY"
-    echo "   - OPENAI_API_KEY"
+    echo "   - OPENROUTER_API_KEY"
     echo "   - STRIPE_SECRET_KEY"
     echo "   - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
 fi
@@ -55,8 +55,8 @@ if [ -z "$NEXT_PUBLIC_SUPABASE_ANON_KEY" ]; then
     MISSING_VARS+=("NEXT_PUBLIC_SUPABASE_ANON_KEY")
 fi
 
-if [ -z "$OPENAI_API_KEY" ]; then
-    MISSING_VARS+=("OPENAI_API_KEY")
+if [ -z "$OPENROUTER_API_KEY" ]; then
+    MISSING_VARS+=("OPENROUTER_API_KEY")
 fi
 
 if [ ${#MISSING_VARS[@]} -gt 0 ]; then
