@@ -1,9 +1,12 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import { currentStage, isDevelopment, isProduction } from '@/lib/env'
 
+const supabaseUrlFromEnv = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
+const supabaseAnonKeyFromEnv = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim()
+
 const requiredClientVars: Array<[string, string | undefined]> = [
-  ['NEXT_PUBLIC_SUPABASE_URL', process.env.NEXT_PUBLIC_SUPABASE_URL],
-  ['NEXT_PUBLIC_SUPABASE_ANON_KEY', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY],
+  ['NEXT_PUBLIC_SUPABASE_URL', supabaseUrlFromEnv],
+  ['NEXT_PUBLIC_SUPABASE_ANON_KEY', supabaseAnonKeyFromEnv],
 ]
 
 const missingClientVars = requiredClientVars
@@ -23,8 +26,8 @@ if (missingClientVars.length > 0) {
 }
 
 // 客户端配置 - 使用占位符以避免构建错误
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key'
+const supabaseUrl = supabaseUrlFromEnv || 'https://placeholder.supabase.co'
+const supabaseAnonKey = supabaseAnonKeyFromEnv || 'placeholder-anon-key'
 
 // 客户端实例
 export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
@@ -37,7 +40,7 @@ export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKe
 
 // 服务端客户端（用于API路由）
 export const createServiceClient = (): SupabaseClient => {
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()
 
   if (!serviceKey) {
     const message = `Missing Supabase environment variables: SUPABASE_SERVICE_ROLE_KEY (stage: ${currentStage})`

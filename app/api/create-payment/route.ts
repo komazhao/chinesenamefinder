@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createCheckoutSession, PRICING_PLANS } from '@/lib/stripe'
+import { createCheckoutSession, PRICING_PLANS, isStripeConfigured } from '@/lib/stripe'
 import { createServiceClient } from '@/lib/supabase'
 import { isDevelopment } from '@/lib/env'
 import { z } from 'zod'
@@ -14,6 +14,13 @@ const createPaymentSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isStripeConfigured) {
+      return NextResponse.json(
+        { error: '支付服务未启用', code: 'STRIPE_NOT_CONFIGURED' },
+        { status: 503 }
+      )
+    }
+
     // 验证用户身份
     const authHeader = request.headers.get('Authorization')
     if (!authHeader?.startsWith('Bearer ')) {
@@ -143,6 +150,13 @@ export async function POST(request: NextRequest) {
 // 获取支付状态
 export async function GET(request: NextRequest) {
   try {
+    if (!isStripeConfigured) {
+      return NextResponse.json(
+        { error: '支付服务未启用', code: 'STRIPE_NOT_CONFIGURED' },
+        { status: 503 }
+      )
+    }
+
     const { searchParams } = new URL(request.url)
     const sessionId = searchParams.get('session_id')
 

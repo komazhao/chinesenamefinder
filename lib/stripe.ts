@@ -1,15 +1,10 @@
 import Stripe from 'stripe'
-import { currentStage, isProduction } from '@/lib/env'
+import { currentStage } from '@/lib/env'
 
 // 确保 Stripe 密钥存在
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY?.trim()
 if (!stripeSecretKey) {
   const message = 'STRIPE_SECRET_KEY is not defined in environment variables'
-
-  if (isProduction) {
-    throw new Error(message)
-  }
-
   console.warn(`${message}; current stage: ${currentStage}`)
 }
 
@@ -21,9 +16,11 @@ export const stripe = stripeSecretKey
     })
   : null
 
+export const isStripeConfigured = Boolean(stripeSecretKey)
+
 const getStripeClient = (): Stripe => {
   if (!stripe) {
-    throw new Error(`Stripe client unavailable (stage: ${currentStage})`)
+    throw new Error(`Stripe client unavailable (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
   }
 
   return stripe

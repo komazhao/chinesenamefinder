@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { constructWebhookEvent } from '@/lib/stripe'
+import { constructWebhookEvent, isStripeConfigured } from '@/lib/stripe'
 import { createServiceClient } from '@/lib/supabase'
 import { isDevelopment } from '@/lib/env'
 import Stripe from 'stripe'
@@ -9,6 +9,11 @@ export const runtime = 'edge'
 // Webhook 端点需要原始请求体
 export async function POST(request: NextRequest) {
   try {
+    if (!isStripeConfigured) {
+      console.warn('[Stripe webhook] Stripe 未配置，忽略请求')
+      return NextResponse.json({ success: true, message: 'Stripe disabled' }, { status: 200 })
+    }
+
     const body = await request.text()
     const signature = request.headers.get('stripe-signature')
 

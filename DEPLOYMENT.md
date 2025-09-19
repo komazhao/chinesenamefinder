@@ -239,12 +239,12 @@ curl https://openrouter.ai/api/v1/models \
 | `OPENROUTER_API_URL` | OpenRouter 自定义接口（可选） | ⭕️ | `https://openrouter.ai/api/v1/chat/completions` | 同生产 |
 | `OPENROUTER_MODEL` | 默认模型（可选） | ⭕️ | `openai/gpt-4o-mini` | 同生产或测试模型 |
 | `OPENROUTER_APP_NAME` | OpenRouter 应用名（可选） | ⭕️ | `Chinese Name Finder` | `Chinese Name Finder (Preview)` |
-| `STRIPE_SECRET_KEY` | Stripe Secret Key | ✅ | `sk_live_xxx` | `sk_test_xxx` |
-| `STRIPE_WEBHOOK_SECRET` | Stripe Webhook Secret | ✅ | `whsec_live_xxx` | `whsec_test_xxx` |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe Publishable Key | ✅ | `pk_live_xxx` | `pk_test_xxx` |
-| `STRIPE_BASIC_PRICE_ID` | Stripe 基础版价格 ID（可选） | ⭕️ | `price_live_basic` | `price_test_basic` |
-| `STRIPE_STANDARD_PRICE_ID` | Stripe 标准版价格 ID（可选） | ⭕️ | `price_live_standard` | `price_test_standard` |
-| `STRIPE_PREMIUM_PRICE_ID` | Stripe 高级版价格 ID（可选） | ⭕️ | `price_live_premium` | `price_test_premium` |
+| `STRIPE_SECRET_KEY` | Stripe Secret Key（启用支付时必填） | ⭕️ | `sk_live_xxx` | `sk_test_xxx` |
+| `STRIPE_WEBHOOK_SECRET` | Stripe Webhook Secret（启用支付时必填） | ⭕️ | `whsec_live_xxx` | `whsec_test_xxx` |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe Publishable Key（启用支付时必填） | ⭕️ | `pk_live_xxx` | `pk_test_xxx` |
+| `STRIPE_BASIC_PRICE_ID` | Stripe 基础版价格 ID | ⭕️ | `price_live_basic` | `price_test_basic` |
+| `STRIPE_STANDARD_PRICE_ID` | Stripe 标准版价格 ID | ⭕️ | `price_live_standard` | `price_test_standard` |
+| `STRIPE_PREMIUM_PRICE_ID` | Stripe 高级版价格 ID | ⭕️ | `price_live_premium` | `price_test_premium` |
 | `NEXT_PUBLIC_GA_ID` | Google Analytics（可选） | ⭕️ | `G-XXXXXXX` | 留空 |
 | `NEXT_PUBLIC_SENTRY_DSN` | Sentry DSN（可选） | ⭕️ | `https://xxx.ingest.sentry.io/123` | `https://xxx.ingest.sentry.io/456` |
 | `GOOGLE_VERIFICATION_ID` | 搜索验证（可选） | ⭕️ | `abcdefg` | 留空 |
@@ -265,6 +265,7 @@ OPENROUTER_API_KEY=or-prod-xxxx
 OPENROUTER_API_URL=https://openrouter.ai/api/v1/chat/completions
 OPENROUTER_MODEL=openai/gpt-4o-mini
 OPENROUTER_APP_NAME=Chinese Name Finder
+# Stripe（可选）
 STRIPE_SECRET_KEY=sk_live_xxx
 STRIPE_WEBHOOK_SECRET=whsec_live_xxx
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxx
@@ -290,6 +291,7 @@ OPENROUTER_API_KEY=or-test-xxxx
 OPENROUTER_API_URL=https://openrouter.ai/api/v1/chat/completions
 OPENROUTER_MODEL=openai/gpt-4o-mini
 OPENROUTER_APP_NAME=Chinese Name Finder (Preview)
+# Stripe（可选）
 STRIPE_SECRET_KEY=sk_test_xxx
 STRIPE_WEBHOOK_SECRET=whsec_test_xxx
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
