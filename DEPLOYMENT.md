@@ -216,7 +216,7 @@ curl https://openrouter.ai/api/v1/models \
 3. 选择 **Connect to Git**，授权 Cloudflare 访问 GitHub 仓库，并选择 `chinesenamefinder` 这个仓库及要部署的分支（通常是 `main`）。
 4. 在构建设置中填写：
    - **Framework preset**：`Next.js`
-   - **Build command**：`npm install && npm run build && npx @cloudflare/next-on-pages --experimental-minify`
+   - **Build command**：`npm ci && npm run build && npx @cloudflare/next-on-pages`
    - **Build output directory**：`.vercel/output/static`
    - **Root directory**：`/`
 5. 点击 **Save and Deploy** 触发第一次构建，首次安装依赖会稍慢。
@@ -257,6 +257,17 @@ curl https://openrouter.ai/api/v1/models \
 > ⚠️ 常见坑：
 > - 如果构建日志里只显示 `Build environment variables: APP_STAGE: production`，而没有你配置的 `NEXT_PUBLIC_*` 变量，大概率是没有把它们加到“Build 环境变量”。
 > - `NEXT_PUBLIC_*` 前缀的变量不是机密，可以加在 wrangler.toml 或 Build 变量里；而 `SUPABASE_SERVICE_ROLE_KEY`、`STRIPE_SECRET_KEY`、`OPENROUTER_API_KEY` 等敏感值请放在 Cloudflare Pages 的 Environment variables/Secrets 中，不要写入仓库。
+
+#### 6.3.1 变量修改后如何生效？
+
+- 无需在代码里新增命令；Cloudflare Pages 会在“下一次构建”时读取最新变量。
+- 修改完成后点击页面右上角的 `Save`（Build 页面为 `Save`，Environment 页面为 `Save` 或 `Save and deploy`）。
+- 触发重新构建的方式有三种：
+  - 在 Pages 的 Deployments 列表中，选择最近一次构建，点击 `Retry deployment` 或 `Redeploy`；
+  - 向绑定分支推送一次提交（可用空提交：`git commit --allow-empty -m "trigger redeploy" && git push`）；
+  - 使用 Wrangler：`wrangler pages deploy .vercel/output/static --project-name <your-project>`（先执行 `npm run build && npx @cloudflare/next-on-pages`）。
+
+> 备注：Build 变量只在构建时读取；Runtime/Secrets 在运行时读取。两者都可能需要更新。
 
 **生产环境示例（Build & Runtime）**
 

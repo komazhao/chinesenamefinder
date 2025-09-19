@@ -22,9 +22,6 @@ const firaCode = Fira_Code({
   display: 'swap',
 })
 
-// 统一使用 Edge Runtime（Cloudflare Pages 需要）
-export const runtime = 'edge'
-
 export default async function RootLayout({
   children,
 }: {
