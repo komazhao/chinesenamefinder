@@ -78,13 +78,6 @@ export default function PrivacyPage() {
     { name: t('privacy.dataTypes.support.name'), purpose: t('privacy.dataTypes.support.purpose'), retention: t('privacy.dataTypes.support.retention'), required: false }
   ]
 
-  const thirdPartyServices = [
-    { name: t('privacy.thirdPartyServices.alibaba.name'), purpose: t('privacy.thirdPartyServices.alibaba.purpose'), dataTypes: t('privacy.thirdPartyServices.alibaba.dataTypes') },
-    { name: t('privacy.thirdPartyServices.wechat.name'), purpose: t('privacy.thirdPartyServices.wechat.purpose'), dataTypes: t('privacy.thirdPartyServices.wechat.dataTypes') },
-    { name: t('privacy.thirdPartyServices.alipay.name'), purpose: t('privacy.thirdPartyServices.alipay.purpose'), dataTypes: t('privacy.thirdPartyServices.alipay.dataTypes') },
-    { name: t('privacy.thirdPartyServices.tencent.name'), purpose: t('privacy.thirdPartyServices.tencent.purpose'), dataTypes: t('privacy.thirdPartyServices.tencent.dataTypes') }
-  ]
-
   return (
     <>
       <Header />
@@ -235,38 +228,6 @@ export default function PrivacyPage() {
                       ))}
                     </tbody>
                   </table>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        {/* Third Party Services */}
-        <section className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Globe className="w-5 h-5" />
-                  {t('privacy.thirdParty.title')}
-                </CardTitle>
-                <CardDescription>
-                  {t('privacy.thirdParty.description')}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {thirdPartyServices.map((service, index) => (
-                    <div key={index} className="border rounded-lg p-4">
-                      <h4 className="font-semibold mb-2">{service.name}</h4>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        <strong>{t('privacy.thirdParty.purposeLabel')}：</strong>{service.purpose}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        <strong>{t('privacy.thirdParty.dataTypesLabel')}：</strong>{service.dataTypes}
-                      </p>
-                    </div>
-                  ))}
                 </div>
               </CardContent>
             </Card>

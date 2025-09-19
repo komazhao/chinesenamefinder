@@ -107,12 +107,6 @@ export default function TermsPage() {
     }
   ]
 
-  const contactInfo = [
-    { type: t('terms.contact.legal'), value: 'legal@chinesenamefinder.com', icon: Mail },
-    { type: t('terms.contact.phone'), value: '+86 400-123-4567', icon: Phone },
-    { type: t('terms.contact.address'), value: t('terms.contact.addressValue'), icon: Globe }
-  ]
-
   return (
     <>
       <Header />
@@ -267,49 +261,6 @@ export default function TermsPage() {
           </div>
         </section>
 
-        {/* Legal Entity Info */}
-        <section className="container mx-auto px-4 py-8">
-          <div className="max-w-4xl mx-auto">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('terms.company.title')}</CardTitle>
-                <CardDescription>
-                  {t('terms.company.description')}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-semibold mb-3">{t('terms.company.details.title')}</h4>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>{t('terms.company.details.name')}:</strong> {t('terms.company.details.nameValue')}</p>
-                      <p><strong>{t('terms.company.details.address')}:</strong> {t('terms.company.details.addressValue')}</p>
-                      <p><strong>{t('terms.company.details.code')}:</strong> {t('terms.company.details.codeValue')}</p>
-                      <p><strong>{t('terms.company.details.representative')}:</strong> {t('terms.company.details.representativeValue')}</p>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-3">{t('terms.contact.title')}</h4>
-                    <div className="space-y-3">
-                      {contactInfo.map((contact, index) => {
-                        const Icon = contact.icon
-                        return (
-                          <div key={index} className="flex items-center gap-3">
-                            <Icon className="w-4 h-4 text-muted-foreground" />
-                            <span className="text-sm">
-                              <strong>{contact.type}：</strong>{contact.value}
-                            </span>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
         {/* Contact Section */}
         <section className="container mx-auto px-4 py-16">
           <Card className="max-w-4xl mx-auto bg-gradient-to-r from-amber-600 to-orange-600 text-white border-0">
@@ -324,7 +275,7 @@ export default function TermsPage() {
               <div className="grid md:grid-cols-3 gap-6 mb-8">
                 <div className="flex items-center justify-center gap-2">
                   <Mail className="w-5 h-5" />
-                  <span className="text-sm">legal@chinesenamefinder.com</span>
+                  <span className="text-sm">support@chinesenamefinder.com</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <Phone className="w-5 h-5" />
@@ -339,7 +290,7 @@ export default function TermsPage() {
                 <Button variant="secondary" size="lg" asChild>
                   <Link href="/contact">
                     <Mail className="mr-2 h-4 w-4" />
-                    {t('terms.cta.contactLegal')}
+                    {t('terms.cta.contactSupport')}
                   </Link>
                 </Button>
                 <Button variant="outline" size="lg" className="bg-transparent border-white text-white hover:bg-white/10" asChild>

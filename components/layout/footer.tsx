@@ -27,7 +27,6 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4">{t('sections.support')}</h4>
             <ul className="space-y-2 text-muted-foreground">
-              <li><Link href="/help" className="hover:text-foreground transition-colors">{t('links.help')}</Link></li>
               <li><Link href="/contact" className="hover:text-foreground transition-colors">{t('links.contact')}</Link></li>
               <li><Link href="/dashboard" className="hover:text-foreground transition-colors">{t('links.dashboard')}</Link></li>
             </ul>

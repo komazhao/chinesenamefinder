@@ -10,9 +10,9 @@
     "pricing": "Pricing",
     "generate": "Generate Name",
     "dashboard": "Dashboard",
-    "contact": "Contact",
+    "contact": "Feedback",
     "blog": "Blog",
-    "stories": "Stories",
+    "stories": "User Stories",
     "sign_in": "Sign In",
     "sign_out": "Sign Out",
     "register": "Register",
@@ -283,10 +283,10 @@
     },
     "links": {
       "ai_naming": "AI Naming",
-      "stories": "Cultural Stories",
+      "stories": "User Stories",
       "pricing": "Pricing",
       "help": "Help Center",
-      "contact": "Contact Us",
+      "contact": "Feedback",
       "dashboard": "Dashboard",
       "about": "About Us",
       "privacy": "Privacy Policy",
@@ -346,7 +346,7 @@
     "user": "User",
     "description": "Manage your Chinese name collections and generation history",
     "creditsRemaining": "Credits Remaining",
-    "canGenerate": "Can generate {{count}} names",
+    "canGenerate": "Can generate {count} names",
     "todayGenerations": "Today's Generations",
     "todayGenerationsDesc": "Number of names generated today",
     "favoriteNames": "Favorite Names",
@@ -621,9 +621,9 @@
         "action": "Contact Now"
       },
       "chat": {
-        "title": "Online Support",
-        "description": "Real-time response during business hours",
-        "value": "Click to start conversation"
+        "title": "Feedback Form",
+        "description": "Submit questions or suggestions via the form",
+        "value": "Fill out feedback form"
       },
       "phone": {
         "title": "Phone Support",
@@ -700,7 +700,7 @@
           "answer": "You can contact our technical support team via email, online chat, or phone."
         }
       },
-      "viewAll": "View Complete Help Center"
+      "viewAll": "Browse self-service resources"
     },
     "enterprise": {
       "title": "Enterprise Services",
@@ -975,34 +975,6 @@
         "retention": "3 years"
       }
     },
-    "thirdParty": {
-      "title": "Third-Party Service Providers",
-      "description": "Our partner third-party service providers and their data processing scope",
-      "purposeLabel": "Purpose",
-      "dataTypesLabel": "Data Types"
-    },
-    "thirdPartyServices": {
-      "alibaba": {
-        "name": "Alibaba Cloud",
-        "purpose": "Cloud computing and data storage",
-        "dataTypes": "Encrypted user data"
-      },
-      "wechat": {
-        "name": "WeChat Pay",
-        "purpose": "Payment processing",
-        "dataTypes": "Transaction information"
-      },
-      "alipay": {
-        "name": "Alipay",
-        "purpose": "Payment processing",
-        "dataTypes": "Transaction information"
-      },
-      "tencent": {
-        "name": "Tencent Cloud",
-        "purpose": "Content delivery network",
-        "dataTypes": "Anonymized access logs"
-      }
-    },
     "notices": {
       "children": "Children's Privacy Protection: Our service is intended for users aged 18 and above. If you are under 18, please use our service under parental guidance.",
       "changes": "Policy Change Notice: If our privacy policy undergoes significant changes, we will notify you 30 days in advance via email or website announcement.",
@@ -1077,7 +1049,7 @@
         "description": "Respect IP rights and use service content appropriately"
       }
     },
-    "importantNotice": "Important Notice: These Terms of Service constitute a legally binding agreement between you and Cultural Companion. Please read all terms carefully before using the service. If you have questions, please contact our legal team.",
+    "importantNotice": "Important Notice: These Terms of Service constitute a legally binding agreement between you and Cultural Companion. Please read all terms carefully before using the service. If you have questions, our support team is here to help.",
     "dispute": {
       "title": "Dispute Resolution",
       "description": "How to handle potential disputes and disagreements",
@@ -1097,33 +1069,11 @@
       },
       "jurisdiction": "These terms are governed by the laws of the People's Republic of China. Any disputes shall be resolved through friendly negotiation first. If negotiation fails, the matter shall be submitted to the competent People's Court in Beijing."
     },
-    "company": {
-      "title": "Company Information",
-      "description": "Legal entity information of the service provider",
-      "details": {
-        "title": "Company Details",
-        "name": "Company Name",
-        "nameValue": "Cultural Companion Technology Co., Ltd.",
-        "address": "Registered Address",
-        "addressValue": "Science Park, Chaoyang District, Beijing",
-        "code": "Unified Social Credit Code",
-        "codeValue": "91110000XXXXXXXXXX",
-        "representative": "Legal Representative",
-        "representativeValue": "Zhang XX"
-      }
-    },
-    "contact": {
-      "title": "Contact Information",
-      "legal": "Legal Email",
-      "phone": "Customer Service",
-      "address": "Company Address",
-      "addressValue": "Science Park, Chaoyang District, Beijing"
-    },
     "cta": {
-      "title": "Questions About Terms? We Can Help",
-      "description": "If you have any questions about the Terms of Service or need legal advice, our legal team is ready to provide professional answers",
+      "title": "Questions About These Terms?",
+      "description": "If you have any questions about the Terms of Service or how they apply to you, our support team will provide timely assistance.",
       "hours": "Business Days",
-      "contactLegal": "Contact Legal",
+      "contactSupport": "Contact Support",
       "privacy": "Privacy Policy"
     },
     "finalNotice": "Thank you for choosing Cultural Companion! We are committed to complying with all applicable laws and regulations to provide you with safe and reliable services. Your trust is our motivation for continuous improvement."
@@ -1358,7 +1308,7 @@
     },
     "results": {
       "title": "Generation Results",
-      "description": "Generated {{count}} names for you",
+      "description": "Generated {count} names for you",
       "matchRate": "Match Rate",
       "meaningExplanation": "Meaning",
       "culturalBackground": "Cultural Context",

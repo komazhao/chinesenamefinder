@@ -22,8 +22,12 @@ import {
   HeadphonesIcon,
   Building2,
   CheckCircle,
-  AlertCircle,
-  Loader2
+  Loader2,
+  Book,
+  Settings,
+  Shield,
+  CreditCard,
+  ChevronRight
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Link } from '@/i18n/routing'
@@ -40,34 +44,67 @@ export default function ContactPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  const resourceCards = [
+    {
+      icon: Book,
+      title: t('help.categories.quickStart.title'),
+      description: t('help.categories.quickStart.description'),
+      href: '/generate',
+      color: 'from-red-500 to-red-600'
+    },
+    {
+      icon: Settings,
+      title: t('help.categories.account.title'),
+      description: t('help.categories.account.description'),
+      href: '/settings',
+      color: 'from-blue-500 to-blue-600'
+    },
+    {
+      icon: CreditCard,
+      title: t('help.categories.billing.title'),
+      description: t('help.categories.billing.description'),
+      href: '/pricing',
+      color: 'from-purple-500 to-purple-600'
+    },
+    {
+      icon: Shield,
+      title: t('help.categories.privacy.title'),
+      description: t('help.categories.privacy.description'),
+      href: '/privacy',
+      color: 'from-emerald-500 to-emerald-600'
+    }
+  ]
+
   const contactMethods = [
     {
       title: t('contact.methods.email.title'),
       description: t('contact.methods.email.description'),
       value: 'support@chinesenamefinder.com',
       icon: Mail,
-      action: 'mailto:support@chinesenamefinder.com'
+      action: 'mailto:support@chinesenamefinder.com',
+      actionLabel: t('contact.methods.email.action')
     },
     {
       title: t('contact.methods.chat.title'),
       description: t('contact.methods.chat.description'),
       value: t('contact.methods.chat.value'),
       icon: MessageCircle,
-      action: '#'
+      action: '#feedback-form',
+      actionLabel: t('help.quickActions.contact.action')
     },
     {
       title: t('contact.methods.phone.title'),
       description: t('contact.methods.phone.description'),
       value: '+86 400-123-4567',
       icon: Phone,
-      action: 'tel:+8640012334567'
+      action: 'tel:+8640012334567',
+      actionLabel: t('help.quickActions.contact.action')
     },
     {
       title: t('contact.methods.address.title'),
       description: t('contact.methods.address.description'),
       value: t('contact.methods.address.value'),
-      icon: MapPin,
-      action: '#'
+      icon: MapPin
     }
   ]
 
@@ -149,6 +186,40 @@ export default function ContactPage() {
           </div>
         </section>
 
+        {/* Self-Service Resources */}
+        <section id="self-service" className="container mx-auto px-4 py-8">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-8">{t('help.categories.title')}</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {resourceCards.map((card, index) => {
+                const Icon = card.icon
+                return (
+                  <Link key={index} href={card.href}>
+                    <Card className="hover:shadow-lg transition-all cursor-pointer group h-full">
+                      <CardHeader>
+                        <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${card.color} text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                          <Icon className="w-6 h-6" />
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                            {card.title}
+                          </CardTitle>
+                          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <CardDescription>
+                          {card.description}
+                        </CardDescription>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
         {/* Contact Methods */}
         <section className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
@@ -167,11 +238,13 @@ export default function ContactPage() {
                     </CardHeader>
                     <CardContent className="text-center">
                       <p className="font-medium text-primary mb-4">{method.value}</p>
-                      <Button variant="outline" size="sm" className="w-full" asChild>
-                        <a href={method.action}>
-                          {t('contact.methods.email.action')}
-                        </a>
-                      </Button>
+                      {method.action && method.actionLabel && (
+                        <Button variant="outline" size="sm" className="w-full" asChild>
+                          <a href={method.action}>
+                            {method.actionLabel}
+                          </a>
+                        </Button>
+                      )}
                     </CardContent>
                   </Card>
                 )
@@ -184,7 +257,7 @@ export default function ContactPage() {
         <section className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8">
             {/* Contact Form */}
-            <Card>
+            <Card id="feedback-form">
               <CardHeader>
                 <CardTitle className="text-2xl flex items-center gap-2">
                   <Send className="w-6 h-6" />
@@ -328,9 +401,9 @@ export default function ContactPage() {
                     ))}
                   </div>
                   <Button variant="outline" className="w-full mt-4" asChild>
-                    <Link href="/help">
+                    <a href="#self-service">
                       {t('contact.faq.viewAll')}
-                    </Link>
+                    </a>
                   </Button>
                 </CardContent>
               </Card>
