@@ -13,6 +13,9 @@ type Props = {
   params: Promise<{ locale: string }>
 }
 
+// 统一使用 Edge Runtime（覆盖该段的所有路由）
+export const runtime = 'edge'
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }

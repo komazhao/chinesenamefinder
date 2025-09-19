@@ -3,6 +3,9 @@ import { createServiceClient, isSupabaseConfigured } from '@/lib/supabase'
 import { isDevelopment } from '@/lib/env'
 import { z } from 'zod'
 
+// Cloudflare Pages 需要 Edge Runtime
+export const runtime = 'edge'
+
 // 请求验证 schema
 const generateNameSchema = z.object({
   englishName: z.string().min(1, '英文名不能为空').max(50, '英文名长度不能超过50个字符'),

@@ -223,10 +223,13 @@ curl https://openrouter.ai/api/v1/models \
 
 > 之后每次向目标分支推送代码，Cloudflare Pages 都会自动构建并发布最新版本。
 
-### 6.3 配置 Environment variables
+### 6.3 配置 Environment variables（重点：构建环境 VS 运行时）
 
-1. 打开 Pages 项目 → **Settings → Environment variables**。
-2. 分别在 `Production` 与 `Preview` 标签页下添加变量（键值与 `.env.local` 对应）。建议结构如下：
+1. 打开 Pages 项目 → 推荐两处都配置：
+   - 构建环境变量（Build）：Settings → Builds & deployments → Environment variables
+   - 运行时变量（Runtime）：Settings → Environment variables（或 Secrets）
+2. 请分别在 `Production` 与 `Preview` 标签页下添加变量（键值与 `.env.local` 对应）。建议结构如下：
+   - 其中 `NEXT_PUBLIC_SUPABASE_URL` 与 `NEXT_PUBLIC_SUPABASE_ANON_KEY` 一定要在“Build”中配置，否则 Next.js 在“Collecting page data”阶段拿不到，构建日志会出现 Missing Supabase environment variables。
 
 | Key | 说明 | 必填 | Production 示例 | Preview 示例 |
 | --- | --- | --- | --- | --- |
@@ -251,7 +254,9 @@ curl https://openrouter.ai/api/v1/models \
 | `YANDEX_VERIFICATION_ID` | 搜索验证（可选） | ⭕️ | `hijklmn` | 留空 |
 | `NEXT_PUBLIC_LOCALE_DETECTION` | 是否启用自动语言识别（可选） | ⭕️ | `true` | `false` |
 
-> ⚠️ Cloudflare Pages 会将 **Environment variables** 同时用于构建与运行时，敏感值同样需要填写在这里；若你希望加密存储，可在 **Secrets** 中再次添加同名变量以供运行时访问。
+> ⚠️ 常见坑：
+> - 如果构建日志里只显示 `Build environment variables: APP_STAGE: production`，而没有你配置的 `NEXT_PUBLIC_*` 变量，大概率是没有把它们加到“Build 环境变量”。
+> - `NEXT_PUBLIC_*` 前缀的变量不是机密，可以加在 wrangler.toml 或 Build 变量里；而 `SUPABASE_SERVICE_ROLE_KEY`、`STRIPE_SECRET_KEY`、`OPENROUTER_API_KEY` 等敏感值请放在 Cloudflare Pages 的 Environment variables/Secrets 中，不要写入仓库。
 
 **生产环境示例（Build & Runtime）**
 
