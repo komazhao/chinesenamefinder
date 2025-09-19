@@ -312,7 +312,7 @@ git push origin main
 
 ```bash
 # 生产环境变量
-NODE_ENV=production
+APP_STAGE=production
 NEXT_PUBLIC_SUPABASE_URL=your-production-supabase-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-production-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-production-service-key
@@ -324,6 +324,8 @@ NEXT_PUBLIC_SITE_URL=https://your-production-domain.com
 NEXT_PUBLIC_GA_ID=your-google-analytics-id
 NEXT_PUBLIC_SENTRY_DSN=your-sentry-dsn
 ```
+
+> 预览环境请将 `APP_STAGE` 设置为 `preview`，并按照需要替换为测试凭据。
 
 ## 📊 数据库设计
 

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase'
+import { isDevelopment } from '@/lib/env'
 import { z } from 'zod'
 
 // 请求验证 schema
@@ -353,7 +354,7 @@ export async function POST(request: NextRequest) {
       {
         error: '服务器内部错误',
         code: 'INTERNAL_ERROR',
-        message: process.env.NODE_ENV === 'development' ? (error as Error).message : undefined
+        message: isDevelopment ? (error as Error).message : undefined
       },
       { status: 500 }
     )

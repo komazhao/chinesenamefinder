@@ -83,7 +83,7 @@ const nextConfig = {
   },
 
   // ✅ 核心修改 3: 静态导出优化
-  assetPrefix: process.env.NODE_ENV === 'production' ? undefined : undefined,
+  assetPrefix: process.env.APP_STAGE === 'production' ? undefined : undefined,
 
   // ✅ 保持模板原有配置
   reactStrictMode: false,
@@ -197,7 +197,7 @@ command = "npm run build && npm run export"
 
 # ✅ 环境变量绑定
 [env.production]
-vars = { NODE_ENV = "production" }
+vars = { APP_STAGE = "production" }
 
 # ✅ Functions 配置
 [[env.production.services]]

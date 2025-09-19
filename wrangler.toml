@@ -9,10 +9,22 @@ binding = "CACHE_KV"
 id = "your-kv-namespace-id"
 preview_id = "your-preview-kv-namespace-id"
 
+# 默认变量（本地或未指定环境）
+[vars]
+APP_STAGE = "local"
+
 # 环境变量（生产环境）
 [env.production]
-vars = { NODE_ENV = "production" }
+vars = { APP_STAGE = "production" }
+
+[[env.production.kv_namespaces]]
+binding = "CACHE_KV"
+id = "your-kv-namespace-id"
 
 # 环境变量（预览环境）
 [env.preview]
-vars = { NODE_ENV = "development" }
+vars = { APP_STAGE = "preview" }
+
+[[env.preview.kv_namespaces]]
+binding = "CACHE_KV"
+id = "your-preview-kv-namespace-id"

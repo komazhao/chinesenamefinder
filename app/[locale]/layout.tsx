@@ -6,6 +6,7 @@ import { routing } from '@/i18n/routing'
 import { AuthProvider } from '@/components/providers/auth-provider'
 import { ToastProvider } from '@/components/providers/toast-provider'
 import { ThemeProvider } from '@/components/providers/theme-provider'
+import { currentStage, isProduction } from '@/lib/env'
 
 type Props = {
   children: React.ReactNode
@@ -118,7 +119,7 @@ export default async function LocaleLayout({
       </NextIntlClientProvider>
 
       {/* Performance monitoring and error reporting */}
-      {process.env.NODE_ENV === 'production' && (
+      {isProduction && (
         <>
           {process.env.NEXT_PUBLIC_GA_ID && (
             <>
@@ -149,7 +150,7 @@ export default async function LocaleLayout({
                   if (window.Sentry) {
                     Sentry.init({
                       dsn: '${process.env.NEXT_PUBLIC_SENTRY_DSN}',
-                      environment: 'production',
+                      environment: '${currentStage}',
                       tracesSampleRate: 0.1,
                     });
                   }

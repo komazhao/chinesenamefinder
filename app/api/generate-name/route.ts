@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { NameGenerator, type NameRequest } from '@/lib/openai'
 import { createServiceClient } from '@/lib/supabase'
+import { isDevelopment } from '@/lib/env'
 import { z } from 'zod'
 
 // 请求验证 schema
@@ -225,7 +226,7 @@ export async function POST(request: NextRequest) {
       {
         error: '服务器内部错误',
         code: 'INTERNAL_ERROR',
-        message: process.env.NODE_ENV === 'development' ? message : undefined
+        message: isDevelopment ? message : undefined
       },
       { status: 500 }
     )

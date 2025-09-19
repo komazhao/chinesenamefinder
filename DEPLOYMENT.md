@@ -228,9 +228,9 @@ curl https://openrouter.ai/api/v1/models \
 1. 打开 Pages 项目 → **Settings → Environment variables**。
 2. 分别在 `Production` 与 `Preview` 标签页下添加变量（键值与 `.env.local` 对应）。建议结构如下：
 
-| Key | Production | Preview/Dev |
-| --- | ---------- | ------------ |
-| `NODE_ENV` | `production` | `development` |
+| Key | Production | Preview |
+| --- | ---------- | ------- |
+| `APP_STAGE` | `production` | `preview` |
 | `NEXT_PUBLIC_SITE_URL` | `https://your-domain.com` | `https://<preview>.pages.dev` |
 | `NEXT_PUBLIC_SUPABASE_URL` | 生产 Supabase URL | 同上（或测试项目） |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | 生产 Anon Key | 测试 Anon Key |

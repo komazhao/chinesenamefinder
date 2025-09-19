@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createCheckoutSession, PRICING_PLANS } from '@/lib/stripe'
 import { createServiceClient } from '@/lib/supabase'
+import { isDevelopment } from '@/lib/env'
 import { z } from 'zod'
 
 export const runtime = 'edge'
@@ -132,7 +133,7 @@ export async function POST(request: NextRequest) {
       {
         error: '创建支付会话失败',
         code: 'PAYMENT_ERROR',
-        message: process.env.NODE_ENV === 'development' ? message : undefined
+        message: isDevelopment ? message : undefined
       },
       { status: 500 }
     )

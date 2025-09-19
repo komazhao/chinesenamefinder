@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { constructWebhookEvent } from '@/lib/stripe'
 import { createServiceClient } from '@/lib/supabase'
+import { isDevelopment } from '@/lib/env'
 import Stripe from 'stripe'
 
 export const runtime = 'edge'
@@ -254,7 +255,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         error: 'Webhook handler failed',
-        message: process.env.NODE_ENV === 'development' ? message : undefined
+        message: isDevelopment ? message : undefined
       },
       { status: 500 }
     )
