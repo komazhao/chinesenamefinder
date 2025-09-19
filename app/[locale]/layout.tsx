@@ -93,14 +93,16 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale}>
-      <body className="min-h-screen bg-background antialiased font-chinese-sans">
+    <html lang={locale} suppressHydrationWarning>
+      <body className="min-h-screen bg-background antialiased font-chinese-sans" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
+            forcedTheme="light"
             enableSystem={false}
             disableTransitionOnChange
+            storageKey="theme"
           >
             <AuthProvider>
               <div className="relative flex min-h-screen flex-col">

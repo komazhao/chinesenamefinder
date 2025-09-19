@@ -12,7 +12,7 @@ interface AuthContextType {
   loading: boolean
   error: Error | null
   signIn: (email: string, password: string) => Promise<void>
-  signUp: (email: string, password: string, fullName?: string) => Promise<void>
+  signUp: (email: string, password: string, fullName?: string) => Promise<{ data: any; error: Error | null }>
   signOut: () => Promise<void>
   signInWithGoogle: () => Promise<void>
   updateProfile: (updates: Partial<UserProfile>) => Promise<UserProfile>
@@ -126,6 +126,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setError(null)
 
     try {
+      // 检查是否使用占位符配置
+      if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.includes('placeholder')) {
+        throw new Error('Supabase未正确配置：请在.env.local中设置真实的SUPABASE密钥')
+      }
+
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -147,7 +152,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setError(null)
 
     try {
-      const { error } = await supabase.auth.signUp({
+      // 检查是否使用占位符配置
+      if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.includes('placeholder')) {
+        throw new Error('Supabase未正确配置：请在.env.local中设置真实的SUPABASE密钥')
+      }
+
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -158,10 +168,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
 
       if (error) throw error
+
+      return { data, error: null }
     } catch (error) {
       const authError = error instanceof Error ? error : new Error('Sign up failed')
       setError(authError)
-      throw authError
+      return { data: null, error: authError }
     } finally {
       setLoading(false)
     }
@@ -190,10 +202,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setError(null)
 
     try {
+      // 检查是否使用占位符配置
+      if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.includes('placeholder')) {
+        throw new Error('Supabase未正确配置：请在.env.local中设置真实的SUPABASE密钥')
+      }
+
+      const currentUrl = window.location.origin
+      const locale = window.location.pathname.startsWith('/zh') ? 'zh' : 'en'
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
+          redirectTo: `${currentUrl}/${locale}/auth/callback`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          }
         }
       })
 
@@ -201,9 +225,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       const authError = error instanceof Error ? error : new Error('Google sign in failed')
       setError(authError)
-      throw authError
-    } finally {
       setLoading(false)
+      throw authError
     }
   }
 

@@ -105,7 +105,7 @@ export function Header() {
                       </div>
 
                       <div className="flex items-center justify-between py-2 border-t">
-                        <span className="text-sm text-muted-foreground">剩余积分</span>
+                        <span className="text-sm text-muted-foreground">{t('credits_remaining')}</span>
                         <span className="font-medium">
                           {profile?.credits_remaining || 0}
                         </span>
@@ -118,7 +118,7 @@ export function Header() {
                           onClick={() => setIsProfileOpen(false)}
                         >
                           <User className="w-4 h-4" />
-                          <span className="text-sm">个人中心</span>
+                          <span className="text-sm">{t('profile_center')}</span>
                         </Link>
 
                         <Link
@@ -127,7 +127,7 @@ export function Header() {
                           onClick={() => setIsProfileOpen(false)}
                         >
                           <Settings className="w-4 h-4" />
-                          <span className="text-sm">设置</span>
+                          <span className="text-sm">{t('settings')}</span>
                         </Link>
 
                         <Link
@@ -136,7 +136,7 @@ export function Header() {
                           onClick={() => setIsProfileOpen(false)}
                         >
                           <CreditCard className="w-4 h-4" />
-                          <span className="text-sm">购买积分</span>
+                          <span className="text-sm">{t('purchase_credits')}</span>
                         </Link>
 
                         <button
@@ -144,7 +144,7 @@ export function Header() {
                           className="w-full flex items-center space-x-2 p-2 rounded-md hover:bg-muted transition-colors text-red-600"
                         >
                           <LogOut className="w-4 h-4" />
-                          <span className="text-sm">退出登录</span>
+                          <span className="text-sm">{t('logout')}</span>
                         </button>
                       </div>
                     </div>
@@ -218,7 +218,7 @@ export function Header() {
                             {profile?.display_name || '用户'}
                           </p>
                           <p className="text-sm text-muted-foreground">
-                            剩余积分: {profile?.credits_remaining || 0}
+                            {t('credits_remaining')}: {profile?.credits_remaining || 0}
                           </p>
                         </div>
                       </div>
@@ -232,7 +232,7 @@ export function Header() {
                         >
                           <Link href="/dashboard">
                             <User className="w-4 h-4 mr-2" />
-                            个人中心
+                            {t('profile_center')}
                           </Link>
                         </Button>
 
@@ -244,7 +244,7 @@ export function Header() {
                         >
                           <Link href="/pricing">
                             <CreditCard className="w-4 h-4 mr-2" />
-                            购买积分
+                            {t('purchase_credits')}
                           </Link>
                         </Button>
 
@@ -257,7 +257,7 @@ export function Header() {
                           }}
                         >
                           <LogOut className="w-4 h-4 mr-2" />
-                          退出登录
+                          {t('logout')}
                         </Button>
                       </div>
                     </div>
@@ -269,7 +269,7 @@ export function Header() {
                         asChild
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <Link href="/auth/login">登录</Link>
+                        <Link href="/auth/login">{t('login')}</Link>
                       </Button>
                       <Button
                         variant="chinese"
@@ -277,7 +277,7 @@ export function Header() {
                         asChild
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <Link href="/auth/register">免费注册</Link>
+                        <Link href="/auth/register">{t('free_register')}</Link>
                       </Button>
                     </div>
                   )}

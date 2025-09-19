@@ -29,7 +29,7 @@ import Link from 'next/link'
 export default function PrivacyPage() {
   const t = useTranslations()
 
-  const lastUpdated = t('privacy.lastUpdated')
+  const lastUpdated = '2024年12月15日'
 
   const sections = [
     {

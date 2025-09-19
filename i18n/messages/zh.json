@@ -15,7 +15,14 @@
     "stories": "用户故事",
     "sign_in": "登录",
     "sign_out": "退出登录",
-    "register": "免费注册"
+    "register": "免费注册",
+    "credits_remaining": "剩余积分",
+    "profile_center": "个人中心",
+    "settings": "设置",
+    "purchase_credits": "购买积分",
+    "logout": "退出登录",
+    "login": "登录",
+    "free_register": "免费注册"
   },
   "hero": {
     "title": "发现您的完美中文名",
@@ -336,10 +343,40 @@
   "dashboard": {
     "title": "控制台",
     "welcome": "欢迎回来",
+    "user": "用户",
+    "description": "管理您的中文名字收藏和生成历史",
     "creditsRemaining": "剩余积分",
+    "canGenerate": "可生成 {count} 个名字",
     "todayGenerations": "今日生成",
+    "todayGenerationsDesc": "今天生成的名字数量",
     "favoriteNames": "收藏名字",
-    "totalGenerated": "总生成数"
+    "favoriteNamesDesc": "您收藏的名字",
+    "totalGenerated": "总生成数",
+    "totalGeneratedDesc": "生成名字总数",
+    "quickActions": "快速操作",
+    "quickActionsDesc": "常用功能",
+    "generateNewName": "生成新名字",
+    "purchaseCredits": "购买积分",
+    "accountSettings": "账户设置",
+    "usageStats": "使用统计",
+    "usageStatsDesc": "您的生成活动概览",
+    "creditsUsageRate": "积分使用率",
+    "subscriptionPlan": "订阅方案",
+    "myNames": "我的名字",
+    "myNamesDesc": "管理您生成的和收藏的名字",
+    "allNames": "所有名字",
+    "favorites": "收藏夹",
+    "noNamesYet": "您还没有生成任何名字。",
+    "startGenerating": "立即开始生成",
+    "matchRate": "匹配度",
+    "generatedTime": "生成时间",
+    "noFavoritesYet": "您还没有收藏任何名字。点击名字列表中的心形图标来收藏您喜欢的名字。",
+    "fetchDataFailed": "获取数据失败",
+    "copiedToClipboard": "已复制到剪贴板",
+    "favoriteStatusUpdated": "收藏状态已更新",
+    "operationFailed": "操作失败",
+    "nameDeleted": "名字已删除",
+    "deleteFailed": "删除失败"
   },
   "common": {
     "loading": "加载中...",
@@ -852,7 +889,10 @@
   },
   "privacy": {
     "title": "隐私政策",
+    "heading": "隐私政策",
+    "description": "了解我们如何保护您的个人信息和隐私权利",
     "lastUpdated": "最后更新",
+    "global": "全球适用",
     "sections": {
       "introduction": {
         "title": "引言",
@@ -882,11 +922,114 @@
         "title": "联系我们",
         "content": "如果您对本隐私政策有任何疑问，请使用我们联系部分提供的信息与我们联系。"
       }
+    },
+    "quickActions": {
+      "security": {
+        "title": "数据安全",
+        "description": "了解我们的安全措施",
+        "action": "查看详情"
+      },
+      "transparency": {
+        "title": "透明度",
+        "description": "了解数据使用方式",
+        "action": "查看详情"
+      },
+      "control": {
+        "title": "数据控制",
+        "description": "管理您的隐私设置",
+        "action": "访问设置"
+      }
+    },
+    "dataTypes": {
+      "account": {
+        "name": "账户信息",
+        "purpose": "身份验证和账户管理",
+        "retention": "账户存续期间"
+      },
+      "preferences": {
+        "name": "偏好设置",
+        "purpose": "个性化服务体验",
+        "retention": "2年"
+      },
+      "usage": {
+        "name": "使用数据",
+        "purpose": "服务改进和分析",
+        "retention": "1年"
+      },
+      "payment": {
+        "name": "支付信息",
+        "purpose": "处理付款和账单",
+        "retention": "法律要求的期限"
+      },
+      "support": {
+        "name": "客服记录",
+        "purpose": "提供技术支持",
+        "retention": "3年"
+      }
+    },
+    "dataProcessing": {
+      "title": "数据处理详情",
+      "description": "我们如何处理不同类型的数据",
+      "table": {
+        "dataType": "数据类型",
+        "purpose": "使用目的",
+        "retention": "保存期限",
+        "required": "是否必需",
+        "requiredYes": "必需",
+        "requiredNo": "可选"
+      }
+    },
+    "thirdPartyServices": {
+      "alibaba": {
+        "name": "阿里云",
+        "purpose": "云服务和数据存储",
+        "dataTypes": "技术数据、使用统计"
+      },
+      "wechat": {
+        "name": "微信支付",
+        "purpose": "支付处理",
+        "dataTypes": "支付信息、交易记录"
+      },
+      "alipay": {
+        "name": "支付宝",
+        "purpose": "支付处理",
+        "dataTypes": "支付信息、交易记录"
+      },
+      "tencent": {
+        "name": "腾讯云",
+        "purpose": "内容分发和加速",
+        "dataTypes": "访问日志、性能数据"
+      }
+    },
+    "thirdParty": {
+      "title": "第三方服务",
+      "description": "我们与以下第三方服务提供商合作",
+      "purposeLabel": "使用目的",
+      "dataTypesLabel": "数据类型"
+    },
+    "notices": {
+      "children": "我们不会故意收集13岁以下儿童的个人信息。如果您未满18岁，请在使用我们的服务前获得家长同意。",
+      "changes": "我们可能会定期更新本隐私政策。重大变更将通过网站通知或电子邮件通知您。",
+      "crossBorder": "您的数据可能会跨境传输和处理。我们确保所有数据传输都符合适用的数据保护法律。"
+    },
+    "contact": {
+      "title": "隐私问题？我们随时为您解答",
+      "description": "如果您对我们的隐私实践有任何疑问或担忧，请随时联系我们",
+      "email": "privacy@chinesenamefinder.com",
+      "phone": "+86 400-123-4567",
+      "contactUs": "联系我们",
+      "manageData": "管理数据"
     }
   },
   "terms": {
     "title": "服务条款",
+    "heading": "服务条款",
+    "description": "了解使用我们服务的条款和条件",
     "lastUpdated": "最后更新",
+    "effectiveDate": "生效日期",
+    "global": "全球适用",
+    "importantNotice": "重要提示：使用我们的服务即表示您同意这些条款。请仔细阅读所有条款内容。",
+    "finalNotice": "感谢您选择文化伴侣。我们致力于为您提供优质的AI中文起名服务，并保护您的权益。",
     "sections": {
       "acceptance": {
         "title": "接受条款",
@@ -920,17 +1063,96 @@
         "title": "条款变更",
         "content": "我们保留随时修改这些条款的权利。我们将通过在本页面发布新条款来通知您任何变更。"
       }
+    },
+    "keyPoints": {
+      "title": "关键要点",
+      "service": {
+        "title": "服务性质",
+        "description": "AI驱动的中文起名服务"
+      },
+      "user": {
+        "title": "用户责任",
+        "description": "合法使用并遵守条款"
+      },
+      "payment": {
+        "title": "付费服务",
+        "description": "透明定价，安全支付"
+      },
+      "intellectual": {
+        "title": "知识产权",
+        "description": "受法律保护的原创内容"
+      }
+    },
+    "dispute": {
+      "title": "争议解决",
+      "description": "我们致力于通过友好协商解决任何争议",
+      "jurisdiction": "本条款受中华人民共和国法律管辖，任何争议将由北京市朝阳区人民法院管辖。",
+      "steps": {
+        "negotiation": {
+          "title": "友好协商",
+          "description": "首先通过直接沟通解决分歧"
+        },
+        "mediation": {
+          "title": "第三方调解",
+          "description": "寻求中立第三方协助调解"
+        },
+        "legal": {
+          "title": "法律途径",
+          "description": "通过法律程序解决争议"
+        }
+      }
+    },
+    "company": {
+      "title": "法律实体信息",
+      "description": "文化伴侣的法律实体详细信息",
+      "details": {
+        "title": "公司详情",
+        "name": "公司名称",
+        "nameValue": "北京文化伴侣科技有限公司",
+        "address": "注册地址",
+        "addressValue": "北京市朝阳区科技园区创新大厦",
+        "code": "统一社会信用代码",
+        "codeValue": "91110000000000000X",
+        "representative": "法定代表人",
+        "representativeValue": "张某某"
+      }
+    },
+    "contact": {
+      "title": "联系方式",
+      "legal": "法务邮箱",
+      "phone": "客服电话",
+      "address": "联系地址",
+      "addressValue": "北京市朝阳区科技园区创新大厦"
+    },
+    "cta": {
+      "title": "有法律问题需要咨询？",
+      "description": "我们的法务团队随时为您提供专业的法律支持和解答",
+      "hours": "工作日",
+      "contactLegal": "联系法务",
+      "privacy": "隐私政策"
     }
   },
   "settings": {
     "title": "设置",
+    "pageTitle": "账户设置",
+    "pageHeading": "管理您的账户",
+    "pageDescription": "个性化您的体验，管理隐私设置，查看使用统计，让文化伴侣更好地为您服务。",
+    "usageOverview": "使用概览",
     "profile": {
       "title": "个人资料设置",
       "name": "显示名称",
       "email": "邮箱地址",
       "avatar": "头像",
       "bio": "个人简介",
-      "save": "保存更改"
+      "save": "保存更改",
+      "description": "管理您的个人信息和账户详情",
+      "fullName": "姓名",
+      "phone": "手机号",
+      "birthDate": "出生日期",
+      "location": "所在地",
+      "website": "个人网站",
+      "bioLabel": "个人简介",
+      "saveProfile": "保存更改"
     },
     "preferences": {
       "title": "起名偏好",
@@ -938,7 +1160,84 @@
       "elements": "五行偏好",
       "length": "名字长度",
       "notifications": "邮件通知",
-      "newsletter": "营销邮件"
+      "newsletter": "营销邮件",
+      "description": "自定义您的使用体验和默认设置",
+      "interfaceLanguage": "界面语言",
+      "timezone": "时区",
+      "currency": "货币",
+      "defaultNamingStyle": "默认起名风格",
+      "darkMode": "深色模式",
+      "darkModeDesc": "启用深色主题界面",
+      "autoSave": "自动保存",
+      "autoSaveDesc": "自动保存您的起名偏好",
+      "soundEffects": "声音效果",
+      "soundEffectsDesc": "启用界面交互声音",
+      "savePreferences": "保存设置",
+      "traditionalStyle": "传统风格",
+      "modernStyle": "现代风格",
+      "poeticStyle": "诗意风格",
+      "simplifiedChinese": "简体中文",
+      "traditionalChinese": "繁体中文",
+      "english": "English",
+      "chinaTime": "中国时间 (UTC+8)",
+      "japanTime": "日本时间 (UTC+9)",
+      "usEastTime": "美东时间 (UTC-5)",
+      "cny": "人民币 (¥)",
+      "usd": "美元 ($)",
+      "eur": "欧元 (€)"
+    },
+    "notifications": {
+      "title": "通知设置",
+      "description": "管理您接收通知的方式和内容",
+      "emailNotifications": "邮件通知",
+      "emailNotificationsDesc": "接收重要更新和生成结果",
+      "pushNotifications": "推送通知",
+      "pushNotificationsDesc": "浏览器推送通知",
+      "smsNotifications": "短信通知",
+      "smsNotificationsDesc": "重要安全提醒",
+      "marketingNotifications": "营销通知",
+      "marketingNotificationsDesc": "产品更新和优惠信息",
+      "saveNotifications": "保存设置"
+    },
+    "security": {
+      "title": "安全设置",
+      "description": "保护您的账户安全和隐私",
+      "currentPassword": "当前密码",
+      "currentPasswordPlaceholder": "请输入当前密码",
+      "newPassword": "新密码",
+      "newPasswordPlaceholder": "请输入新密码",
+      "confirmPassword": "确认新密码",
+      "confirmPasswordPlaceholder": "再次输入新密码",
+      "passwordRequirements": "密码长度至少8位，包含字母、数字和特殊字符",
+      "updatePassword": "更新密码",
+      "connectedDevices": "已登录设备",
+      "connectedDevicesDesc": "管理您的登录设备和会话",
+      "lastActivity": "最后活动",
+      "currentDevice": "当前设备",
+      "signOut": "注销"
+    },
+    "billing": {
+      "title": "账单设置",
+      "description": "管理您的订阅和支付方式",
+      "currentPlan": "您当前使用的是高级套餐，下次续费时间：2024年4月15日",
+      "premiumPlan": "高级套餐",
+      "premiumPlanDesc": "无限次AI起名 + 高级分析",
+      "currentPlanBadge": "当前套餐",
+      "downloadInvoice": "下载发票",
+      "manageSubscription": "管理订阅"
+    },
+    "data": {
+      "title": "数据管理",
+      "description": "导出、删除或管理您的数据",
+      "exportData": "导出数据",
+      "exportDataDesc": "下载您的所有数据副本",
+      "export": "导出",
+      "deleteAccount": "删除账户",
+      "deleteAccountDesc": "永久删除您的账户和所有数据",
+      "delete": "删除",
+      "deleteWarning": "删除账户是不可逆操作，请谨慎考虑",
+      "recentActivity": "最近活动",
+      "recentActivityDesc": "查看您的账户活动记录"
     },
     "account": {
       "title": "账户设置",
@@ -952,6 +1251,48 @@
       "interface": "界面语言",
       "timezone": "时区",
       "currency": "货币"
+    },
+    "stats": {
+      "totalGenerations": "总生成次数",
+      "monthlyGenerations": "本月生成",
+      "favoriteNames": "收藏名字",
+      "accountCredits": "账户积分"
+    },
+    "activity": {
+      "generateName": "生成名字",
+      "generateNameDetails": "张雅文 - 诗意风格",
+      "modifyPreferences": "修改偏好",
+      "modifyPreferencesDetails": "更新命名风格偏好",
+      "downloadReport": "下载报告",
+      "downloadReportDetails": "五行分析报告",
+      "accountRecharge": "账户充值",
+      "accountRechargeDetails": "购买高级套餐",
+      "timeAgo": {
+        "justNow": "刚刚",
+        "hoursAgo": "{count} 小时前",
+        "daysAgo": "{count} 天前",
+        "weeksAgo": "{count} 周前"
+      }
+    },
+    "devices": {
+      "iphone": "iPhone 15 Pro",
+      "macbook": "MacBook Pro",
+      "ipad": "iPad Air"
+    },
+    "toast": {
+      "profileSaved": "个人资料设置已保存",
+      "preferencesSaved": "偏好设置已保存",
+      "notificationsSaved": "通知设置已保存",
+      "passwordSaved": "密码设置已保存",
+      "saveFailed": "保存失败，请重试"
+    },
+    "tabs": {
+      "profile": "个人资料",
+      "preferences": "偏好设置",
+      "notifications": "通知设置",
+      "security": "安全设置",
+      "billing": "账单设置",
+      "data": "数据管理"
     }
   },
   "generate": {

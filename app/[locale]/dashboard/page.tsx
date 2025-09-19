@@ -110,7 +110,7 @@ export default function DashboardPage() {
 
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error)
-      toast.error('获取数据失败')
+      toast.error(t('fetchDataFailed'))
     } finally {
       setIsLoading(false)
     }
@@ -118,7 +118,7 @@ export default function DashboardPage() {
 
   const handleCopyName = (name: SavedName) => {
     navigator.clipboard.writeText(`${name.chinese_name} (${name.pinyin})`)
-    toast.success('已复制到剪贴板')
+    toast.success(t('copiedToClipboard'))
   }
 
   const handleToggleFavorite = async (nameId: string) => {
@@ -136,11 +136,11 @@ export default function DashboardPage() {
 
       if (response.ok) {
         await fetchDashboardData()
-        toast.success('收藏状态已更新')
+        toast.success(t('favoriteStatusUpdated'))
       }
     } catch (error) {
       console.error('Failed to toggle favorite:', error)
-      toast.error('操作失败')
+      toast.error(t('operationFailed'))
     }
   }
 
@@ -155,11 +155,11 @@ export default function DashboardPage() {
 
       if (response.ok) {
         await fetchDashboardData()
-        toast.success('名字已删除')
+        toast.success(t('nameDeleted'))
       }
     } catch (error) {
       console.error('Failed to delete name:', error)
-      toast.error('删除失败')
+      toast.error(t('deleteFailed'))
     }
   }
 
@@ -205,10 +205,10 @@ export default function DashboardPage() {
           {/* Welcome Section */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">
-              欢迎回来，{profile?.display_name || '用户'}
+              {t('welcome')}, {profile?.display_name || t('user')}
             </h1>
             <p className="text-muted-foreground">
-              管理您的中文名字收藏和生成历史
+              {t('description')}
             </p>
           </div>
 
@@ -216,7 +216,7 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">剩余积分</CardTitle>
+                <CardTitle className="text-sm font-medium">{t('creditsRemaining')}</CardTitle>
                 <Sparkles className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
@@ -224,46 +224,46 @@ export default function DashboardPage() {
                   {profile?.credits_remaining || 0}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  可生成 {profile?.credits_remaining || 0} 次名字
+                  {t('canGenerate', { count: profile?.credits_remaining || 0 })}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">今日生成</CardTitle>
+                <CardTitle className="text-sm font-medium">{t('todayGenerations')}</CardTitle>
                 <Calendar className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{usageStats.todayGenerations}</div>
                 <p className="text-xs text-muted-foreground">
-                  今天已生成的名字数量
+                  {t('todayGenerationsDesc')}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">收藏名字</CardTitle>
+                <CardTitle className="text-sm font-medium">{t('favoriteNames')}</CardTitle>
                 <Heart className="h-4 w-4 text-red-500" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{favoriteNames.length}</div>
                 <p className="text-xs text-muted-foreground">
-                  已收藏的喜爱名字
+                  {t('favoriteNamesDesc')}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">总生成数</CardTitle>
+                <CardTitle className="text-sm font-medium">{t('totalGenerated')}</CardTitle>
                 <TrendingUp className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{savedNames.length}</div>
                 <p className="text-xs text-muted-foreground">
-                  累计生成的名字数量
+                  {t('totalGeneratedDesc')}
                 </p>
               </CardContent>
             </Card>
@@ -273,26 +273,26 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <Card>
               <CardHeader>
-                <CardTitle>快速操作</CardTitle>
-                <CardDescription>常用功能快速入口</CardDescription>
+                <CardTitle>{t('quickActions')}</CardTitle>
+                <CardDescription>{t('quickActionsDesc')}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <Button asChild className="w-full">
                   <Link href="/generate">
                     <Plus className="mr-2 h-4 w-4" />
-                    生成新名字
+                    {t('generateNewName')}
                   </Link>
                 </Button>
                 <Button variant="outline" asChild className="w-full">
                   <Link href="/pricing">
                     <CreditCard className="mr-2 h-4 w-4" />
-                    购买积分
+                    {t('purchaseCredits')}
                   </Link>
                 </Button>
                 <Button variant="outline" asChild className="w-full">
                   <Link href="/settings">
                     <Settings className="mr-2 h-4 w-4" />
-                    账户设置
+                    {t('accountSettings')}
                   </Link>
                 </Button>
               </CardContent>
@@ -300,13 +300,13 @@ export default function DashboardPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>使用统计</CardTitle>
-                <CardDescription>您的生成活动概览</CardDescription>
+                <CardTitle>{t('usageStats')}</CardTitle>
+                <CardDescription>{t('usageStatsDesc')}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
                   <div className="flex justify-between text-sm mb-2">
-                    <span>积分使用率</span>
+                    <span>{t('creditsUsageRate')}</span>
                     <span>{Math.round(((100 - (profile?.credits_remaining || 0)) / 100) * 100)}%</span>
                   </div>
                   <Progress
@@ -316,7 +316,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="pt-4 border-t">
                   <p className="text-sm text-muted-foreground">
-                    订阅计划: <span className="font-medium capitalize">{profile?.subscription_tier || 'free'}</span>
+                    {t('subscriptionPlan')}: <span className="font-medium capitalize">{profile?.subscription_tier || 'free'}</span>
                   </p>
                 </div>
               </CardContent>
@@ -326,23 +326,23 @@ export default function DashboardPage() {
           {/* Names Tabs */}
           <Card>
             <CardHeader>
-              <CardTitle>我的名字</CardTitle>
-              <CardDescription>管理您生成和收藏的名字</CardDescription>
+              <CardTitle>{t('myNames')}</CardTitle>
+              <CardDescription>{t('myNamesDesc')}</CardDescription>
             </CardHeader>
             <CardContent>
               <Tabs defaultValue="all" className="w-full">
                 <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="all">全部名字 ({savedNames.length})</TabsTrigger>
-                  <TabsTrigger value="favorites">收藏名字 ({favoriteNames.length})</TabsTrigger>
+                  <TabsTrigger value="all">{t('allNames')} ({savedNames.length})</TabsTrigger>
+                  <TabsTrigger value="favorites">{t('favorites')} ({favoriteNames.length})</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="all" className="space-y-4">
                   {savedNames.length === 0 ? (
                     <Alert>
                       <AlertDescription>
-                        您还没有生成过名字。
+                        {t('noNamesYet')}
                         <Link href="/generate" className="ml-2 text-primary hover:underline">
-                          立即开始生成
+                          {t('startGenerating')}
                         </Link>
                       </AlertDescription>
                     </Alert>
@@ -361,7 +361,7 @@ export default function DashboardPage() {
                                   </Badge>
                                   {name.quality_score && (
                                     <Badge variant="secondary">
-                                      匹配度 {name.quality_score}%
+                                      {t('matchRate')} {name.quality_score}%
                                     </Badge>
                                   )}
                                 </div>
@@ -372,7 +372,7 @@ export default function DashboardPage() {
                                   </p>
                                 )}
                                 <p className="text-xs text-muted-foreground mt-2">
-                                  生成时间: {formatDate(name.created_at)}
+                                  {t('generatedTime')}: {formatDate(name.created_at)}
                                 </p>
                               </div>
                               <div className="flex gap-2 ml-4">
@@ -417,7 +417,7 @@ export default function DashboardPage() {
                   {favoriteNames.length === 0 ? (
                     <Alert>
                       <AlertDescription>
-                        您还没有收藏任何名字。在名字列表中点击心形图标来收藏您喜欢的名字。
+                        {t('noFavoritesYet')}
                       </AlertDescription>
                     </Alert>
                   ) : (

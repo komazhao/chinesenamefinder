@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Eye, EyeOff, Mail, Lock, Loader2, Chrome } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -14,6 +14,7 @@ import { useTranslations } from 'next-intl'
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { signIn, signInWithGoogle } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -25,15 +26,33 @@ export default function LoginPage() {
 
   const t = useTranslations('auth')
 
+  // 检查URL参数中的错误信息
+  useEffect(() => {
+    const errorParam = searchParams.get('error')
+    if (errorParam) {
+      switch (errorParam) {
+        case 'callback_failed':
+          setError('认证回调失败，请重试登录')
+          break
+        case 'oauth_error':
+          setError('Google 登录失败，请重试')
+          break
+        case 'session_expired':
+          setError('会话已过期，请重新登录')
+          break
+        default:
+          setError('登录时发生未知错误')
+      }
+    }
+  }, [searchParams])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
     setIsLoading(true)
 
     try {
-      const { error } = await signIn(formData.email, formData.password)
-      if (error) throw error
-
+      await signIn(formData.email, formData.password)
       router.push('/dashboard')
     } catch (err: any) {
       setError(err.message || t('loginError'))
@@ -48,6 +67,7 @@ export default function LoginPage() {
 
     try {
       await signInWithGoogle()
+      // Google OAuth会重定向，所以这里不需要手动导航
     } catch (err: any) {
       setError(err.message || t('googleLoginError'))
       setIsLoading(false)

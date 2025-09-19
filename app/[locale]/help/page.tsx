@@ -36,83 +36,33 @@ export default function HelpPage() {
       icon: Book,
       title: t('help.categories.quickStart.title'),
       description: t('help.categories.quickStart.description'),
-      articles: 12,
-      color: 'from-blue-500 to-blue-600'
+      color: 'from-blue-500 to-blue-600',
+      href: '/help/quick-start'
     },
     {
       icon: Settings,
       title: t('help.categories.account.title'),
       description: t('help.categories.account.description'),
-      articles: 8,
-      color: 'from-green-500 to-green-600'
+      color: 'from-green-500 to-green-600',
+      href: '/settings'
     },
     {
       icon: CreditCard,
       title: t('help.categories.billing.title'),
       description: t('help.categories.billing.description'),
-      articles: 15,
-      color: 'from-purple-500 to-purple-600'
+      color: 'from-purple-500 to-purple-600',
+      href: '/pricing'
     },
     {
       icon: Shield,
       title: t('help.categories.privacy.title'),
       description: t('help.categories.privacy.description'),
-      articles: 6,
-      color: 'from-red-500 to-red-600'
-    },
-    {
-      icon: Zap,
-      title: t('help.categories.ai.title'),
-      description: t('help.categories.ai.description'),
-      articles: 20,
-      color: 'from-amber-500 to-amber-600'
-    },
-    {
-      icon: MessageCircle,
-      title: t('help.categories.support.title'),
-      description: t('help.categories.support.description'),
-      articles: 10,
-      color: 'from-indigo-500 to-indigo-600'
+      color: 'from-red-500 to-red-600',
+      href: '/privacy'
     }
   ]
 
-  const popularArticles = [
-    {
-      title: t('help.popular.articles.firstTime.title'),
-      description: t('help.popular.articles.firstTime.description'),
-      category: t('help.categories.quickStart.title'),
-      readTime: '3分钟',
-      views: 1520
-    },
-    {
-      title: t('help.popular.articles.fiveElements.title'),
-      description: t('help.popular.articles.fiveElements.description'),
-      category: t('help.categories.ai.title'),
-      readTime: '5分钟',
-      views: 1240
-    },
-    {
-      title: t('help.popular.articles.subscription.title'),
-      description: t('help.popular.articles.subscription.description'),
-      category: t('help.categories.billing.title'),
-      readTime: '4分钟',
-      views: 980
-    },
-    {
-      title: t('help.popular.articles.privacy.title'),
-      description: t('help.popular.articles.privacy.description'),
-      category: t('help.categories.privacy.title'),
-      readTime: '6分钟',
-      views: 750
-    },
-    {
-      title: t('help.popular.articles.account.title'),
-      description: t('help.popular.articles.account.description'),
-      category: t('help.categories.account.title'),
-      readTime: '2分钟',
-      views: 680
-    }
-  ]
+  // Removed popularArticles - no actual content pages
 
   const quickActions = [
     {
@@ -128,13 +78,6 @@ export default function HelpPage() {
       description: t('help.quickActions.email.description'),
       action: t('help.quickActions.email.action'),
       href: 'mailto:support@chinesenamefinder.com'
-    },
-    {
-      icon: MessageCircle,
-      title: t('help.quickActions.chat.title'),
-      description: t('help.quickActions.chat.description'),
-      action: t('help.quickActions.chat.action'),
-      href: '#'
     }
   ]
 
@@ -175,79 +118,32 @@ export default function HelpPage() {
         <section className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-8">{t('help.categories.title')}</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
               {helpCategories.map((category, index) => {
                 const Icon = category.icon
                 return (
-                  <Card key={index} className="hover:shadow-lg transition-all cursor-pointer group">
-                    <CardHeader>
-                      <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${category.color} text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                          {category.title}
-                        </CardTitle>
-                        <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="mb-3">
-                        {category.description}
-                      </CardDescription>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <FileText className="w-4 h-4" />
-                        <span>{category.articles} 篇文章</span>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <Link key={index} href={category.href}>
+                    <Card className="hover:shadow-lg transition-all cursor-pointer group h-full">
+                      <CardHeader>
+                        <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${category.color} text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                          <Icon className="w-6 h-6" />
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                            {category.title}
+                          </CardTitle>
+                          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <CardDescription>
+                          {category.description}
+                        </CardDescription>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 )
               })}
-            </div>
-          </div>
-        </section>
-
-        {/* Popular Articles */}
-        <section className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8">{t('help.popular.title')}</h2>
-            <div className="space-y-4">
-              {popularArticles.map((article, index) => (
-                <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer">
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <Badge variant="outline" className="text-xs">
-                            {article.category}
-                          </Badge>
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <Clock className="w-3 h-3" />
-                            {article.readTime}
-                          </div>
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <User className="w-3 h-3" />
-                            {article.views} 次浏览
-                          </div>
-                        </div>
-                        <h3 className="text-lg font-semibold mb-2 hover:text-primary transition-colors">
-                          {article.title}
-                        </h3>
-                        <p className="text-muted-foreground">
-                          {article.description}
-                        </p>
-                      </div>
-                      <ChevronRight className="w-5 h-5 text-muted-foreground ml-4 flex-shrink-0" />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            <div className="text-center mt-8">
-              <Button variant="outline" size="lg">
-                {t('help.popular.viewAll')}
-              </Button>
             </div>
           </div>
         </section>
@@ -256,7 +152,7 @@ export default function HelpPage() {
         <section className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-8">{t('help.quickActions.title')}</h2>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {quickActions.map((action, index) => {
                 const Icon = action.icon
                 return (
@@ -332,15 +228,12 @@ export default function HelpPage() {
               <p className="text-xl opacity-90 mb-8">
                 {t('help.cta.description')}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex justify-center">
                 <Button variant="secondary" size="lg" asChild>
                   <Link href="/contact">
                     <MessageCircle className="mr-2 h-4 w-4" />
                     {t('help.cta.contact')}
                   </Link>
-                </Button>
-                <Button variant="outline" size="lg" className="bg-transparent border-white text-white hover:bg-white/10">
-                  {t('help.cta.community')}
                 </Button>
               </div>
             </CardContent>

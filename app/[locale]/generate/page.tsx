@@ -142,23 +142,37 @@ export default function GeneratePage() {
   }
 
   const handleSaveName = async (name: GeneratedName) => {
+    if (!user) {
+      toast.error(t('generate.errors.pleaseLogin'))
+      return
+    }
+
     try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session?.access_token) {
+        toast.error(t('generate.errors.pleaseLogin'))
+        return
+      }
+
       const response = await fetch('/api/names', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
+          english_name: formData.englishName || 'Generated Name',
           chinese_name: name.chinese,
           pinyin: name.pinyin,
           meaning: name.meaning,
-          cultural_context: name.culturalContext,
-          generation_type: formData.style,
+          style: formData.style,
+          is_favorite: false,
         }),
       })
 
       if (!response.ok) {
-        throw new Error('Save failed')
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Save failed')
       }
 
       toast.success(t('generate.results.savedSuccessfully'))

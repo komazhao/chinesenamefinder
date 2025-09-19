@@ -30,8 +30,8 @@ import Link from 'next/link'
 export default function TermsPage() {
   const t = useTranslations()
 
-  const lastUpdated = t('terms.lastUpdated')
-  const effectiveDate = t('terms.effectiveDate')
+  const lastUpdated = '2024年12月15日'
+  const effectiveDate = '2024年12月15日'
 
   const sections = [
     {
