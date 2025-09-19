@@ -1,16 +1,33 @@
 import Stripe from 'stripe'
+import { currentStage, isProduction } from '@/lib/env'
 
 // 确保 Stripe 密钥存在
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 if (!stripeSecretKey) {
-  throw new Error('STRIPE_SECRET_KEY is not defined in environment variables')
+  const message = 'STRIPE_SECRET_KEY is not defined in environment variables'
+
+  if (isProduction) {
+    throw new Error(message)
+  }
+
+  console.warn(`${message}; current stage: ${currentStage}`)
 }
 
-// 创建 Stripe 实例
-export const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: '2023-10-16',
-  typescript: true,
-})
+// 创建 Stripe 实例（非生产环境缺失密钥时返回占位对象以避免构建失败）
+export const stripe = stripeSecretKey
+  ? new Stripe(stripeSecretKey, {
+      apiVersion: '2023-10-16',
+      typescript: true,
+    })
+  : null
+
+const getStripeClient = (): Stripe => {
+  if (!stripe) {
+    throw new Error(`Stripe client unavailable (stage: ${currentStage})`)
+  }
+
+  return stripe
+}
 
 // 定价计划配置
 export const PRICING_PLANS = {
@@ -81,8 +98,10 @@ export async function createCheckoutSession({
     throw new Error(`Invalid plan type: ${planType}`)
   }
 
+  const stripeClient = getStripeClient()
+
   try {
-    const session = await stripe.checkout.sessions.create({
+    const session = await stripeClient.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
         {
@@ -150,8 +169,10 @@ export async function createSubscriptionSession({
   // 年付享受8折优惠
   const price = isYearly ? Math.floor(plan.price * 12 * 0.8) : plan.price
 
+  const stripeClient = getStripeClient()
+
   try {
-    const session = await stripe.checkout.sessions.create({
+    const session = await stripeClient.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
         {
@@ -193,8 +214,10 @@ export async function createSubscriptionSession({
 
 // 获取客户信息
 export async function getCustomer(customerId: string): Promise<Stripe.Customer | null> {
+  const stripeClient = getStripeClient()
+
   try {
-    const customer = await stripe.customers.retrieve(customerId)
+    const customer = await stripeClient.customers.retrieve(customerId)
     return customer as Stripe.Customer
   } catch (error) {
     console.error('Error fetching customer:', error)
@@ -204,8 +227,10 @@ export async function getCustomer(customerId: string): Promise<Stripe.Customer |
 
 // 获取订阅信息
 export async function getSubscription(subscriptionId: string): Promise<Stripe.Subscription | null> {
+  const stripeClient = getStripeClient()
+
   try {
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId)
+    const subscription = await stripeClient.subscriptions.retrieve(subscriptionId)
     return subscription
   } catch (error) {
     console.error('Error fetching subscription:', error)
@@ -215,8 +240,10 @@ export async function getSubscription(subscriptionId: string): Promise<Stripe.Su
 
 // 取消订阅
 export async function cancelSubscription(subscriptionId: string): Promise<Stripe.Subscription> {
+  const stripeClient = getStripeClient()
+
   try {
-    const subscription = await stripe.subscriptions.update(subscriptionId, {
+    const subscription = await stripeClient.subscriptions.update(subscriptionId, {
       cancel_at_period_end: true,
     })
     return subscription
@@ -233,7 +260,8 @@ export function constructWebhookEvent(
   secret: string
 ): Stripe.Event {
   try {
-    return stripe.webhooks.constructEvent(body, signature, secret)
+    const stripeClient = getStripeClient()
+    return stripeClient.webhooks.constructEvent(body, signature, secret)
   } catch (error) {
     console.error('Error constructing webhook event:', error)
     throw new Error('Webhook 签名验证失败')
@@ -245,8 +273,10 @@ export async function createPortalSession(
   customerId: string,
   returnUrl: string
 ): Promise<Stripe.BillingPortal.Session> {
+  const stripeClient = getStripeClient()
+
   try {
-    const session = await stripe.billingPortal.sessions.create({
+    const session = await stripeClient.billingPortal.sessions.create({
       customer: customerId,
       return_url: returnUrl,
     })
@@ -262,7 +292,8 @@ export async function getUsageRecord(
   subscriptionItemId: string
 ): Promise<Stripe.UsageRecordSummary[]> {
   try {
-    const usageRecords = await stripe.subscriptionItems.listUsageRecordSummaries(
+    const stripeClient = getStripeClient()
+    const usageRecords = await stripeClient.subscriptionItems.listUsageRecordSummaries(
       subscriptionItemId,
       { limit: 100 }
     )
@@ -288,7 +319,8 @@ export function isValidWebhookSignature(
   secret: string
 ): boolean {
   try {
-    stripe.webhooks.constructEvent(body, signature, secret)
+    const stripeClient = getStripeClient()
+    stripeClient.webhooks.constructEvent(body, signature, secret)
     return true
   } catch {
     return false

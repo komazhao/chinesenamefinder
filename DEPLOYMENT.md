@@ -228,18 +228,30 @@ curl https://openrouter.ai/api/v1/models \
 1. 打开 Pages 项目 → **Settings → Environment variables**。
 2. 分别在 `Production` 与 `Preview` 标签页下添加变量（键值与 `.env.local` 对应）。建议结构如下：
 
-| Key | Production | Preview |
-| --- | ---------- | ------- |
-| `APP_STAGE` | `production` | `preview` |
-| `NEXT_PUBLIC_SITE_URL` | `https://your-domain.com` | `https://<preview>.pages.dev` |
-| `NEXT_PUBLIC_SUPABASE_URL` | 生产 Supabase URL | 同上（或测试项目） |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | 生产 Anon Key | 测试 Anon Key |
-| `SUPABASE_SERVICE_ROLE_KEY` | 生产 Service Role | 测试 Service Role |
-| `OPENROUTER_API_KEY` | 生产密钥 | 测试/受限密钥 |
-| `STRIPE_SECRET_KEY` | `sk_live_...` | `sk_test_...` |
-| `STRIPE_WEBHOOK_SECRET` | 生产 Webhook | 测试 Webhook |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | `pk_live_...` | `pk_test_...` |
-| 可选监控变量 | 按需填写 | 按需填写 |
+| Key | 说明 | 必填 | Production 示例 | Preview 示例 |
+| --- | --- | --- | --- | --- |
+| `APP_STAGE` | 部署阶段标识 | ✅ | `production` | `preview` |
+| `NEXT_PUBLIC_SITE_URL` | 站点访问域名 | ✅ | `https://chinesenamefinder.com` | `https://<preview>.pages.dev` |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase 项目 URL | ✅ | `https://xxxx.supabase.co` | `https://xxxx.supabase.co` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase Anon Key | ✅ | `eyJhbGciOiJI...` | `eyJhbGciOiJI...`（可使用测试项目） |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase Service Role Key | ✅ | `eyJhbGciOiJI...` | `eyJhbGciOiJI...` |
+| `OPENROUTER_API_KEY` | OpenRouter API 密钥 | ✅ | `or-prod-xxxx` | `or-test-xxxx` |
+| `OPENROUTER_API_URL` | OpenRouter 自定义接口（可选） | ⭕️ | `https://openrouter.ai/api/v1/chat/completions` | 同生产 |
+| `OPENROUTER_MODEL` | 默认模型（可选） | ⭕️ | `openai/gpt-4o-mini` | 同生产或测试模型 |
+| `OPENROUTER_APP_NAME` | OpenRouter 应用名（可选） | ⭕️ | `Chinese Name Finder` | `Chinese Name Finder (Preview)` |
+| `STRIPE_SECRET_KEY` | Stripe Secret Key | ✅ | `sk_live_xxx` | `sk_test_xxx` |
+| `STRIPE_WEBHOOK_SECRET` | Stripe Webhook Secret | ✅ | `whsec_live_xxx` | `whsec_test_xxx` |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe Publishable Key | ✅ | `pk_live_xxx` | `pk_test_xxx` |
+| `STRIPE_BASIC_PRICE_ID` | Stripe 基础版价格 ID（可选） | ⭕️ | `price_live_basic` | `price_test_basic` |
+| `STRIPE_STANDARD_PRICE_ID` | Stripe 标准版价格 ID（可选） | ⭕️ | `price_live_standard` | `price_test_standard` |
+| `STRIPE_PREMIUM_PRICE_ID` | Stripe 高级版价格 ID（可选） | ⭕️ | `price_live_premium` | `price_test_premium` |
+| `NEXT_PUBLIC_GA_ID` | Google Analytics（可选） | ⭕️ | `G-XXXXXXX` | 留空 |
+| `NEXT_PUBLIC_SENTRY_DSN` | Sentry DSN（可选） | ⭕️ | `https://xxx.ingest.sentry.io/123` | `https://xxx.ingest.sentry.io/456` |
+| `GOOGLE_VERIFICATION_ID` | 搜索验证（可选） | ⭕️ | `abcdefg` | 留空 |
+| `YANDEX_VERIFICATION_ID` | 搜索验证（可选） | ⭕️ | `hijklmn` | 留空 |
+| `NEXT_PUBLIC_LOCALE_DETECTION` | 是否启用自动语言识别（可选） | ⭕️ | `true` | `false` |
+
+> ⚠️ Cloudflare Pages 会将 **Environment variables** 同时用于构建与运行时，敏感值同样需要填写在这里；若你希望加密存储，可在 **Secrets** 中再次添加同名变量以供运行时访问。
 
 ### 6.4 绑定 Pages 与自定义域名
 
