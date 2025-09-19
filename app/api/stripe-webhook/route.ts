@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { constructWebhookEvent, isStripeConfigured } from '@/lib/stripe'
-import { createServiceClient } from '@/lib/supabase'
+import { createServiceClient, isSupabaseConfigured } from '@/lib/supabase'
 import { isDevelopment } from '@/lib/env'
 import Stripe from 'stripe'
 
@@ -12,6 +12,11 @@ export async function POST(request: NextRequest) {
     if (!isStripeConfigured) {
       console.warn('[Stripe webhook] Stripe 未配置，忽略请求')
       return NextResponse.json({ success: true, message: 'Stripe disabled' }, { status: 200 })
+    }
+
+    if (!isSupabaseConfigured) {
+      console.warn('[Stripe webhook] Supabase 未配置，忽略请求')
+      return NextResponse.json({ success: true, message: 'Supabase disabled' }, { status: 200 })
     }
 
     const body = await request.text()

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServiceClient } from '@/lib/supabase'
+import { createServiceClient, isSupabaseConfigured } from '@/lib/supabase'
 import { z } from 'zod'
 
 export const runtime = 'edge'
@@ -7,6 +7,13 @@ export const runtime = 'edge'
 // 获取用户的名字列表
 export async function GET(request: NextRequest) {
   try {
+    if (!isSupabaseConfigured) {
+      return NextResponse.json(
+        { error: '数据服务未配置', code: 'SUPABASE_NOT_CONFIGURED' },
+        { status: 503 }
+      )
+    }
+
     const { searchParams } = new URL(request.url)
     const page = parseInt(searchParams.get('page') || '1')
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 100)
@@ -116,6 +123,13 @@ const createNameSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isSupabaseConfigured) {
+      return NextResponse.json(
+        { error: '数据服务未配置', code: 'SUPABASE_NOT_CONFIGURED' },
+        { status: 503 }
+      )
+    }
+
     // 验证用户身份
     const authHeader = request.headers.get('Authorization')
     if (!authHeader?.startsWith('Bearer ')) {

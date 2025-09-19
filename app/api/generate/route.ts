@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServiceClient } from '@/lib/supabase'
+import { createServiceClient, isSupabaseConfigured } from '@/lib/supabase'
 import { isDevelopment } from '@/lib/env'
 import { z } from 'zod'
 
@@ -229,6 +229,13 @@ export async function POST(request: NextRequest) {
     let profile = null
 
     if (authHeader && authHeader.startsWith('Bearer ')) {
+      if (!isSupabaseConfigured) {
+        return NextResponse.json(
+          { error: '数据服务未配置', code: 'SUPABASE_NOT_CONFIGURED' },
+          { status: 503 }
+        )
+      }
+
       const token = authHeader.replace('Bearer ', '')
       const supabase = createServiceClient()
 
@@ -266,6 +273,13 @@ export async function POST(request: NextRequest) {
 
     // 4. 如果用户已登录，保存生成的名字到数据库并扣除积分
     if (user && profile) {
+      if (!isSupabaseConfigured) {
+        return NextResponse.json(
+          { error: '数据服务未配置', code: 'SUPABASE_NOT_CONFIGURED' },
+          { status: 503 }
+        )
+      }
+
       const supabase = createServiceClient()
 
       // 保存生成的名字
@@ -364,6 +378,13 @@ export async function POST(request: NextRequest) {
 // GET 方法用于获取API使用统计
 export async function GET(request: NextRequest) {
   try {
+    if (!isSupabaseConfigured) {
+      return NextResponse.json(
+        { error: '数据服务未配置', code: 'SUPABASE_NOT_CONFIGURED' },
+        { status: 503 }
+      )
+    }
+
     const authHeader = request.headers.get('Authorization')
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return NextResponse.json(

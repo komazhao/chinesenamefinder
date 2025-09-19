@@ -1,8 +1,9 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
-import { currentStage, isDevelopment, isProduction } from '@/lib/env'
+import { currentStage } from '@/lib/env'
 
 const supabaseUrlFromEnv = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
 const supabaseAnonKeyFromEnv = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim()
+const serviceRoleKeyFromEnv = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()
 
 const requiredClientVars: Array<[string, string | undefined]> = [
   ['NEXT_PUBLIC_SUPABASE_URL', supabaseUrlFromEnv],
@@ -14,16 +15,16 @@ const missingClientVars = requiredClientVars
   .map(([key]) => key)
 
 if (missingClientVars.length > 0) {
-  const message = `Missing Supabase environment variables: ${missingClientVars.join(', ')}`
+  const message = `Missing Supabase environment variables: ${missingClientVars.join(', ')} (stage: ${currentStage})`
 
-  if (isProduction) {
-    throw new Error(`${message} (stage: ${currentStage})`)
-  }
-
-  if (!isDevelopment) {
-    console.warn(`${message}; stage: ${currentStage}`)
-  }
+  console.warn(message)
 }
+
+export const isSupabaseConfigured = Boolean(
+  supabaseUrlFromEnv &&
+  supabaseAnonKeyFromEnv &&
+  serviceRoleKeyFromEnv
+)
 
 // 客户端配置 - 使用占位符以避免构建错误
 const supabaseUrl = supabaseUrlFromEnv || 'https://placeholder.supabase.co'
@@ -40,16 +41,11 @@ export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKe
 
 // 服务端客户端（用于API路由）
 export const createServiceClient = (): SupabaseClient => {
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()
+  const serviceKey = serviceRoleKeyFromEnv
 
   if (!serviceKey) {
     const message = `Missing Supabase environment variables: SUPABASE_SERVICE_ROLE_KEY (stage: ${currentStage})`
-
-    if (isProduction) {
-      throw new Error(message)
-    }
-
-    throw new Error(`${message}. 请在部署环境中配置该变量。`)
+    throw new Error(message)
   }
 
   return createClient(

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { NameGenerator, type NameRequest } from '@/lib/openai'
-import { createServiceClient } from '@/lib/supabase'
+import { createServiceClient, isSupabaseConfigured } from '@/lib/supabase'
 import { isDevelopment } from '@/lib/env'
 import { z } from 'zod'
 
@@ -27,6 +27,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: '未授权访问', code: 'UNAUTHORIZED' },
         { status: 401 }
+      )
+    }
+
+    if (!isSupabaseConfigured) {
+      return NextResponse.json(
+        { error: '数据服务未配置', code: 'SUPABASE_NOT_CONFIGURED' },
+        { status: 503 }
       )
     }
 
@@ -245,6 +252,13 @@ export async function GET(request: NextRequest) {
     }
 
     const token = authHeader.replace('Bearer ', '')
+    if (!isSupabaseConfigured) {
+      return NextResponse.json(
+        { error: '数据服务未配置', code: 'SUPABASE_NOT_CONFIGURED' },
+        { status: 503 }
+      )
+    }
+
     const supabase = createServiceClient()
 
     const { data: { user }, error: authError } = await supabase.auth.getUser(token)

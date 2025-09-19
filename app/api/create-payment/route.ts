@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createCheckoutSession, PRICING_PLANS, isStripeConfigured } from '@/lib/stripe'
-import { createServiceClient } from '@/lib/supabase'
+import { createServiceClient, isSupabaseConfigured } from '@/lib/supabase'
 import { isDevelopment } from '@/lib/env'
 import { z } from 'zod'
 
@@ -17,6 +17,13 @@ export async function POST(request: NextRequest) {
     if (!isStripeConfigured) {
       return NextResponse.json(
         { error: '支付服务未启用', code: 'STRIPE_NOT_CONFIGURED' },
+        { status: 503 }
+      )
+    }
+
+    if (!isSupabaseConfigured) {
+      return NextResponse.json(
+        { error: '数据服务未配置', code: 'SUPABASE_NOT_CONFIGURED' },
         { status: 503 }
       )
     }
@@ -153,6 +160,13 @@ export async function GET(request: NextRequest) {
     if (!isStripeConfigured) {
       return NextResponse.json(
         { error: '支付服务未启用', code: 'STRIPE_NOT_CONFIGURED' },
+        { status: 503 }
+      )
+    }
+
+    if (!isSupabaseConfigured) {
+      return NextResponse.json(
+        { error: '数据服务未配置', code: 'SUPABASE_NOT_CONFIGURED' },
         { status: 503 }
       )
     }

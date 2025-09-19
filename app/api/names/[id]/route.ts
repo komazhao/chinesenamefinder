@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServiceClient } from '@/lib/supabase'
+import { createServiceClient, isSupabaseConfigured } from '@/lib/supabase'
 import { z } from 'zod'
 
 export const runtime = 'edge'
@@ -10,6 +10,13 @@ export async function GET(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
+    if (!isSupabaseConfigured) {
+      return NextResponse.json(
+        { error: '数据服务未配置', code: 'SUPABASE_NOT_CONFIGURED' },
+        { status: 503 }
+      )
+    }
+
     const { id: nameId } = await context.params
 
     // 验证用户身份
@@ -73,6 +80,13 @@ export async function PATCH(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
+    if (!isSupabaseConfigured) {
+      return NextResponse.json(
+        { error: '数据服务未配置', code: 'SUPABASE_NOT_CONFIGURED' },
+        { status: 503 }
+      )
+    }
+
     const { id: nameId } = await context.params
 
     // 验证用户身份
@@ -147,6 +161,13 @@ export async function DELETE(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
+    if (!isSupabaseConfigured) {
+      return NextResponse.json(
+        { error: '数据服务未配置', code: 'SUPABASE_NOT_CONFIGURED' },
+        { status: 503 }
+      )
+    }
+
     const { id: nameId } = await context.params
 
     // 验证用户身份
