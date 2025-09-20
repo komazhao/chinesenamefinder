@@ -1,4 +1,5 @@
 import type Stripe from 'stripe'
+import type * as StripeNS from 'stripe'
 import { currentStage } from '@/lib/env'
 
 // 确保 Stripe 密钥存在
@@ -16,11 +17,13 @@ const getStripeClient = async (): Promise<Stripe> => {
     throw new Error(`Stripe client unavailable (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
   }
   const { default: Stripe } = await import('stripe')
+  const httpClientFactory = (Stripe as unknown as { createFetchHttpClient?: () => StripeNS.HttpClient })
+    .createFetchHttpClient
   const client = new Stripe(stripeSecretKey, {
     apiVersion: '2023-10-16',
     typescript: true,
     // 使用 fetch HttpClient 以兼容 Cloudflare Workers（Edge Runtime）
-    httpClient: (Stripe as any).createFetchHttpClient?.(),
+    httpClient: httpClientFactory ? httpClientFactory() : undefined,
   }) as Stripe
   return client
 }
@@ -257,8 +260,17 @@ export async function constructWebhookEvent(
 ): Promise<Stripe.Event> {
   try {
     const { default: Stripe } = await import('stripe')
-    // Stripe.webhooks.constructEvent 是纯计算（基于 HMAC），不发起网络请求
-    return (Stripe as any).webhooks.constructEvent(body, signature, secret) as Stripe.Event
+    const webhooks = (Stripe as unknown as {
+      webhooks: {
+        constructEvent: (
+          body: string | Buffer,
+          signature: string,
+          secret: string
+        ) => StripeNS.Event
+      }
+    }).webhooks
+    // 纯计算（基于 HMAC），不发起网络请求
+    return webhooks.constructEvent(body, signature, secret) as Stripe.Event
   } catch (error) {
     console.error('Error constructing webhook event:', error)
     throw new Error('Webhook 签名验证失败')
@@ -317,7 +329,16 @@ export async function isValidWebhookSignature(
 ): Promise<boolean> {
   try {
     const { default: Stripe } = await import('stripe')
-    ;(Stripe as any).webhooks.constructEvent(body, signature, secret)
+    const webhooks = (Stripe as unknown as {
+      webhooks: {
+        constructEvent: (
+          body: string | Buffer,
+          signature: string,
+          secret: string
+        ) => StripeNS.Event
+      }
+    }).webhooks
+    webhooks.constructEvent(body, signature, secret)
     return Promise.resolve(true)
   } catch {
     return Promise.resolve(false)
