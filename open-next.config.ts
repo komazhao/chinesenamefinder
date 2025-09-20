@@ -1,8 +1,5 @@
 // OpenNext Cloudflare adapter configuration
-// Keep defaults; just set output directory to avoid interactive prompt.
-import { defineConfig } from '@opennextjs/cloudflare'
-
-export default defineConfig({
+// 使用最小配置，避免对包的导入以便 npx 直接运行。
+export default {
   outDir: '.open-next'
-})
-
+}
