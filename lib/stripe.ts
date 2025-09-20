@@ -1,5 +1,4 @@
 import type Stripe from 'stripe'
-import type * as StripeNS from 'stripe'
 import { currentStage } from '@/lib/env'
 
 // 确保 Stripe 密钥存在
@@ -17,15 +16,14 @@ const getStripeClient = async (): Promise<Stripe> => {
     throw new Error(`Stripe client unavailable (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
   }
   const { default: Stripe } = await import('stripe')
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const httpClientFactory = (Stripe as unknown as { createFetchHttpClient?: () => any })
+  const httpClientFactory = (Stripe as unknown as { createFetchHttpClient?: () => unknown })
     .createFetchHttpClient
   const client = new Stripe(stripeSecretKey, {
     apiVersion: '2023-10-16',
     typescript: true,
     // 使用 fetch HttpClient 以兼容 Cloudflare Workers（Edge Runtime）
-    httpClient: httpClientFactory ? httpClientFactory() : undefined,
-  }) as Stripe
+    httpClient: httpClientFactory ? (httpClientFactory() as never) : undefined,
+  }) as unknown as Stripe
   return client
 }
 
@@ -267,7 +265,7 @@ export async function constructWebhookEvent(
           body: string | Buffer,
           signature: string,
           secret: string
-        ) => StripeNS.Event
+        ) => Stripe.Event
       }
     }).webhooks
     // 纯计算（基于 HMAC），不发起网络请求
@@ -336,7 +334,7 @@ export async function isValidWebhookSignature(
           body: string | Buffer,
           signature: string,
           secret: string
-        ) => StripeNS.Event
+        ) => Stripe.Event
       }
     }).webhooks
     webhooks.constructEvent(body, signature, secret)
