@@ -223,13 +223,14 @@ curl https://openrouter.ai/api/v1/models \
 
 > 之后每次向目标分支推送代码，Cloudflare Pages 都会自动构建并发布最新版本。
 
-### 6.3 配置 Environment variables（重点：构建环境 VS 运行时）
+### 6.3 配置 Variables and secrets（Cloudflare 最新界面）
 
-1. 打开 Pages 项目 → 推荐两处都配置：
-   - 构建环境变量（Build）：Settings → Builds & deployments → Environment variables
-   - 运行时变量（Runtime）：Settings → Environment variables（或 Secrets）
-2. 请分别在 `Production` 与 `Preview` 标签页下添加变量（键值与 `.env.local` 对应）。建议结构如下：
-   - 其中 `NEXT_PUBLIC_SUPABASE_URL` 与 `NEXT_PUBLIC_SUPABASE_ANON_KEY` 一定要在“Build”中配置，否则 Next.js 在“Collecting page data”阶段拿不到，构建日志会出现 Missing Supabase environment variables。
+1. 打开 Pages 项目 → Settings → Variables and secrets。
+2. 顶部切换 `Production` 与 `Preview` 两个 Tab，分别添加变量（与 `.env.local` 键一致）。
+3. 在该页面中区分两类变量：
+   - Environment variables：普通变量（适合 `NEXT_PUBLIC_*`、`APP_STAGE` 等非机密）
+   - Secrets：加密变量（适合 `SUPABASE_SERVICE_ROLE_KEY`、`OPENROUTER_API_KEY`、`STRIPE_SECRET_KEY` 等机密）
+4. 该页面配置的变量同时对“构建阶段”和“运行时”生效，无需额外页面。
 
 | Key | 说明 | 必填 | Production 示例 | Preview 示例 |
 | --- | --- | --- | --- | --- |
@@ -255,19 +256,19 @@ curl https://openrouter.ai/api/v1/models \
 | `NEXT_PUBLIC_LOCALE_DETECTION` | 是否启用自动语言识别（可选） | ⭕️ | `true` | `false` |
 
 > ⚠️ 常见坑：
-> - 如果构建日志里只显示 `Build environment variables: APP_STAGE: production`，而没有你配置的 `NEXT_PUBLIC_*` 变量，大概率是没有把它们加到“Build 环境变量”。
-> - `NEXT_PUBLIC_*` 前缀的变量不是机密，可以加在 wrangler.toml 或 Build 变量里；而 `SUPABASE_SERVICE_ROLE_KEY`、`STRIPE_SECRET_KEY`、`OPENROUTER_API_KEY` 等敏感值请放在 Cloudflare Pages 的 Environment variables/Secrets 中，不要写入仓库。
+> - 构建日志里若只看到 `Build environment variables: APP_STAGE: production`，那一段只是 Wrangler 读取 wrangler.toml 的提示；通过 “Variables and secrets” 配置的变量不会逐条列出。是否注入成功以 Next 构建是否仍报 Missing Supabase env 为准。
+> - `NEXT_PUBLIC_*` 变量会被 Next.js 注入到客户端包，因此放在 Environment variables；敏感值放在 Secrets，不要写入仓库或 wrangler.toml。
 
 #### 6.3.1 变量修改后如何生效？
 
 - 无需在代码里新增命令；Cloudflare Pages 会在“下一次构建”时读取最新变量。
-- 修改完成后点击页面右上角的 `Save`（Build 页面为 `Save`，Environment 页面为 `Save` 或 `Save and deploy`）。
+- 修改完成后点击页面右上角的 `Save` 或 `Save and deploy`。
 - 触发重新构建的方式有三种：
   - 在 Pages 的 Deployments 列表中，选择最近一次构建，点击 `Retry deployment` 或 `Redeploy`；
   - 向绑定分支推送一次提交（可用空提交：`git commit --allow-empty -m "trigger redeploy" && git push`）；
-  - 使用 Wrangler：`wrangler pages deploy .vercel/output/static --project-name <your-project>`（先执行 `npm run build && npx @cloudflare/next-on-pages`）。
+  - 使用 Wrangler：`wrangler pages deploy .vercel/output/static --project-name <your-project>`（先执行 `npm ci && npm run build && npx @cloudflare/next-on-pages`）。
 
-> 备注：Build 变量只在构建时读取；Runtime/Secrets 在运行时读取。两者都可能需要更新。
+> 备注：该页面的 Environment variables 与 Secrets 都同时在构建与运行时可用；机密信息请使用 Secrets。
 
 **生产环境示例（Build & Runtime）**
 
