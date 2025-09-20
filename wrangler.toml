@@ -15,6 +15,12 @@ SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdX
 OPENROUTER_API_KEY = "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"
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
+
+# Stripe 配置 (需要替换为实际密钥)
+STRIPE_SECRET_KEY=sk_test_placeholder_stripe_key
+STRIPE_WEBHOOK_SECRET=whsec_placeholder_webhook_secret
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_placeholder_publishable_key
+
 # 环境变量（预览环境）
 [env.preview]
 vars = { APP_STAGE = "preview" }
