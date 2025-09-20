@@ -26,7 +26,13 @@ export async function generateMetadata({
   params,
 }: Omit<Props, 'children'>): Promise<Metadata> {
   const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'metadata' })
+  let t: Awaited<ReturnType<typeof getTranslations>> | ((k: string) => string)
+  try {
+    t = await getTranslations({ locale, namespace: 'metadata' })
+  } catch (e) {
+    // 防御：i18n 元数据加载失败时，使用 key 作为回退，避免 500
+    t = (k: string) => k
+  }
 
   return {
     title: {
@@ -96,7 +102,12 @@ export default async function LocaleLayout({
 
   // Providing all messages to the client
   // side is the easiest way to get started
-  const messages = await getMessages()
+  let messages: any = {}
+  try {
+    messages = await getMessages()
+  } catch (e) {
+    messages = {}
+  }
 
   return (
     <>
