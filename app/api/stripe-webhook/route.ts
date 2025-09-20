@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     // 验证 Webhook 签名
     let event: Stripe.Event
     try {
-      event = constructWebhookEvent(body, signature, webhookSecret)
+      event = await constructWebhookEvent(body, signature, webhookSecret)
     } catch (error) {
       console.error('Webhook signature verification failed:', error)
       return NextResponse.json(

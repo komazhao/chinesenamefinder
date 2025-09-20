@@ -250,28 +250,15 @@ export async function cancelSubscription(subscriptionId: string): Promise<Stripe
 }
 
 // 构造 Webhook 事件
-export function constructWebhookEvent(
+export async function constructWebhookEvent(
   body: string | Buffer,
   signature: string,
   secret: string
-): Stripe.Event {
+): Promise<Stripe.Event> {
   try {
-    // 仅在需要时动态加载 stripe 模块
-    const createEvent = (stripeModule: any) => {
-      const client = new stripeModule.default('sk_dummy', { apiVersion: '2023-10-16' })
-      return client.webhooks.constructEvent(body, signature, secret)
-    }
-    // 优先使用 require（若可用），否则使用动态 import
-    // @ts-ignore
-    const maybeReq = typeof require !== 'undefined' ? require : null
-    if (maybeReq) {
-      try {
-        // @ts-ignore
-        const stripeModule = maybeReq('stripe')
-        return createEvent(stripeModule)
-      } catch {}
-    }
-    return createEvent(await import('stripe'))
+    const { default: Stripe } = await import('stripe')
+    // Stripe.webhooks.constructEvent 是纯计算（基于 HMAC），不发起网络请求
+    return (Stripe as any).webhooks.constructEvent(body, signature, secret) as Stripe.Event
   } catch (error) {
     console.error('Error constructing webhook event:', error)
     throw new Error('Webhook 签名验证失败')
@@ -323,20 +310,16 @@ export function formatCurrency(amountInCents: number): string {
 }
 
 // 验证 Webhook 签名
-export function isValidWebhookSignature(
+export async function isValidWebhookSignature(
   body: string | Buffer,
   signature: string,
   secret: string
-): boolean {
+): Promise<boolean> {
   try {
-    const stripeClient = getStripeClient()
-    if (!stripeClient) {
-      console.warn(`Cannot validate webhook signature: Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
-      return false
-    }
-    stripeClient.webhooks.constructEvent(body, signature, secret)
-    return true
+    const { default: Stripe } = await import('stripe')
+    ;(Stripe as any).webhooks.constructEvent(body, signature, secret)
+    return Promise.resolve(true)
   } catch {
-    return false
+    return Promise.resolve(false)
   }
 }
