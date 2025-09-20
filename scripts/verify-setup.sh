@@ -57,10 +57,10 @@ else
     echo -e "${RED}❌${NC} package.json 缺少 Next.js 依赖"
 fi
 
-if grep -q "@cloudflare/next-on-pages" package.json; then
-    echo -e "${GREEN}✅${NC} Cloudflare Pages 配置正确"
+if grep -q 'pages_build_output_dir = ".open-next"' wrangler.toml; then
+    echo -e "${GREEN}✅${NC} Cloudflare Pages(OpenNext) 输出目录已配置"
 else
-    echo -e "${RED}❌${NC} 缺少 Cloudflare Pages 配置"
+    echo -e "${YELLOW}⚠️${NC} 建议将 wrangler.toml 的 pages_build_output_dir 设置为 .open-next"
 fi
 
 if grep -q "supabase" package.json; then

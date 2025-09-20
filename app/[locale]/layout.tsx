@@ -13,6 +13,11 @@ type Props = {
   params: Promise<{ locale: string }>
 }
 
+// Cloudflare Pages 要求所有非静态路由使用 Edge 运行时；
+// 将本地化路由段设置为 Edge，涵盖其下所有页面与子路由。
+// 注：此路由段使用静态预渲染（generateStaticParams），
+// 不在此处声明 Edge 运行时，避免与 SSG 冲突。
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }

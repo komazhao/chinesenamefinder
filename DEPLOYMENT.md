@@ -216,8 +216,8 @@ curl https://openrouter.ai/api/v1/models \
 3. 选择 **Connect to Git**，授权 Cloudflare 访问 GitHub 仓库，并选择 `chinesenamefinder` 这个仓库及要部署的分支（通常是 `main`）。
 4. 在构建设置中填写：
    - **Framework preset**：`Next.js`
-   - **Build command**：`npm ci && npm run build && npx @cloudflare/next-on-pages`
-   - **Build output directory**：`.vercel/output/static`
+   - **Build command**：`npm ci && npx @opennextjs/cloudflare@latest build`
+   - **Build output directory**：`.open-next`
    - **Root directory**：`/`
 5. 点击 **Save and Deploy** 触发第一次构建，首次安装依赖会稍慢。
 
@@ -266,7 +266,7 @@ curl https://openrouter.ai/api/v1/models \
 - 触发重新构建的方式有三种：
   - 在 Pages 的 Deployments 列表中，选择最近一次构建，点击 `Retry deployment` 或 `Redeploy`；
   - 向绑定分支推送一次提交（可用空提交：`git commit --allow-empty -m "trigger redeploy" && git push`）；
-  - 使用 Wrangler：`wrangler pages deploy .vercel/output/static --project-name <your-project>`（先执行 `npm ci && npm run build && npx @cloudflare/next-on-pages`）。
+  - 使用 Wrangler：`wrangler pages deploy .open-next --project-name <your-project>`（先执行 `npm ci && npx @opennextjs/cloudflare@latest build`）。
 
 > 备注：该页面的 Environment variables 与 Secrets 都同时在构建与运行时可用；机密信息请使用 Secrets。
 
@@ -345,7 +345,7 @@ NEXT_PUBLIC_LOCALE_DETECTION=false
 npm install -g wrangler
 wrangler login
 npm run build
-npx @cloudflare/next-on-pages
+npx @opennextjs/cloudflare@latest build
 wrangler pages deploy .vercel/output/static --project-name chinesenamefinder
 ```
 
