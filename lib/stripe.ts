@@ -18,9 +18,10 @@ export const stripe = stripeSecretKey
 
 export const isStripeConfigured = Boolean(stripeSecretKey)
 
-const getStripeClient = (): Stripe => {
+const getStripeClient = (): Stripe | null => {
   if (!stripe) {
-    throw new Error(`Stripe client unavailable (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
+    console.warn(`Stripe client unavailable (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
+    return null
   }
 
   return stripe
@@ -96,6 +97,9 @@ export async function createCheckoutSession({
   }
 
   const stripeClient = getStripeClient()
+  if (!stripeClient) {
+    throw new Error(`Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
+  }
 
   try {
     const session = await stripeClient.checkout.sessions.create({
@@ -167,6 +171,9 @@ export async function createSubscriptionSession({
   const price = isYearly ? Math.floor(plan.price * 12 * 0.8) : plan.price
 
   const stripeClient = getStripeClient()
+  if (!stripeClient) {
+    throw new Error(`Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
+  }
 
   try {
     const session = await stripeClient.checkout.sessions.create({
@@ -212,6 +219,10 @@ export async function createSubscriptionSession({
 // 获取客户信息
 export async function getCustomer(customerId: string): Promise<Stripe.Customer | null> {
   const stripeClient = getStripeClient()
+  if (!stripeClient) {
+    console.warn(`Cannot fetch customer: Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
+    return null
+  }
 
   try {
     const customer = await stripeClient.customers.retrieve(customerId)
@@ -225,6 +236,10 @@ export async function getCustomer(customerId: string): Promise<Stripe.Customer |
 // 获取订阅信息
 export async function getSubscription(subscriptionId: string): Promise<Stripe.Subscription | null> {
   const stripeClient = getStripeClient()
+  if (!stripeClient) {
+    console.warn(`Cannot fetch subscription: Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
+    return null
+  }
 
   try {
     const subscription = await stripeClient.subscriptions.retrieve(subscriptionId)
@@ -238,6 +253,9 @@ export async function getSubscription(subscriptionId: string): Promise<Stripe.Su
 // 取消订阅
 export async function cancelSubscription(subscriptionId: string): Promise<Stripe.Subscription> {
   const stripeClient = getStripeClient()
+  if (!stripeClient) {
+    throw new Error(`Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
+  }
 
   try {
     const subscription = await stripeClient.subscriptions.update(subscriptionId, {
@@ -258,6 +276,9 @@ export function constructWebhookEvent(
 ): Stripe.Event {
   try {
     const stripeClient = getStripeClient()
+    if (!stripeClient) {
+      throw new Error(`Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
+    }
     return stripeClient.webhooks.constructEvent(body, signature, secret)
   } catch (error) {
     console.error('Error constructing webhook event:', error)
@@ -271,6 +292,9 @@ export async function createPortalSession(
   returnUrl: string
 ): Promise<Stripe.BillingPortal.Session> {
   const stripeClient = getStripeClient()
+  if (!stripeClient) {
+    throw new Error(`Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
+  }
 
   try {
     const session = await stripeClient.billingPortal.sessions.create({
@@ -290,6 +314,10 @@ export async function getUsageRecord(
 ): Promise<Stripe.UsageRecordSummary[]> {
   try {
     const stripeClient = getStripeClient()
+    if (!stripeClient) {
+      console.warn(`Cannot fetch usage records: Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
+      return []
+    }
     const usageRecords = await stripeClient.subscriptionItems.listUsageRecordSummaries(
       subscriptionItemId,
       { limit: 100 }
@@ -317,6 +345,10 @@ export function isValidWebhookSignature(
 ): boolean {
   try {
     const stripeClient = getStripeClient()
+    if (!stripeClient) {
+      console.warn(`Cannot validate webhook signature: Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
+      return false
+    }
     stripeClient.webhooks.constructEvent(body, signature, secret)
     return true
   } catch {

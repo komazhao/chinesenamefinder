@@ -44,8 +44,18 @@ export const createServiceClient = (): SupabaseClient => {
   const serviceKey = serviceRoleKeyFromEnv
 
   if (!serviceKey) {
-    const message = `Missing Supabase environment variables: SUPABASE_SERVICE_ROLE_KEY (stage: ${currentStage})`
-    throw new Error(message)
+    console.warn(`Missing Supabase environment variables: SUPABASE_SERVICE_ROLE_KEY (stage: ${currentStage})`)
+    // 返回使用匿名密钥的客户端作为兜底
+    return createClient(
+      supabaseUrl,
+      supabaseAnonKey,
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      }
+    )
   }
 
   return createClient(
