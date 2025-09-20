@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
+import type { AbstractIntlMessages } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
@@ -29,7 +30,7 @@ export async function generateMetadata({
   let t: Awaited<ReturnType<typeof getTranslations>> | ((k: string) => string)
   try {
     t = await getTranslations({ locale, namespace: 'metadata' })
-  } catch (e) {
+  } catch (_) {
     // 防御：i18n 元数据加载失败时，使用 key 作为回退，避免 500
     t = (k: string) => k
   }
@@ -102,11 +103,11 @@ export default async function LocaleLayout({
 
   // Providing all messages to the client
   // side is the easiest way to get started
-  let messages: any = {}
+  let messages: AbstractIntlMessages = {}
   try {
     messages = await getMessages()
-  } catch (e) {
-    messages = {}
+  } catch (_) {
+    messages = {} as AbstractIntlMessages
   }
 
   return (
