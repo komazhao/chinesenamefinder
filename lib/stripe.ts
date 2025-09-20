@@ -1,4 +1,4 @@
-import Stripe from 'stripe'
+import type Stripe from 'stripe'
 import { currentStage } from '@/lib/env'
 
 // 确保 Stripe 密钥存在
@@ -8,23 +8,21 @@ if (!stripeSecretKey) {
   console.warn(`${message}; current stage: ${currentStage}`)
 }
 
-// 创建 Stripe 实例（非生产环境缺失密钥时返回占位对象以避免构建失败）
-export const stripe = stripeSecretKey
-  ? new Stripe(stripeSecretKey, {
-      apiVersion: '2023-10-16',
-      typescript: true,
-    })
-  : null
-
 export const isStripeConfigured = Boolean(stripeSecretKey)
 
-const getStripeClient = (): Stripe | null => {
-  if (!stripe) {
-    console.warn(`Stripe client unavailable (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
-    return null
+// 使用动态导入，避免 Edge Worker 启动时加载 Node-only 依赖
+const getStripeClient = async (): Promise<Stripe> => {
+  if (!stripeSecretKey) {
+    throw new Error(`Stripe client unavailable (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
   }
-
-  return stripe
+  const { default: Stripe } = await import('stripe')
+  const client = new Stripe(stripeSecretKey, {
+    apiVersion: '2023-10-16',
+    typescript: true,
+    // 使用 fetch HttpClient 以兼容 Cloudflare Workers（Edge Runtime）
+    httpClient: (Stripe as any).createFetchHttpClient?.(),
+  }) as Stripe
+  return client
 }
 
 // 定价计划配置
@@ -96,10 +94,7 @@ export async function createCheckoutSession({
     throw new Error(`Invalid plan type: ${planType}`)
   }
 
-  const stripeClient = getStripeClient()
-  if (!stripeClient) {
-    throw new Error(`Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
-  }
+  const stripeClient = await getStripeClient()
 
   try {
     const session = await stripeClient.checkout.sessions.create({
@@ -170,10 +165,7 @@ export async function createSubscriptionSession({
   // 年付享受8折优惠
   const price = isYearly ? Math.floor(plan.price * 12 * 0.8) : plan.price
 
-  const stripeClient = getStripeClient()
-  if (!stripeClient) {
-    throw new Error(`Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
-  }
+  const stripeClient = await getStripeClient()
 
   try {
     const session = await stripeClient.checkout.sessions.create({
@@ -218,11 +210,7 @@ export async function createSubscriptionSession({
 
 // 获取客户信息
 export async function getCustomer(customerId: string): Promise<Stripe.Customer | null> {
-  const stripeClient = getStripeClient()
-  if (!stripeClient) {
-    console.warn(`Cannot fetch customer: Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
-    return null
-  }
+  const stripeClient = await getStripeClient()
 
   try {
     const customer = await stripeClient.customers.retrieve(customerId)
@@ -235,11 +223,7 @@ export async function getCustomer(customerId: string): Promise<Stripe.Customer |
 
 // 获取订阅信息
 export async function getSubscription(subscriptionId: string): Promise<Stripe.Subscription | null> {
-  const stripeClient = getStripeClient()
-  if (!stripeClient) {
-    console.warn(`Cannot fetch subscription: Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
-    return null
-  }
+  const stripeClient = await getStripeClient()
 
   try {
     const subscription = await stripeClient.subscriptions.retrieve(subscriptionId)
@@ -252,10 +236,7 @@ export async function getSubscription(subscriptionId: string): Promise<Stripe.Su
 
 // 取消订阅
 export async function cancelSubscription(subscriptionId: string): Promise<Stripe.Subscription> {
-  const stripeClient = getStripeClient()
-  if (!stripeClient) {
-    throw new Error(`Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
-  }
+  const stripeClient = await getStripeClient()
 
   try {
     const subscription = await stripeClient.subscriptions.update(subscriptionId, {
@@ -275,11 +256,22 @@ export function constructWebhookEvent(
   secret: string
 ): Stripe.Event {
   try {
-    const stripeClient = getStripeClient()
-    if (!stripeClient) {
-      throw new Error(`Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
+    // 仅在需要时动态加载 stripe 模块
+    const createEvent = (stripeModule: any) => {
+      const client = new stripeModule.default('sk_dummy', { apiVersion: '2023-10-16' })
+      return client.webhooks.constructEvent(body, signature, secret)
     }
-    return stripeClient.webhooks.constructEvent(body, signature, secret)
+    // 优先使用 require（若可用），否则使用动态 import
+    // @ts-ignore
+    const maybeReq = typeof require !== 'undefined' ? require : null
+    if (maybeReq) {
+      try {
+        // @ts-ignore
+        const stripeModule = maybeReq('stripe')
+        return createEvent(stripeModule)
+      } catch {}
+    }
+    return createEvent(await import('stripe'))
   } catch (error) {
     console.error('Error constructing webhook event:', error)
     throw new Error('Webhook 签名验证失败')
@@ -291,10 +283,7 @@ export async function createPortalSession(
   customerId: string,
   returnUrl: string
 ): Promise<Stripe.BillingPortal.Session> {
-  const stripeClient = getStripeClient()
-  if (!stripeClient) {
-    throw new Error(`Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
-  }
+  const stripeClient = await getStripeClient()
 
   try {
     const session = await stripeClient.billingPortal.sessions.create({
@@ -313,11 +302,7 @@ export async function getUsageRecord(
   subscriptionItemId: string
 ): Promise<Stripe.UsageRecordSummary[]> {
   try {
-    const stripeClient = getStripeClient()
-    if (!stripeClient) {
-      console.warn(`Cannot fetch usage records: Stripe not configured (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
-      return []
-    }
+    const stripeClient = await getStripeClient()
     const usageRecords = await stripeClient.subscriptionItems.listUsageRecordSummaries(
       subscriptionItemId,
       { limit: 100 }

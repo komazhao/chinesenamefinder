@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { constructWebhookEvent, isStripeConfigured } from '@/lib/stripe'
 import { createServiceClient, isSupabaseConfigured } from '@/lib/supabase'
 import { isDevelopment } from '@/lib/env'
-import Stripe from 'stripe'
+import type Stripe from 'stripe'
 
 export const runtime = 'edge'
 
