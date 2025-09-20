@@ -9,9 +9,41 @@ pages_build_output_dir = ".vercel/output/static"
 APP_STAGE = "local"
 
 # 环境变量（生产环境）
-[env.production]
-vars = { APP_STAGE = "production" }
+[env.production.vars]
+APP_STAGE = "production"
+# Supabase 配置
+NEXT_PUBLIC_SUPABASE_URL = "https://jdwrdqithnxlszlnqfrp.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkd3JkcWl0aG54bHN6bG5xZnJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5MzAyOTksImV4cCI6MjA3MzUwNjI5OX0.Lm9eP3vjQi-6CvICHyAqpK50ilaXskei3bIDRk7XX5k"
+SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkd3JkcWl0aG54bHN6bG5xZnJwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzkzMDI5OSwiZXhwIjoyMDczNTA2Mjk5fQ.4nCbvtWAAfisMbfMMLTDmgpBc0hSE1_s4WjqP7T7rDk"
+# OpenAI 配置
+OPENAI_API_KEY = "sk-placeholder-openai-api-key"
+# OpenRouter 配置
+OPENROUTER_API_KEY = "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"
+OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
+# Stripe 配置
+STRIPE_SECRET_KEY = "sk_test_placeholder_stripe_key"
+STRIPE_WEBHOOK_SECRET = "whsec_placeholder_webhook_secret"
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = "pk_test_placeholder_publishable_key"
+# 应用配置
+NEXT_PUBLIC_SITE_URL = "https://chinesenamefinder.pages.dev"
+NODE_ENV = "production"
 
 # 环境变量（预览环境）
-[env.preview]
-vars = { APP_STAGE = "preview" }
+[env.preview.vars]
+APP_STAGE = "preview"
+# Supabase 配置
+NEXT_PUBLIC_SUPABASE_URL = "https://jdwrdqithnxlszlnqfrp.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkd3JkcWl0aG54bHN6bG5xZnJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5MzAyOTksImV4cCI6MjA3MzUwNjI5OX0.Lm9eP3vjQi-6CvICHyAqpK50ilaXskei3bIDRk7XX5k"
+SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkd3JkcWl0aG54bHN6bG5xZnJwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzkzMDI5OSwiZXhwIjoyMDczNTA2Mjk5fQ.4nCbvtWAAfisMbfMMLTDmgpBc0hSE1_s4WjqP7T7rDk"
+# OpenAI 配置
+OPENAI_API_KEY = "sk-placeholder-openai-api-key"
+# OpenRouter 配置
+OPENROUTER_API_KEY = "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"
+OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
+# Stripe 配置
+STRIPE_SECRET_KEY = "sk_test_placeholder_stripe_key"
+STRIPE_WEBHOOK_SECRET = "whsec_placeholder_webhook_secret"
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = "pk_test_placeholder_publishable_key"
+# 应用配置
+NEXT_PUBLIC_SITE_URL = "https://chinesenamefinder-preview.pages.dev"
+NODE_ENV = "preview"
