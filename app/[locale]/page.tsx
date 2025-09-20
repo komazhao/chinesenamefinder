@@ -1,5 +1,7 @@
 'use client'
 
+export const runtime = 'edge'
+
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { ArrowRight, Sparkles, Heart, Star, Globe } from 'lucide-react'

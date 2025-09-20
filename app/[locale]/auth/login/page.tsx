@@ -1,5 +1,7 @@
 'use client'
 
+export const runtime = 'edge'
+
 import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Eye, EyeOff, Mail, Lock, Loader2, Chrome } from 'lucide-react'

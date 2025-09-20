@@ -1,5 +1,7 @@
 'use client'
 
+export const runtime = 'edge'
+
 import React from 'react'
 import { useTranslations } from 'next-intl'
 import { Header } from '@/components/layout/header'
