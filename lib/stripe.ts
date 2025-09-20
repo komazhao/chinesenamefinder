@@ -17,7 +17,7 @@ const getStripeClient = async (): Promise<Stripe> => {
     throw new Error(`Stripe client unavailable (missing STRIPE_SECRET_KEY, stage: ${currentStage})`)
   }
   const { default: Stripe } = await import('stripe')
-  const httpClientFactory = (Stripe as unknown as { createFetchHttpClient?: () => StripeNS.HttpClient })
+  const httpClientFactory = (Stripe as unknown as { createFetchHttpClient?: () => any })
     .createFetchHttpClient
   const client = new Stripe(stripeSecretKey, {
     apiVersion: '2023-10-16',
