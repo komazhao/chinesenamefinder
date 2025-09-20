@@ -2,7 +2,7 @@ name = "chinesenamefinder"
 compatibility_date = "2024-09-01"
 compatibility_flags = ["nodejs_compat"]
 # 使用 OpenNext Cloudflare 适配器的输出目录
-pages_build_output_dir = ".vercel/output/static"
+pages_build_output_dir = ".open-next"
 
 # 环境变量（生产环境）
 [env.production.vars]

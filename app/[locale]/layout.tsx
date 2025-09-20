@@ -19,9 +19,10 @@ type Props = {
 // 注：此路由段使用静态预渲染（generateStaticParams），
 // 不在此处声明 Edge 运行时，避免与 SSG 冲突。
 
-// 为满足 Cloudflare next-on-pages 要求：该段落下存在动态路由，
-// 统一使用 Edge 运行时；不再导出 generateStaticParams（避免与 Edge 冲突）。
-export const runtime = 'edge'
+// OpenNext 适配下可恢复 SSG；保留静态参数生成，避免运行时 i18n 抖动。
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
+}
 
 export async function generateMetadata({
   params,
