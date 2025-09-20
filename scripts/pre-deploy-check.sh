@@ -84,7 +84,7 @@ check_item "代码格式检查" "npm run lint -- --quiet"
 echo -e "\n${BLUE}🏗️ 构建检查${NC}"
 echo "开始构建检查，这可能需要几分钟..."
 check_item "Next.js 构建" "npm run build"
-check_item "Cloudflare Pages 构建(OpenNext)" "npx @opennextjs/cloudflare@latest build"
+check_item "Cloudflare Pages 构建" "npx @cloudflare/next-on-pages"
 
 # 6. 文件结构检查
 echo -e "\n${BLUE}📁 文件结构检查${NC}"
@@ -138,7 +138,7 @@ check_item "贡献指南存在" "[ -f CONTRIBUTING.md ]" false
 echo -e "\n${BLUE}🚀 部署配置检查${NC}"
 check_item "GitHub Actions 配置" "[ -f .github/workflows/deploy.yml ]"
 check_item "Wrangler 配置" "[ -f wrangler.toml ]"
-check_item "Cloudflare Pages 兼容(OpenNext)" "grep -q 'pages_build_output_dir = \".open-next\"' wrangler.toml"
+check_item "Cloudflare Pages 兼容" "grep -q '@cloudflare/next-on-pages' package.json"
 
 # 检查结果汇总
 echo -e "\n${BLUE}📊 检查结果汇总${NC}"

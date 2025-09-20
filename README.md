@@ -293,7 +293,7 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```bash
 # 本地构建测试
 npm run build
-npx @opennextjs/cloudflare@latest build
+npx @cloudflare/next-on-pages
 
 # 推送到 GitHub（自动触发部署）
 git add .
