@@ -27,7 +27,7 @@ check_file_structure() {
         "app/layout.tsx"
         "app/page.tsx"
         "lib/supabase.ts"
-        "lib/openai.ts"
+        "lib/openrouter.ts"
         "lib/stripe.ts"
         "components/ui/button.tsx"
         "components/layout/header.tsx"
@@ -57,10 +57,10 @@ else
     echo -e "${RED}❌${NC} package.json 缺少 Next.js 依赖"
 fi
 
-if grep -q "@cloudflare/next-on-pages" package.json; then
-    echo -e "${GREEN}✅${NC} Cloudflare Pages 配置正确"
+if grep -q "@opennextjs/cloudflare" package.json || rg -n "@opennextjs/cloudflare" -S . >/dev/null 2>&1; then
+    echo -e "${GREEN}✅${NC} OpenNext Cloudflare 适配器已配置"
 else
-    echo -e "${RED}❌${NC} 缺少 Cloudflare Pages 配置"
+    echo -e "${YELLOW}⚠️${NC} 未检测到 OpenNext 适配器（构建可能依赖 Cloudflare Pages 界面配置）"
 fi
 
 if grep -q "supabase" package.json; then
@@ -162,7 +162,7 @@ existing_files=0
 
 files_to_check=(
     "package.json" "next.config.mjs" "tailwind.config.ts" "tsconfig.json"
-    "app/layout.tsx" "app/page.tsx" "lib/supabase.ts" "lib/openai.ts"
+    "app/layout.tsx" "app/page.tsx" "lib/supabase.ts" "lib/openrouter.ts"
     "lib/stripe.ts" "components/ui/button.tsx" "components/layout/header.tsx"
     "README.md" "DEPLOYMENT.md" ".gitignore"
 )

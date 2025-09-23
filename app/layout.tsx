@@ -55,7 +55,7 @@ export default async function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
         {/* DNS 预取 */}
-        <link rel="dns-prefetch" href="//api.openai.com" />
+        <link rel="dns-prefetch" href="//openrouter.ai" />
         <link rel="dns-prefetch" href="//js.stripe.com" />
       </head>
       <body

@@ -13,6 +13,7 @@
 # Production
 /build
 /.vercel/
+/.open-next/
 /.wrangler/
 
 # Environment variables

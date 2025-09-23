@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { NameGenerator, type NameRequest } from '@/lib/openai'
+import { NameGenerator, type NameRequest } from '@/lib/openrouter'
 import { createServiceClient, isSupabaseConfigured } from '@/lib/supabase'
 import { isDevelopment } from '@/lib/env'
 import { z } from 'zod'
@@ -97,8 +97,8 @@ export async function POST(request: NextRequest) {
     if (!openrouterKey) {
       console.error('OPENROUTER_API_KEY not configured')
       return NextResponse.json(
-        { error: '服务配置错误', code: 'SERVICE_ERROR' },
-        { status: 500 }
+        { error: 'AI 服务未配置', code: 'AI_NOT_CONFIGURED' },
+        { status: 503 }
       )
     }
 

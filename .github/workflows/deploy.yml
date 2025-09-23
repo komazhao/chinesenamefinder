@@ -33,18 +33,19 @@ jobs:
       - name: Run lint
         run: npm run lint --fix
 
-      - name: Build application
+      - name: Build application (OpenNext)
         run: |
-          npm run build
-          npx @cloudflare/next-on-pages
+          node scripts/validate-env.mjs
+          npx @opennextjs/cloudflare@latest build --openNextConfigPath open-next.config.js
         env:
           # Supabase
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
 
-          # OpenAI
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # OpenRouter
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_API_URL: ${{ secrets.OPENROUTER_API_URL }}
 
           # Stripe
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
@@ -64,7 +65,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: chinesenamefinder
-          directory: .vercel/output/static
+          directory: .open-next
           # Optional: git branch to deploy from
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
