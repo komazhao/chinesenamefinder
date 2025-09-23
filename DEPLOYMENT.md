@@ -216,9 +216,13 @@ curl https://openrouter.ai/api/v1/models \
 3. 选择 **Connect to Git**，授权 Cloudflare 访问 GitHub 仓库，并选择 `chinesenamefinder` 这个仓库及要部署的分支（通常是 `main`）。
 4. 在构建设置中填写（OpenNext 适配器）：
    - **Framework preset**：`None`（或 `Next.js` 也可）
-   - **Build command**：`npm ci && node scripts/validate-env.mjs && npx @opennextjs/cloudflare@latest build --openNextConfigPath open-next.config.js`
+   - **Build command（推荐单行，避免 UI 自动换行插入空格）**：
+     - `npm ci && npm run build:opennext`
+     - 若必须手写：`npm ci && node scripts/validate-env.mjs && npx @opennextjs/cloudflare@latest build --openNextConfigPath open-next.config.js`
    - **Build output directory**：`.open-next`
    - **Root directory**：`/`
+
+> 重要：Cloudflare Pages 的命令输入框若出现自动换行，可能在 `@opennextjs/` 与 `cloudflare` 之间插入空格，导致 `npx` 解析为 `@opennextjs`。请优先使用 `npm run build:opennext`，或确保整条命令为同一行、无意外空格。
 5. 点击 **Save and Deploy** 触发第一次构建。
 
 > 之后每次向目标分支推送代码，Cloudflare Pages 都会自动构建并发布最新版本。
