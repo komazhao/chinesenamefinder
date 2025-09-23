@@ -5,17 +5,19 @@ export default function RootRedirectPage() {
   const script = `(() => {
     try {
       const lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      const dest = lang.includes('zh') ? '/zh' : '/en';
-      if (location.pathname !== dest) location.replace(dest);
+      const dest = lang.includes('zh') ? '/zh/' : '/en/';
+      if (location.pathname !== dest && location.pathname !== dest.slice(0, -1)) {
+        location.replace(dest);
+      }
     } catch (_) {
-      location.replace('/en');
+      location.replace('/en/');
     }
   })();`;
 
   return (
     <div>
       <noscript>
-        <meta httpEquiv="refresh" content="0; url=/en" />
+        <meta httpEquiv="refresh" content="0; url=/en/" />
       </noscript>
       <script dangerouslySetInnerHTML={{ __html: script }} />
     </div>

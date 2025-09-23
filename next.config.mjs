@@ -40,16 +40,6 @@ const nextConfig = {
     return config
   },
 
-  // 基础重定向：根路径 → 英文版（客户端仍有按语言跳转脚本）
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/en',
-        permanent: false,
-      },
-    ]
-  },
 }
 
 export default withNextIntl(nextConfig)
