@@ -4,7 +4,6 @@ import { isDevelopment } from '@/lib/env'
 import { z } from 'zod'
 
 // Cloudflare Pages 需要 Edge Runtime
-export const runtime = 'edge'
 
 // 请求验证 schema
 const generateNameSchema = z.object({

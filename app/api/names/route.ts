@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServiceClient, isSupabaseConfigured } from '@/lib/supabase'
 import { z } from 'zod'
 
-export const runtime = 'edge'
 
 // 获取用户的名字列表
 export async function GET(request: NextRequest) {

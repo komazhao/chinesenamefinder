@@ -1,4 +1,4 @@
-export const runtime = 'edge'
+// Node-compatible runtime (no Edge) for OpenNext build
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="12" fill="#dc2626"/>
@@ -11,4 +11,3 @@ export async function GET() {
     headers: { 'content-type': 'image/svg+xml; charset=utf-8' }
   })
 }
-

@@ -4,7 +4,6 @@ import { createServiceClient, isSupabaseConfigured } from '@/lib/supabase'
 import { isDevelopment } from '@/lib/env'
 import { z } from 'zod'
 
-export const runtime = 'edge'
 
 const createPaymentSchema = z.object({
   planType: z.enum(['basic', 'standard', 'premium'] as const),

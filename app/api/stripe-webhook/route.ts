@@ -4,7 +4,6 @@ import { createServiceClient, isSupabaseConfigured } from '@/lib/supabase'
 import { isDevelopment } from '@/lib/env'
 import type Stripe from 'stripe'
 
-export const runtime = 'edge'
 
 // Webhook 端点需要原始请求体
 export async function POST(request: NextRequest) {

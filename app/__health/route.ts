@@ -1,4 +1,4 @@
-export const runtime = 'edge'
+// No edge runtime here to satisfy OpenNext bundling constraints
 
 export async function GET() {
   const info = {

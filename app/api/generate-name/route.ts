@@ -17,7 +17,6 @@ const generateNameSchema = z.object({
 })
 
 // 边缘运行时配置（Cloudflare Pages兼容）
-export const runtime = 'edge'
 
 export async function POST(request: NextRequest) {
   try {
