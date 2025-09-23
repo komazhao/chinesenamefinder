@@ -4,17 +4,20 @@ compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".open-next"
 
 # 构建时环境变量
-# 注意：这些值需要从 Cloudflare Pages UI 配置中复制
-# 敏感信息（如 API 密钥）应该使用机密管理
 [vars]
 APP_STAGE = "production"
 NEXT_PUBLIC_SITE_URL = "https://chinesenamefinder.com"
 
-# 从你的截图中复制的环境变量值
+# Supabase 配置
 NEXT_PUBLIC_SUPABASE_URL = "https://jdwrdqithnxlszlnqfrp.supabase.co"
-NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkd3JkcWl0aG54bHN6bG5xZnJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjY1MzE5NDIsImV4cCI6MjA0MjEwNzk0Mn0.Z2bUTk7g-IfIa6pSW0g_zFhPhZJECPSkOJA0j6X2G1o"
+NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkd3JkcWl0aG54bHN6bG5xZnJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5MzAyOTksImV4cCI6MjA3MzUwNjI5OX0.Lm9eP3vjQi-6CvICHyAqpK50ilaXskei3bIDRk7XX5k"
+SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkd3JkcWl0aG54bHN6bG5xZnJwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzkzMDI5OSwiZXhwIjoyMDczNTA2Mjk5fQ.4nCbvtWAAfisMbfMMLTDmgpBc0hSE1_s4WjqP7T7rDk"
 
-# 这些是测试值，生产环境应该通过 Cloudflare 机密管理
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = "pk_test_placeholder_publishable_key"
+# OpenRouter AI 配置
 OPENROUTER_API_KEY = "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"
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
+
+# Stripe 配置（测试环境）
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = "pk_test_placeholder_publishable_key"
+STRIPE_SECRET_KEY = "sk_test_placeholder_stripe_key"
+STRIPE_WEBHOOK_SECRET = "whsec_placeholder_webhook_secret"
