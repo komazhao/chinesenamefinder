@@ -3,8 +3,24 @@
 // - Never prints values, only presence.
 // - Fails build only when production essentials are missing.
 
-const stage = (process.env.APP_STAGE || process.env.NODE_ENV || 'development').toLowerCase()
+// Detect Cloudflare Pages environment based on branch
+const cfBranch = process.env.CF_PAGES_BRANCH
+const rawStage = process.env.APP_STAGE || process.env.NODE_ENV || 'development'
+
+let stage = rawStage.toLowerCase()
+
+// Handle Cloudflare Pages branch-based environment detection
+if (cfBranch) {
+  stage = cfBranch === 'main' ? 'production' : 'preview'
+}
+
 const isProd = stage === 'production'
+
+// Debug: Show detected environment info
+console.log(`[env-check] APP_STAGE: ${process.env.APP_STAGE || 'undefined'}`)
+console.log(`[env-check] CF_PAGES_BRANCH: ${process.env.CF_PAGES_BRANCH || 'undefined'}`)
+console.log(`[env-check] NODE_ENV: ${process.env.NODE_ENV || 'undefined'}`)
+console.log(`[env-check] Detected stage: ${stage}`)
 
 const checks = []
 const errors = []
