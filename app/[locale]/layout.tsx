@@ -31,7 +31,7 @@ export async function generateMetadata({
   let t: Awaited<ReturnType<typeof getTranslations>> | ((k: string) => string)
   try {
     t = await getTranslations({ locale, namespace: 'metadata' })
-  } catch (_) {
+  } catch {
     // 防御：i18n 元数据加载失败时，使用 key 作为回退，避免 500
     t = (k: string) => k
   }
@@ -107,7 +107,7 @@ export default async function LocaleLayout({
   let messages: AbstractIntlMessages = {}
   try {
     messages = await getMessages()
-  } catch (_) {
+  } catch {
     messages = {} as AbstractIntlMessages
   }
 

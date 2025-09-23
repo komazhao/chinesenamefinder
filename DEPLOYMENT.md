@@ -209,21 +209,21 @@ curl https://openrouter.ai/api/v1/models \
 
 > 域名迁移完成后，后续的 DNS、SSL 等都可以在 Cloudflare 中配置，无需再回到原注册商。
 
-### 6.2 通过 Workers & Pages 部署静态站点
+### 6.2 使用 OpenNext + Cloudflare Pages 部署（推荐）
 
 1. 代码准备好后推送到 GitHub：`git push origin main`
 2. Cloudflare Dashboard → 左侧导航选择 **Workers & Pages → Pages** → 点击 **Create application**。
 3. 选择 **Connect to Git**，授权 Cloudflare 访问 GitHub 仓库，并选择 `chinesenamefinder` 这个仓库及要部署的分支（通常是 `main`）。
-4. 在构建设置中填写：
-   - **Framework preset**：`Next.js`
-   - **Build command**：`npm ci && npm run build && npx @cloudflare/next-on-pages`
-   - **Build output directory**：`.vercel/output/static`
+4. 在构建设置中填写（OpenNext 适配器）：
+   - **Framework preset**：`None`（或 `Next.js` 也可）
+   - **Build command**：`npm ci && npx @opennextjs/cloudflare@latest build --openNextConfigPath open-next.config.js`
+   - **Build output directory**：`.open-next`
    - **Root directory**：`/`
-5. 点击 **Save and Deploy** 触发第一次构建，首次安装依赖会稍慢。
+5. 点击 **Save and Deploy** 触发第一次构建。
 
 > 之后每次向目标分支推送代码，Cloudflare Pages 都会自动构建并发布最新版本。
 
-### 6.3 配置 Variables and secrets（Cloudflare 最新界面）
+### 6.3 配置 Variables & Secrets（强烈推荐，不要把密钥写进仓库）
 
 1. 打开 Pages 项目 → Settings → Variables and secrets。
 2. 顶部切换 `Production` 与 `Preview` 两个 Tab，分别添加变量（与 `.env.local` 键一致）。
@@ -256,8 +256,17 @@ curl https://openrouter.ai/api/v1/models \
 | `NEXT_PUBLIC_LOCALE_DETECTION` | 是否启用自动语言识别（可选） | ⭕️ | `true` | `false` |
 
 > ⚠️ 常见坑：
-> - 构建日志里若只看到 `Build environment variables: APP_STAGE: production`，那一段只是 Wrangler 读取 wrangler.toml 的提示；通过 “Variables and secrets” 配置的变量不会逐条列出。是否注入成功以 Next 构建是否仍报 Missing Supabase env 为准。
+> - 构建日志里若只看到 `Build environment variables: APP_STAGE: production`，那是 Wrangler 读取 wrangler.toml 的提示；通过 “Variables & Secrets” 配置的变量不会逐条列出。是否注入成功以 Next 构建是否仍报 Missing Supabase env 为准。
 > - `NEXT_PUBLIC_*` 变量会被 Next.js 注入到客户端包，因此放在 Environment variables；敏感值放在 Secrets，不要写入仓库或 wrangler.toml。
+
+### 6.4 运行时排障（没有 Log Explorer 时）
+
+- 浏览器访问 `https://<你的域名>/__health`
+  - 期望返回：`{status:'ok', stage, hasSupabaseUrl, hasSupabaseAnon}`
+  - 若 500，请优先检查构建命令、输出目录、环境变量是否正确
+- 浏览器 Network 面板查看 `/en`（或 `/zh`）的响应体与 Response Headers
+  - 若为 500，可暂时在页面内添加 `console.log` 定位；或在相关 API 路由里返回 JSON 文本说明错误点
+
 
 #### 6.3.1 变量修改后如何生效？
 

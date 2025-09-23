@@ -1,26 +1,25 @@
 name = "chinesenamefinder"
 compatibility_date = "2024-09-01"
 compatibility_flags = ["nodejs_compat"]
+
 # 使用 OpenNext Cloudflare 适配器的输出目录
+# 注意：Cloudflare Pages 的 Build Output Directory 也需要设置为 .open-next
 pages_build_output_dir = ".open-next"
 
-# 环境变量（生产环境）
-[env.production.vars]
-APP_STAGE = "production"
-# Supabase 配置
-NEXT_PUBLIC_SUPABASE_URL = "https://jdwrdqithnxlszlnqfrp.supabase.co"
-NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkd3JkcWl0aG54bHN6bG5xZnJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5MzAyOTksImV4cCI6MjA3MzUwNjI5OX0.Lm9eP3vjQi-6CvICHyAqpK50ilaXskei3bIDRk7XX5k"
-SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkd3JkcWl0aG54bHN6bG5xZnJwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzkzMDI5OSwiZXhwIjoyMDczNTA2Mjk5fQ.4nCbvtWAAfisMbfMMLTDmgpBc0hSE1_s4WjqP7T7rDk"
-# OpenRouter 配置
-OPENROUTER_API_KEY = "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"
-OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
+# 强烈注意：不要在 wrangler.toml 中硬编码任何密钥！
+# 请前往 Cloudflare Pages -> Settings -> Environment Variables
+# 通过 UI 配置以下变量（Examples，仅供参考，不要提交真实值）：
+# - APP_STAGE=production
+# - NEXT_PUBLIC_SUPABASE_URL
+# - NEXT_PUBLIC_SUPABASE_ANON_KEY
+# - SUPABASE_SERVICE_ROLE_KEY (Secret)
+# - OPENROUTER_API_KEY (Secret)
+# - OPENROUTER_API_URL
+# - STRIPE_SECRET_KEY (Secret)
+# - STRIPE_WEBHOOK_SECRET (Secret)
+# - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+#
+# 如需为预览环境设置不同变量，请在 Cloudflare Pages 的 Preview 环境中配置。
 
-
-# Stripe 配置 (需要替换为实际密钥)
-STRIPE_SECRET_KEY="sk_test_placeholder_stripe_key"
-STRIPE_WEBHOOK_SECRET="whsec_placeholder_webhook_secret"
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_placeholder_publishable_key"
-
-# 环境变量（预览环境）
-[env.preview]
-vars = { APP_STAGE = "preview" }
+# 如需在本地使用 wrangler 运行 Pages 预览，可在本地 shell 导出变量，
+# 或使用 .env.local（切记不要提交到仓库）。
