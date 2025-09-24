@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { User, Session } from '@supabase/supabase-js'
-import { supabase } from '@/lib/supabase'
+import { supabase, getURL } from '@/lib/supabase'
 import type { UserProfile } from '@/lib/database.types'
 
 interface AuthContextType {
@@ -205,13 +205,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
         throw new Error('Supabase未正确配置：请在.env.local中设置真实的SUPABASE密钥')
       }
 
-      const currentUrl = window.location.origin
-      const locale = window.location.pathname.startsWith('/zh') ? 'zh' : 'en'
+      // 使用getURL获取正确的生产环境URL
+      const baseUrl = typeof window !== 'undefined' ? window.location.origin : getURL()
+      const locale = typeof window !== 'undefined' && window.location.pathname.startsWith('/zh') ? 'zh' : 'en'
+
+      // 在生产环境强制使用NEXT_PUBLIC_SITE_URL
+      const redirectUrl = process.env.NODE_ENV === 'production'
+        ? `${getURL()}${locale}/auth/callback`
+        : `${baseUrl}/${locale}/auth/callback`
+
+      console.log('OAuth Redirect URL:', redirectUrl)
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${currentUrl}/${locale}/auth/callback`,
+          redirectTo: redirectUrl,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',

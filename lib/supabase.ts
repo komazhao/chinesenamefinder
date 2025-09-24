@@ -30,12 +30,27 @@ export const isSupabaseConfigured = Boolean(
 const supabaseUrl = supabaseUrlFromEnv || 'https://placeholder.supabase.co'
 const supabaseAnonKey = supabaseAnonKeyFromEnv || 'placeholder-anon-key'
 
+// 获取站点URL（用于OAuth重定向）
+export const getURL = () => {
+  let url =
+    process?.env?.NEXT_PUBLIC_SITE_URL ?? // 从环境变量获取
+    'https://chinesenamefinder.com' // 生产环境默认值
+
+  // 确保URL包含协议
+  url = url.includes('http') ? url : `https://${url}`
+  // 确保URL末尾有斜杠
+  url = url.charAt(url.length - 1) === '/' ? url : `${url}/`
+
+  return url
+}
+
 // 客户端实例
 export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,
-    detectSessionInUrl: true
+    detectSessionInUrl: true,
+    flowType: 'pkce'
   }
 })
 
