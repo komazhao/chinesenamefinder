@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "validate-env": "node scripts/validate-env.mjs",
-    "build:opennext": "node scripts/validate-env.mjs && npx @opennextjs/cloudflare@latest build --openNextConfigPath open-next.config.js && node scripts/postbuild-cloudflare.mjs",
+    "build:opennext": "node scripts/validate-env.mjs && npx @opennextjs/cloudflare@latest build --openNextConfigPath open-next.config.js && node scripts/postbuild-cloudflare.mjs && ls -la .open-next/",
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
