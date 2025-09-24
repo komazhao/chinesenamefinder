@@ -2,7 +2,7 @@
 import { existsSync, copyFileSync, readdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
-// Create custom worker with static asset handling
+// Create custom worker with static asset handling and dynamic routing support
 const customWorkerContent = `// Custom worker to handle static assets and dynamic routes
 import workerHandler from "./worker.js";
 
@@ -10,9 +10,15 @@ export default {
     async fetch(request, env, ctx) {
         const url = new URL(request.url);
 
+        // Log for debugging
+        console.log("[Worker] Handling request:", url.pathname);
+
         // Handle static assets first
         if (url.pathname.startsWith("/_next/") ||
+            url.pathname.startsWith("/static/") ||
             url.pathname.endsWith(".webmanifest") ||
+            url.pathname.endsWith(".xml") ||
+            url.pathname.endsWith(".txt") ||
             url.pathname.endsWith(".ico") ||
             url.pathname.endsWith(".svg") ||
             url.pathname.endsWith(".png") ||
@@ -22,12 +28,13 @@ export default {
             url.pathname.endsWith(".woff") ||
             url.pathname.endsWith(".woff2") ||
             url.pathname.endsWith(".ttf") ||
-            url.pathname.endsWith(".otf")) {
+            url.pathname.endsWith(".otf") ||
+            url.pathname.endsWith(".css") ||
+            url.pathname.endsWith(".js")) {
 
             // Try to fetch from ASSETS binding (Cloudflare Pages static files)
             if (env.ASSETS) {
                 try {
-                    // For assets in the assets directory
                     const assetResponse = await env.ASSETS.fetch(new URL(url.pathname, request.url));
                     if (assetResponse.status !== 404) {
                         // Add cache headers for static assets
@@ -45,14 +52,25 @@ export default {
                         });
                     }
                 } catch (e) {
-                    // If asset fetch fails, continue to dynamic handler
                     console.error("Asset fetch failed:", e);
                 }
             }
         }
 
-        // For all other requests, use the OpenNext worker handler
-        return workerHandler.fetch(request, env, ctx);
+        // Pass all other requests to the OpenNext worker handler
+        // This includes all dynamic routes, API routes, and pages
+        try {
+            const response = await workerHandler.fetch(request, env, ctx);
+            console.log("[Worker] Response status:", response.status);
+            return response;
+        } catch (error) {
+            console.error("[Worker] Error handling request:", error);
+            // Return a more helpful error response
+            return new Response(\`Error processing request: \${error.message}\`, {
+                status: 500,
+                headers: { "content-type": "text/plain" }
+            });
+        }
     }
 };`;
 
@@ -68,7 +86,7 @@ console.log('[postbuild] Files:', files);
 if (existsSync(sourceWorker)) {
   // Create custom worker
   writeFileSync(customWorker, customWorkerContent);
-  console.log('[postbuild] Created custom-worker.js with static asset handling');
+  console.log('[postbuild] Created custom-worker.js with static asset handling and dynamic routing support');
 
   // Copy custom worker to _worker.js
   copyFileSync(customWorker, targetWorker);

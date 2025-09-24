@@ -215,17 +215,37 @@ curl https://openrouter.ai/api/v1/models \
 2. Cloudflare Dashboard → 左侧导航选择 **Workers & Pages → Pages** → 点击 **Create application**。
 3. 选择 **Connect to Git**，授权 Cloudflare 访问 GitHub 仓库，并选择 `chinesenamefinder` 这个仓库及要部署的分支（通常是 `main`）。
 4. 在构建设置中填写（OpenNext 适配器）：
-   - **Framework preset**：`None`（或 `Next.js` 也可）
-   - **Build command（推荐单行，避免 UI 自动换行插入空格）**：
-     - `npm ci && npm run build:opennext`
-     - 若必须手写：`npm ci && node scripts/validate-env.mjs && npx @opennextjs/cloudflare@latest build --openNextConfigPath open-next.config.js`
+   - **Framework preset**：`None`
+   - **Build command**：`npm ci && npm run build:opennext`
    - **Build output directory**：`.open-next`
    - **Root directory**：`/`
 
-> 重要：Cloudflare Pages 的命令输入框若出现自动换行，可能在 `@opennextjs/` 与 `cloudflare` 之间插入空格，导致 `npx` 解析为 `@opennextjs`。请优先使用 `npm run build:opennext`，或确保整条命令为同一行、无意外空格。
-5. 点击 **Save and Deploy** 触发第一次构建。
+> 重要：确保以下文件配置正确：
+> - `wrangler.toml`：必须存在且配置 `pages_build_output_dir = ".open-next"`，`compatibility_date = "2024-09-23"`
+> - `middleware.ts`：必须存在以支持国际化路由
+> - `package.json`：确保 `build:opennext` 脚本包含了静态资源处理和Worker生成步骤
+
+5. **环境变量配置**：
+   - 如果项目中包含 `wrangler.toml`，其中的 `[vars]` 会用于构建阶段
+   - 运行时的环境变量需要在 Cloudflare Pages Settings → Variables and Secrets 中配置
+   - 两处都需要配置相同的变量以确保构建和运行时都能正确访问
+
+6. 点击 **Save and Deploy** 触发第一次构建。
 
 > 之后每次向目标分支推送代码，Cloudflare Pages 都会自动构建并发布最新版本。
+
+#### 部署架构说明
+
+本项目使用 OpenNext 将 Next.js 应用适配为 Cloudflare Workers 运行：
+
+- **静态资源处理**：通过 `scripts/fix-cloudflare-assets.mjs` 将静态资源复制到正确位置
+- **Worker 生成**：通过 `scripts/postbuild-cloudflare.mjs` 创建自定义 Worker 处理动态路由和静态资源请求
+- **中间件支持**：`middleware.ts` 处理国际化路由重定向
+- **构建流程**：
+  1. OpenNext 构建 Next.js 应用
+  2. 复制静态资源到 `.open-next` 根目录
+  3. 生成自定义 Worker 文件 `_worker.js`
+  4. Cloudflare Pages 部署所有文件
 
 ### 6.3 配置 Variables & Secrets（强烈推荐，不要把密钥写进仓库）
 
