@@ -57,7 +57,7 @@ export async function generateMetadata({
       url: '/',
       title: t('title'),
       description: t('description'),
-      siteName: locale === 'zh' ? '文化伴侣' : 'Cultural Companion',
+      siteName: locale === 'zh' ? '中文名汇' : 'ChineseNameHub',
       images: [
         {
           url: '/og-image.jpg',
@@ -186,7 +186,7 @@ export default async function LocaleLayout({
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebApplication',
-            name: locale === 'zh' ? '文化伴侣' : 'Cultural Companion',
+            name: locale === 'zh' ? '中文名汇' : 'ChineseNameHub',
             description: locale === 'zh' ? '专业的AI中文起名服务平台' : 'Professional AI-powered Chinese name generation service',
             url: process.env.NEXT_PUBLIC_SITE_URL,
             applicationCategory: 'UtilitiesApplication',

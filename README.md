@@ -1,6 +1,6 @@
 # Chinese Name Finder - AI中文起名网站
 
-![Culture Companion](https://img.shields.io/badge/Culture%20Companion-v1.0-red)
+![ChineseNameHub](https://img.shields.io/badge/ChineseNameHub-v1.0-red)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Next.js](https://img.shields.io/badge/Next.js-15.5.3-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
@@ -12,7 +12,7 @@
 
 ## 📖 项目简介
 
-Chinese Name Finder（文化伴侣）是一个基于AI技术的中文起名服务平台，为全球用户提供专业、智能的中文名生成与文化体验服务。
+ChineseNameHub（中文名汇）是一个基于AI技术的中文起名服务平台，为全球用户提供专业、智能的中文名生成与文化体验服务。
 
 ### 核心特性
 
@@ -179,10 +179,22 @@ chinesenamefinder/
 2. 配置 Webhook Endpoint
 3. 设置产品和价格
 
+## 💰 商业模式
+
+### 定价策略
+- **免费套餐**: 每日5次免费额度
+- **基础套餐**: 20积分 - $9.99
+- **标准套餐**: 50积分 - $19.99
+- **高级套餐**: 100积分 - $34.99
+
+### 成本控制
+- AI成本通过缓存和请求限制控制
+- 基础设施使用 Cloudflare 和 Supabase 免费计划
+- 支付手续费: Stripe 2.9% + $0.30
+
 ## 📚 文档
 
 - [部署指南](./DEPLOYMENT.md) - 详细的部署说明
-- [项目总结](./PROJECT_SUMMARY.md) - 项目完整总结
 
 ## 🤝 贡献
 
