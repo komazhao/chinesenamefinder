@@ -68,7 +68,7 @@ export class NameGenerator {
     this.apiUrl = process.env.OPENROUTER_API_URL || 'https://openrouter.ai/api/v1/chat/completions'
     this.model = process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini'
     this.referer = process.env.NEXT_PUBLIC_SITE_URL || 'https://chinesenamefinder.com'
-    this.appName = process.env.OPENROUTER_APP_NAME || 'Chinese Name Finder'
+    this.appName = process.env.OPENROUTER_APP_NAME || 'ChineseNameHub'
   }
 
   /**

@@ -38,7 +38,7 @@ export async function generateMetadata({
 
   return {
     title: {
-      template: '%s | ' + (locale === 'zh' ? '文化伴侣' : 'Cultural Companion'),
+      template: '%s | ' + (locale === 'zh' ? '中文名汇' : 'ChineseNameHub'),
       default: t('title'),
     },
     description: t('description'),

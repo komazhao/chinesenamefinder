@@ -23,7 +23,7 @@ export default function RootRedirectPage() {
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
       <div style={{ textAlign: 'center' }}>
-        <h1>Cultural Companion</h1>
+        <h1>ChineseNameHub</h1>
         <p>Loading...</p>
         <div style={{
           width: '40px',

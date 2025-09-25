@@ -158,7 +158,7 @@ export default function BlogPage() {
         <section className="container mx-auto px-4 py-16">
           <div className="text-center max-w-4xl mx-auto">
             <Badge className="mb-4" variant="secondary">
-              文化伴侣博客
+              中文名汇博客
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               探索文化，分享智慧

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Chinese Name Finder - Professional AI Chinese Name Generator",
-    "description": "Cultural Companion provides professional, intelligent Chinese name generation service, combining traditional culture with modern AI technology.",
+    "description": "ChineseNameHub provides professional, intelligent Chinese name generation service, combining traditional culture with modern AI technology.",
     "keywords": "Chinese name generator, AI naming, Chinese culture, Five Elements naming, poetic naming"
   },
   "navigation": {
@@ -26,7 +26,7 @@
   },
   "hero": {
     "title": "Discover Your Perfect Chinese Name",
-    "subtitle": "Cultural Companion",
+    "subtitle": "ChineseNameHub",
     "description": "Professional AI-powered Chinese name generation combining traditional culture with modern technology. Create meaningful names with deep cultural significance.",
     "cta_primary": "Start Generating",
     "cta_secondary": "Learn More",
@@ -38,7 +38,7 @@
     }
   },
   "features": {
-    "title": "Why Choose Cultural Companion?",
+    "title": "Why Choose ChineseNameHub?",
     "subtitle": "Advanced Features for Perfect Names",
     "items": {
       "ai_technology": {
@@ -74,7 +74,7 @@
       "user1": {
         "name": "Sarah Johnson",
         "role": "Business Professional",
-        "content": "The name Cultural Companion generated for me has deep meaning and sounds beautiful. Perfect for my business in China!"
+        "content": "The name ChineseNameHub generated for me has deep meaning and sounds beautiful. Perfect for my business in China!"
       },
       "user2": {
         "name": "Michael Chen",
