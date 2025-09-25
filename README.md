@@ -1,4 +1,4 @@
-# Chinese Name Finder - AI中文起名网站
+# ChineseNameHub - AI中文起名网站
 
 ![ChineseNameHub](https://img.shields.io/badge/ChineseNameHub-v1.0-red)
 ![License](https://img.shields.io/badge/license-MIT-blue)

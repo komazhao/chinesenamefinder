@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "Chinese Name Finder - Professional AI Chinese Name Generator",
+    "title": "ChineseNameHub - Professional AI Chinese Name Generator",
     "description": "ChineseNameHub provides professional, intelligent Chinese name generation service, combining traditional culture with modern AI technology.",
     "keywords": "Chinese name generator, AI naming, Chinese culture, Five Elements naming, poetic naming"
   },
@@ -271,11 +271,11 @@
   },
   "cta": {
     "title": "Ready to Find Your Chinese Name?",
-    "description": "Join thousands of users who have discovered their perfect Chinese names with Cultural Companion.",
+    "description": "Join thousands of users who have discovered their perfect Chinese names with ChineseNameHub.",
     "button": "Start Generating Names"
   },
   "footer": {
-    "title": "Chinese Name Finder",
+    "title": "ChineseNameHub",
     "description": "Professional AI Chinese naming service platform",
     "sections": {
       "products": "Products",
@@ -293,7 +293,7 @@
       "privacy": "Privacy Policy",
       "terms": "Terms of Service"
     },
-    "copyright": "© 2024 Chinese Name Finder. All rights reserved."
+    "copyright": "© 2024 ChineseNameHub. All rights reserved."
   },
   "language_switcher": {
     "title": "Language",
@@ -302,7 +302,7 @@
   },
   "auth": {
     "welcomeBack": "Welcome Back",
-    "loginSubtitle": "Sign in to your Cultural Companion account",
+    "loginSubtitle": "Sign in to your ChineseNameHub account",
     "email": "Email Address",
     "password": "Password",
     "forgotPassword": "Forgot Password?",
@@ -395,7 +395,7 @@
   "about": {
     "title": "About Us",
     "subtitle": "Inheriting Culture, Innovating the Future",
-    "description": "Cultural Companion is an innovative company focused on AI Chinese naming. We combine the profound heritage of Chinese culture with cutting-edge artificial intelligence technology to provide users worldwide with Chinese name generation services rich in cultural connotations and personal characteristics.",
+    "description": "ChineseNameHub is an innovative company focused on AI Chinese naming. We combine the profound heritage of Chinese culture with cutting-edge artificial intelligence technology to provide users worldwide with Chinese name generation services rich in cultural connotations and personal characteristics.",
     "getStarted": "Start Naming",
     "stats": {
       "users": "Users Served",
@@ -434,7 +434,7 @@
       "title": "Development Journey",
       "subtitle": "Growth path from startup team to serving global users",
       "2023_birth": {
-        "title": "Cultural Companion Born",
+        "title": "ChineseNameHub Born",
         "description": "Team established, began focusing on AI Chinese naming technology research and development"
       },
       "2023_launch": {
@@ -489,7 +489,7 @@
       "culturalRoots": {
         "title": "Finding Cultural Roots: Chinese Name Stories of Overseas Chinese",
         "excerpt": "The touching story of overseas Chinese second generation reconnecting with Chinese culture through AI naming...",
-        "author": "Cultural Companion Team"
+        "author": "ChineseNameHub Team"
       },
       "poetry": {
         "title": "Beautiful Names in Ancient Poetry: The Art of Poetic Naming",
@@ -899,7 +899,7 @@
     "sections": {
       "introduction": {
         "title": "Introduction",
-        "content": "Cultural Companion (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI Chinese naming service."
+        "content": "ChineseNameHub (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI Chinese naming service."
       },
       "collection": {
         "title": "Information We Collect",
@@ -1002,11 +1002,11 @@
     "sections": {
       "acceptance": {
         "title": "Acceptance of Terms",
-        "content": "By accessing and using Cultural Companion's AI Chinese naming service, you accept and agree to be bound by the terms and provision of this agreement."
+        "content": "By accessing and using ChineseNameHub's AI Chinese naming service, you accept and agree to be bound by the terms and provision of this agreement."
       },
       "description": {
         "title": "Service Description",
-        "content": "Cultural Companion provides AI-powered Chinese name generation services, combining traditional cultural wisdom with modern technology to create meaningful names."
+        "content": "ChineseNameHub provides AI-powered Chinese name generation services, combining traditional cultural wisdom with modern technology to create meaningful names."
       },
       "eligibility": {
         "title": "User Eligibility",
@@ -1018,11 +1018,11 @@
       },
       "intellectual": {
         "title": "Intellectual Property",
-        "content": "The service and its original content, features, and functionality are owned by Cultural Companion and are protected by international copyright, trademark, and other intellectual property laws."
+        "content": "The service and its original content, features, and functionality are owned by ChineseNameHub and are protected by international copyright, trademark, and other intellectual property laws."
       },
       "limitation": {
         "title": "Limitation of Liability",
-        "content": "In no event shall Cultural Companion be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the service."
+        "content": "In no event shall ChineseNameHub be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the service."
       },
       "termination": {
         "title": "Termination",
@@ -1052,7 +1052,7 @@
         "description": "Respect IP rights and use service content appropriately"
       }
     },
-    "importantNotice": "Important Notice: These Terms of Service constitute a legally binding agreement between you and Cultural Companion. Please read all terms carefully before using the service. If you have questions, our support team is here to help.",
+    "importantNotice": "Important Notice: These Terms of Service constitute a legally binding agreement between you and ChineseNameHub. Please read all terms carefully before using the service. If you have questions, our support team is here to help.",
     "dispute": {
       "title": "Dispute Resolution",
       "description": "How to handle potential disputes and disagreements",
@@ -1079,13 +1079,13 @@
       "contactSupport": "Contact Support",
       "privacy": "Privacy Policy"
     },
-    "finalNotice": "Thank you for choosing Cultural Companion! We are committed to complying with all applicable laws and regulations to provide you with safe and reliable services. Your trust is our motivation for continuous improvement."
+    "finalNotice": "Thank you for choosing ChineseNameHub! We are committed to complying with all applicable laws and regulations to provide you with safe and reliable services. Your trust is our motivation for continuous improvement."
   },
   "settings": {
     "title": "Settings",
     "pageTitle": "Account Settings",
     "pageHeading": "Manage Your Account",
-    "pageDescription": "Personalize your experience, manage privacy settings, view usage statistics, and let Cultural Companion serve you better.",
+    "pageDescription": "Personalize your experience, manage privacy settings, view usage statistics, and let ChineseNameHub serve you better.",
     "usageOverview": "Usage Overview",
     "profile": {
       "title": "Profile Settings",

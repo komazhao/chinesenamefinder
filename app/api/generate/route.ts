@@ -122,7 +122,7 @@ async function generateNamesWithOpenRouter(formData: OpenRouterFormData): Promis
         'Authorization': `Bearer ${openRouterApiKey}`,
         'Content-Type': 'application/json',
         'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'https://chinesenamefinder.com',
-        'X-Title': 'Chinese Name Finder'
+        'X-Title': 'ChineseNameHub'
       },
       body: JSON.stringify({
         model: 'openai/gpt-4o',
