@@ -190,13 +190,13 @@ export default function PricingPage() {
           {/* Billing Toggle */}
           <div className="flex justify-center mb-8">
             <Tabs value={billingPeriod} onValueChange={(v) => setBillingPeriod(v as 'monthly' | 'one-time')}>
-              <TabsList className="grid w-[400px] grid-cols-2">
-                <TabsTrigger value="one-time" className="flex items-center justify-center">
+              <TabsList className="grid w-full max-w-[500px] grid-cols-2">
+                <TabsTrigger value="one-time" className="flex items-center justify-center text-sm">
                   {t('pricing.billingToggle.oneTime')}
                 </TabsTrigger>
-                <TabsTrigger value="monthly" className="flex items-center justify-center gap-2">
-                  <span>{t('pricing.billingToggle.monthly')}</span>
-                  <Badge className="py-0 px-2 h-5 text-xs" variant="secondary">
+                <TabsTrigger value="monthly" className="flex items-center justify-center gap-1 text-sm">
+                  <span className="truncate">{t('pricing.billingToggle.monthly')}</span>
+                  <Badge className="py-0 px-1.5 h-4 text-[10px] whitespace-nowrap" variant="secondary">
                     {t('pricing.billingToggle.save')}
                   </Badge>
                 </TabsTrigger>
