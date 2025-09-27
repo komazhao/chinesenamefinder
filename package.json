@@ -13,7 +13,8 @@
     "type-check": "tsc --noEmit",
     "pages:deploy": "wrangler pages deploy dist",
     "pages:dev": "wrangler pages dev dist",
-    "db:generate": "supabase gen types typescript --project-id $SUPABASE_PROJECT_ID --schema public > lib/database.types.ts"
+    "db:generate": "supabase gen types typescript --project-id $SUPABASE_PROJECT_ID --schema public > lib/database.types.ts",
+    "deploy": "bash scripts/deploy.sh"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",
