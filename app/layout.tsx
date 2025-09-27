@@ -1,6 +1,7 @@
 import { Inter, Noto_Serif_SC, Fira_Code } from 'next/font/google'
 import './globals.css'
 import { cn } from '@/lib/utils'
+import GoogleAnalytics from '@/components/analytics/google-analytics'
 
 // 字体配置
 const inter = Inter({
@@ -57,6 +58,9 @@ export default async function RootLayout({
         {/* DNS 预取 */}
         <link rel="dns-prefetch" href="//openrouter.ai" />
         <link rel="dns-prefetch" href="//js.stripe.com" />
+
+        {/* Google Analytics */}
+        <GoogleAnalytics />
       </head>
       <body
         className={cn(
