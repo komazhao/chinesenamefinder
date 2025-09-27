@@ -105,11 +105,31 @@ npm run lint
 
 # 类型检查
 npm run type-check
+
+# 一键发版部署
+npm run deploy
 ```
 
 ## 🌐 部署
 
 项目使用 Cloudflare Pages 部署，配置文件为 `wrangler.toml`。
+
+### 🚀 快速发版（推荐）
+
+使用一键发版脚本，自动完成构建、SEO更新和部署：
+
+```bash
+npm run deploy
+```
+
+脚本将自动执行：
+- ✅ 环境检查和依赖安装
+- ✅ 代码质量检查（TypeScript + ESLint）
+- ✅ 更新版本信息和时间戳
+- ✅ 生成/更新 SEO 文件（sitemap, robots.txt）
+- ✅ 生产环境构建
+- ✅ Git 提交（可选）
+- ✅ 自动部署到 Cloudflare Pages
 
 ### 自动部署
 
@@ -134,7 +154,7 @@ node scripts/postbuild-cloudflare.mjs
 npx wrangler pages deploy .open-next --project-name=chinesenamefinder
 ```
 
-详细部署说明请参考 [DEPLOYMENT.md](./DEPLOYMENT.md)
+详细部署说明请参考 [DEPLOYMENT.md](./DEPLOYMENT.md) 和 [RELEASE.md](./RELEASE.md)
 
 ## 📁 项目结构
 
@@ -195,6 +215,8 @@ chinesenamefinder/
 ## 📚 文档
 
 - [部署指南](./DEPLOYMENT.md) - 详细的部署说明
+- [发版指南](./RELEASE.md) - 完整的发版流程
+- [网站架构](./SITE_ARCHITECTURE.md) - 技术架构文档
 
 ## 🤝 贡献
 

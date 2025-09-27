@@ -127,21 +127,67 @@ export const config = {
 
 ## 部署流程
 
-### 自动部署（推荐）
+### 🚀 一键发版部署（强烈推荐）
 
-1. 推送代码到 GitHub:
+使用自动化发版脚本，确保每次部署都包含最新的 SEO 优化和版本信息：
+
+```bash
+# 执行一键发版
+npm run deploy
+```
+
+#### 发版脚本功能详解
+
+1. **环境检查**
+   - 验证 `.env.local` 配置
+   - 检查当前 Git 分支
+   - 确认 Node.js 版本
+
+2. **代码质量保证**
+   - TypeScript 类型检查
+   - ESLint 代码规范检查
+   - 自动修复可修复的问题
+
+3. **版本管理**
+   - 自动更新版本号
+   - 记录构建时间戳
+   - 生成构建信息文件
+
+4. **SEO 优化**
+   - 自动生成最新的 sitemap.xml
+   - 更新 robots.txt
+   - 确保 Google Analytics 正常工作
+
+5. **Git 操作（可选）**
+   - 提交代码变更
+   - 推送到远程仓库
+   - 自动添加 Co-Author 信息
+
+6. **部署验证**
+   - 提供部署后检查清单
+   - 验证关键功能是否正常
+
+### 自动部署（CI/CD）
+
+推送到 `main` 分支自动触发：
+
 ```bash
 git add .
-git commit -m "Your commit message"
+git commit -m "feat: your feature description"
 git push origin main
 ```
 
-2. Cloudflare Pages 自动触发部署
-3. 等待部署完成（约2-3分钟）
+部署流程：
+1. GitHub 接收推送
+2. Cloudflare Pages 检测变更
+3. 自动执行构建命令：`npm ci && npm run build:opennext`
+4. 部署到全球 CDN
+5. 约 2-3 分钟完成
 
-### 手动部署
+### 手动部署（应急）
 
-如需手动部署：
+仅在自动化流程失败时使用：
+
 ```bash
 # 1. 本地构建
 npm run build:opennext

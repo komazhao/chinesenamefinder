@@ -30,7 +30,13 @@ fi
 
 # 2. 安装依赖
 echo -e "\n${YELLOW}2. 安装项目依赖...${NC}"
-npm ci --legacy-peer-deps
+if [ -f "package-lock.json" ]; then
+    echo "  使用 npm ci 安装依赖..."
+    npm ci --legacy-peer-deps
+else
+    echo "  未找到 package-lock.json，使用 npm install..."
+    npm install --legacy-peer-deps
+fi
 
 # 3. 代码质量检查
 echo -e "\n${YELLOW}3. 运行代码质量检查...${NC}"
