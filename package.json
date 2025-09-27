@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231121.0",
+    "@opentelemetry/api": "^1.9.0",
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",
@@ -61,6 +62,7 @@
     "postcss": "^8.4.32",
     "tailwindcss": "^3.3.6",
     "typescript": "^5.3.2",
+    "webpack": "^5.101.3",
     "wrangler": "^4.37.0"
   },
   "overrides": {
